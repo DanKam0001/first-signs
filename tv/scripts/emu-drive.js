@@ -115,11 +115,26 @@ async function expect(needle, timeout = 10000) {
   await key('back', 1, 1200); // leave the round
   await expect('routine at a time');
   await key('down');
-  await key('right', 3);
+  await key('right', 4);
   await key('ok', 1, 1200);
   await expect('Deaf-led ASL class');
   shot('12-about');
   await key('back', 1, 1200);
+  await expect('routine at a time');
+  // Sign Together (duo): Home -> menu row -> 2nd button -> setup -> Start -> Go -> result -> Back home
+  await key('down');
+  await key('right');
+  await key('ok', 1, 1500);
+  await expect('Standing on the LEFT');
+  shot('13-duo-setup');
+  await key('down', 4);
+  await key('ok', 1, 2500);
+  shot('14-duo-intro');
+  await key('ok', 1, 1200);
+  shot('15-duo-need-two');
+  await sleep(9000);
+  shot('16-duo-result');
+  await key('back', 1, 2000);
   await expect('routine at a time');
   console.log(errors.length ? `\nERRORS:\n - ${errors.join('\n - ')}` : '\nALL CHECKS PASSED');
   process.exit(errors.length ? 1 : 0);

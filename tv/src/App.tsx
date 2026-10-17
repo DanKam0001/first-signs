@@ -7,6 +7,8 @@ import { RouterProvider, Route, routeKey, useRouter } from './nav/router';
 import { AboutScreen } from './screens/AboutScreen';
 import { GameScreen } from './screens/GameScreen';
 import { GameSetupScreen } from './screens/GameSetupScreen';
+import { DuoScreen } from './screens/DuoScreen';
+import { DuoSetupScreen } from './screens/DuoSetupScreen';
 import { HomeScreen } from './screens/HomeScreen';
 import { LessonScreen } from './screens/LessonScreen';
 import { PackScreen } from './screens/PackScreen';
@@ -31,6 +33,10 @@ function renderRoute(r: Route) {
       return <GameSetupScreen />;
     case 'game':
       return <GameScreen players={r.players} packId={r.packId} turnsEach={r.turnsEach} />;
+    case 'duoSetup':
+      return <DuoSetupScreen />;
+    case 'duo':
+      return <DuoScreen leftName={r.leftName} rightName={r.rightName} packId={r.packId} rounds={r.rounds} />;
     case 'progress':
       return <ProgressScreen />;
     case 'about':

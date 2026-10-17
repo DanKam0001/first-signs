@@ -10,9 +10,20 @@ export type Frame = {
   right: number[][] | null;
   /** optional camera width/height (PROTOCOL.md section 1) */
   aspect?: number;
+  /** duo mode (PROTOCOL.md 1b): one entry per person, side L/R = camera image left/right */
+  people?: { side: 'L' | 'R'; pose: number[][] | null; left: number[][] | null; right: number[][] | null }[];
 };
-export type Pred = { type: 'pred'; id: string; target: string; top: [string, number][]; ok: boolean };
-export type PhoneState = 'ready' | 'no_hands' | 'countdown' | 'recording' | 'thinking';
+export type DuoResult = { side: 'L' | 'R'; top: [string, number][]; ok: boolean; present?: boolean };
+export type Pred = {
+  type: 'pred';
+  id: string;
+  target: string;
+  top: [string, number][];
+  ok: boolean;
+  mode?: 'solo' | 'duo';
+  people?: DuoResult[];
+};
+export type PhoneState = 'ready' | 'no_hands' | 'need_two' | 'countdown' | 'recording' | 'thinking';
 
 export type ConnSnapshot = {
   url: string;

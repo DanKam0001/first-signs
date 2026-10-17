@@ -8,6 +8,8 @@ export type Route =
   | { name: 'lesson'; packId: string; signId: string }
   | { name: 'gameSetup' }
   | { name: 'game'; players: string[]; packId: string; turnsEach: number }
+  | { name: 'duoSetup' }
+  | { name: 'duo'; leftName: string; rightName: string; packId: string; rounds: number }
   | { name: 'progress' }
   | { name: 'about' }
   | { name: 'settings' };

@@ -298,7 +298,23 @@ export function RefSkeleton({
 }
 
 /** Draws the family member's live skeleton from incoming `frame` messages, mirrored like a mirror. */
-export function LiveSkeleton({ width, height }: { width: number; height: number }) {
+/**
+ * side: duo mode - draw only that person from `frame.people` (L = camera left). Without `people` (a solo
+ * phone), side L falls back to the top-level person and side R waits.
+ */
+export function LiveSkeleton({
+  width,
+  height,
+  side,
+  color = colors.you,
+  waitingText = 'Waiting for the phone camera...',
+}: {
+  width: number;
+  height: number;
+  side?: 'L' | 'R';
+  color?: string;
+  waitingText?: string;
+}) {
   const latest = useRef<CFrame | null>(null);
   const fresh = useRef(false);
   const lastAt = useRef(0);
@@ -309,6 +325,11 @@ export function LiveSkeleton({ width, height }: { width: number; height: number 
   const inset = useRef<HandInset | null>(null);
   useEffect(() => {
     const onFrame = (f: Frame) => {
+      if (side) {
+        const person = f.people?.find((q) => q.side === side);
+        if (person) f = { ...f, pose: person.pose, left: person.left, right: person.right };
+        else if (f.people || side === 'R') return;
+      }
       latest.current = compactLive(f);
       if (typeof f.aspect === 'number' && f.aspect > 0) aspect.current = f.aspect;
       fresh.current = true;
@@ -334,13 +355,13 @@ export function LiveSkeleton({ width, height }: { width: number; height: number 
       conn.events.off('frame', onFrame);
       clearInterval(timer);
     };
-  }, []);
+  }, [side]);
   return (
     <View style={{ width, height }}>
-      <SkeletonView frame={stale ? null : frame} xf={xf.current} width={width} height={height} color={colors.you} mirror aspect={aspect.current} inset={inset.current} />
+      <SkeletonView frame={stale ? null : frame} xf={xf.current} width={width} height={height} color={color} mirror aspect={aspect.current} inset={inset.current} />
       {stale ? (
         <View style={[StyleSheet.absoluteFill, styles.center]}>
-          <Text style={styles.emptyText}>Waiting for the phone camera...</Text>
+          <Text style={styles.emptyText}>{waitingText}</Text>
         </View>
       ) : null}
     </View>

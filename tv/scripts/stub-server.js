@@ -114,6 +114,22 @@ function toFrame(f, t, jitter) {
     right: f.right ? f.right.map(([x, y, z]) => [j(x), j(y), z]) : null,
   };
 }
+// Duo mode (PROTOCOL.md 1b): the same synthetic person, shrunk and shifted to the camera's left (L) / right (R).
+function placePerson(f, dx, scale) {
+  const tx = ([x, y, ...rest]) => [0.5 + (x - 0.5) * scale + dx, 0.55 + (y - 0.55) * scale, ...rest];
+  return { pose: f.pose.map(tx), left: f.left ? f.left.map(tx) : null, right: f.right ? f.right.map(tx) : null };
+}
+function duoFrame(fL, fR, t, jitter) {
+  const L = toFrame(placePerson(fL, -0.21, 0.62), t, jitter);
+  const R = toFrame(placePerson(fR, 0.21, 0.62), t, jitter);
+  return {
+    ...L,
+    people: [
+      { side: 'L', pose: L.pose, left: L.left, right: L.right },
+      { side: 'R', pose: R.pose, left: R.left, right: R.right },
+    ],
+  };
+}
 function startFake(room) {
   const idle = syntheticRef('idle-wave').frames;
   const fake = { attempt: null, tries: {}, k: 0 };
@@ -122,8 +138,11 @@ function startFake(room) {
     const a = fake.attempt;
     let frames = idle;
     if (a && a.stage === 'recording') frames = syntheticRef(a.target).frames;
-    const f = frames[fake.k++ % frames.length];
-    send(room.tv, toFrame(f, Date.now(), a && a.stage === 'recording' ? 0.004 : 0.002));
+    const k = fake.k++;
+    const f = frames[k % frames.length];
+    const jitter = a && a.stage === 'recording' ? 0.004 : 0.002;
+    if (fake.duo) send(room.tv, duoFrame(f, frames[(k + 7) % frames.length], Date.now(), jitter));
+    else send(room.tv, toFrame(f, Date.now(), jitter));
   }, 1000 / 15);
   send(room.tv, { type: 'paired' });
   send(room.tv, { type: 'phone_state', state: 'ready' });
@@ -133,7 +152,14 @@ function fakeAttempt(room, msg) {
   const fake = room.fake;
   const a = { id: msg.id, target: msg.target, stage: 'countdown', timers: [] };
   fake.attempt = a;
-  send(room.tv, { type: 'phone_state', state: 'countdown' });
+  const duo = msg.mode === 'duo';
+  fake.duo = duo;
+  if (duo && !fake.sawDuo) {
+    // first duo attempt: pretend only one person was in view for a moment
+    fake.sawDuo = true;
+    send(room.tv, { type: 'phone_state', state: 'need_two' });
+    a.timers.push(setTimeout(() => send(room.tv, { type: 'phone_state', state: 'countdown' }), 1800));
+  } else send(room.tv, { type: 'phone_state', state: 'countdown' });
   a.timers.push(
     setTimeout(() => {
       a.stage = 'recording';
@@ -155,7 +181,32 @@ function fakeAttempt(room, msg) {
       const top = ok
         ? [[msg.target, p], [others[0], (1 - p) * 0.6], [others[1], (1 - p) * 0.3]]
         : [[others[0], 0.55], [msg.target, p], [others[1], 0.12]];
-      send(room.tv, { type: 'pred', id: msg.id, target: msg.target, top: top.map(([a2, b]) => [a2, Math.round(b * 1000) / 1000]), ok });
+      const round3 = top.map(([a2, b]) => [a2, Math.round(b * 1000) / 1000]);
+      if (duo) {
+        // scripted so a test sees every case: 1 = L ok / R miss, 2 = both ok, 3 = R out of view, then random
+        const d = (fake.duoN = (fake.duoN || 0) + 1);
+        const okL = d === 3 ? true : d <= 2 ? true : Math.random() < OK_RATE;
+        const okR = d === 1 ? false : d === 2 ? true : d === 3 ? false : Math.random() < OK_RATE;
+        const missTop = [[others[0], 0.55], [msg.target, 0.15], [others[1], 0.12]];
+        const okTop = [[msg.target, 0.82], [others[0], 0.1], [others[1], 0.04]];
+        send(room.tv, {
+          type: 'pred',
+          id: msg.id,
+          target: msg.target,
+          mode: 'duo',
+          top: okL ? okTop : missTop,
+          ok: okL,
+          people: [
+            { side: 'L', top: okL ? okTop : missTop, ok: okL, present: true },
+            { side: 'R', top: okR ? okTop : missTop, ok: okR, present: d !== 3 },
+          ],
+        });
+        send(room.tv, { type: 'phone_state', state: 'ready' });
+        fake.attempt = null;
+        console.log(`[stub] room ${room.code}: duo pred ${msg.target} L=${okL} R=${okR}${d === 3 ? ' (R not present)' : ''}`);
+        return;
+      }
+      send(room.tv, { type: 'pred', id: msg.id, target: msg.target, top: round3, ok });
       send(room.tv, { type: 'phone_state', state: 'ready' });
       fake.attempt = null;
       console.log(`[stub] room ${room.code}: pred ${msg.target} ok=${ok}`);

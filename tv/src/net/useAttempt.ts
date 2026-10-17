@@ -37,11 +37,11 @@ export function useAttempt() {
     };
   }, []);
 
-  const start = useCallback((target: string, pack: string) => {
+  const start = useCallback((target: string, pack: string, mode: 'solo' | 'duo' = 'solo') => {
     clear();
     setPred(null);
     const id = newId();
-    const sent = conn.send({ type: 'attempt', id, target, pack, countdownMs: COUNTDOWN_MS, windowMs: WINDOW_MS });
+    const sent = conn.send({ type: 'attempt', id, target, pack, mode, countdownMs: COUNTDOWN_MS, windowMs: WINDOW_MS });
     if (!sent || !conn.snap.paired) {
       setPhase('offline');
       return;

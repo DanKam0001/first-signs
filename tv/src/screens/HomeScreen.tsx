@@ -46,11 +46,12 @@ export function HomeScreen() {
             })}
           </SpatialNavigationView>
           <SpatialNavigationView direction="horizontal" style={styles.menu}>
-            <FocusButton label="Family round" icon="★" onSelect={() => router.push({ name: 'gameSetup' })} />
-            <FocusButton label="Progress" onSelect={() => router.push({ name: 'progress' })} />
-            <FocusButton label={c.paired ? 'Phone connected' : 'Connect phone'} onSelect={() => router.push({ name: 'pair' })} />
-            <FocusButton label="About" onSelect={() => router.push({ name: 'about' })} />
-            <FocusButton label="Settings" onSelect={() => router.push({ name: 'settings' })} />
+            <FocusButton small label="Family round" icon="★" onSelect={() => router.push({ name: 'gameSetup' })} />
+            <FocusButton small label="Sign Together" onSelect={() => router.push({ name: 'duoSetup' })} />
+            <FocusButton small label="Progress" onSelect={() => router.push({ name: 'progress' })} />
+            <FocusButton small label={c.paired ? 'Phone' : 'Connect phone'} onSelect={() => router.push({ name: 'pair' })} />
+            <FocusButton small label="About" onSelect={() => router.push({ name: 'about' })} />
+            <FocusButton small label="Settings" onSelect={() => router.push({ name: 'settings' })} />
           </SpatialNavigationView>
         </SpatialNavigationView>
       </SpatialNavigationRoot>

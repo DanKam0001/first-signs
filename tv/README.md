@@ -19,6 +19,7 @@ so the same navigation code runs on Fire OS, the web and (later) Vega.
 | Pack | A grid of signs with 0-3 stars each. |
 | Lesson | **Watch:** the real sign video, recorded by a Deaf signer (PopSign ASL v1.0). It loops, is fitted without cropping on a dark letterbox, and shows its poster until the first frame. "Slow motion" plays it at 0.5x. The `video.note` caption and the credit line sit under it. **You:** a live mirror skeleton drawn from `frame`s, with a head (an ellipse from pose 0-10, plus mouth and chin markers), thick lines, and a large colour-coded close-up of the dominant hand. **Your turn** sends `attempt`, runs the 3-2-1 countdown and recording bar, and shows the `pred` result: confetti if ok; if missed, "looked a bit like X" plus a `coach` tip. Back cancels an attempt in flight (`cancel`). |
 | Family round | Pick players (Mum, Dad, Grandma...), a pack and the number of turns. Players take turns on random signs; a right answer scores 1, or 2 on a streak of 3 or more. "Show me first" plays the sign video; it also plays after each answer. Ends with a scoreboard. |
+| Sign Together | Duo mode (PROTOCOL.md 1b). Choose who stands on the left and right (facing the TV), a pack, and the number of signs (default 5). For each sign, the video plays, then "Get ready, both of you!", a countdown, and an `attempt` with `mode:"duo"`. Two live mirror panes, each labelled with its player's name, with a head and a hand close-up. The camera-left person "L" is drawn on the TV's right, so each player appears on their own side. Each person gets a verdict: both ok gives "You both got it!" and confetti; one ok gives a coach tip for the other; `present:false` gives "step into view". `phone_state` `need_two` shows a hint. Per-player score and streak, then a scoreboard. |
 | Progress | Signs learned per pack, stored on the TV (AsyncStorage). "Start over" asks you to press twice. |
 | About | Says this is a practice buddy and not a teacher, points families to Deaf-led ASL classes, credits the data, and explains privacy. |
 | Settings | Server URL (typed with the TV keyboard), voice prompts, mirror the teacher, slow motion, and connection info. |
@@ -96,6 +97,7 @@ camera works on localhost. Then press **Start camera** on that page. Controls: a
   then `python -I scripts/web-drive.py`. That script drives every screen with arrows, Enter and Escape only, asserts the
   flow (pair -> lesson miss -> tip -> retry ok -> Back x2 -> family round to the scoreboard -> progress -> about ->
   settings -> progress survives a reload) and saves screenshots to `docs/`.
+- **Sign Together:** `python -I scripts/duo-drive.py` (same stub). The stub's duo preds are scripted: first camera-L ok and R miss, then both ok, then R out of view. It also sends `need_two` once. It checks every case and saves `docs/duo-*.png`.
 - **Android TV emulator:** API 30 `android-tv;x86` image, AVD `fs_tv30` stored on D: (`ANDROID_AVD_HOME=D:\AndroidBuild\avd`),
   WHPX acceleration. Run the stub, then:
   `ADB_SERIAL=emulator-5554 FS_SERVER=ws://10.0.2.2:8790/ws node scripts/emu-drive.js --install dist/first-signs.apk`.
