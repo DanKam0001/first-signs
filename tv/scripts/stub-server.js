@@ -91,6 +91,20 @@ function newCode() {
 // ---- fake phone ----
 function toFrame(f, t, jitter) {
   const j = (v) => v + (Math.random() - 0.5) * jitter;
+  // fake head landmarks 0..10 (nose, eyes, ears, mouth) above the shoulders, like a live phone frame has
+  const [lsx, lsy] = f.pose[11];
+  const [rsx] = f.pose[12];
+  const cx = (lsx + rsx) / 2;
+  const sw = Math.abs(lsx - rsx);
+  const top = lsy - sw * 1.0;
+  const face = [
+    [cx, top + sw * 0.32], // 0 nose
+    [cx + sw * 0.08, top + sw * 0.2], [cx + sw * 0.12, top + sw * 0.2], [cx + sw * 0.16, top + sw * 0.2], // 1-3 left eye
+    [cx - sw * 0.08, top + sw * 0.2], [cx - sw * 0.12, top + sw * 0.2], [cx - sw * 0.16, top + sw * 0.2], // 4-6 right eye
+    [cx + sw * 0.26, top + sw * 0.25], [cx - sw * 0.26, top + sw * 0.25], // 7-8 ears
+    [cx + sw * 0.08, top + sw * 0.45], [cx - sw * 0.08, top + sw * 0.45], // 9-10 mouth
+  ];
+  f = { ...f, pose: f.pose.map((pt, i) => (i <= 10 ? [face[i][0], face[i][1], 0, 0.99] : pt)) };
   return {
     type: 'frame',
     t,

@@ -4,7 +4,7 @@ import { DefaultFocus, SpatialNavigationRoot, SpatialNavigationView } from 'reac
 import { Celebration } from '../components/Celebration';
 import { PracticeStage } from '../components/PracticeStage';
 import { FocusButton, Screen, StatusPill } from '../components/ui';
-import { refFor, Sign, SIGNS, signsInPack } from '../data/signs';
+import { Sign, SIGNS, signsInPack } from '../data/signs';
 import { useConn } from '../net/connection';
 import { useAttempt } from '../net/useAttempt';
 import { speak } from '../net/voice';
@@ -43,7 +43,6 @@ export function GameScreen({ players, packId, turnsEach }: { players: string[]; 
   const handled = useRef<string | null>(null);
   const player = players[turn % players.length];
   const finished = turn >= totalTurns;
-  const refData = useMemo(() => refFor(sign.id), [sign.id]);
   const signPack = packId === 'all' ? sign.packs[0] || 'mealtime' : packId;
 
   useEffect(() => {
@@ -177,7 +176,8 @@ export function GameScreen({ players, packId, turnsEach }: { players: string[]; 
         ))}
       </View>
       <PracticeStage
-        refData={peek || result ? refData : null}
+        signId={sign.id}
+        hideTeacher={!(peek || result)}
         phase={att.phase}
         count={att.count}
         windowMs={att.windowMs}

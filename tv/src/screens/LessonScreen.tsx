@@ -1,10 +1,10 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { DefaultFocus, SpatialNavigationRoot, SpatialNavigationView } from 'react-tv-space-navigation';
 import { Celebration } from '../components/Celebration';
 import { PracticeStage } from '../components/PracticeStage';
 import { FocusButton, Header, Screen } from '../components/ui';
-import { refFor, signById, signsInPack, PACKS } from '../data/signs';
+import { signById, signsInPack, PACKS } from '../data/signs';
 import { useConn } from '../net/connection';
 import { useAttempt } from '../net/useAttempt';
 import { coachTip, speak } from '../net/voice';
@@ -18,7 +18,6 @@ export function LessonScreen({ packId, signId }: { packId: string; signId: strin
   const c = useConn();
   const st = settings.use();
   const sign = signById(signId);
-  const refData = useMemo(() => refFor(signId), [signId]);
   const att = useAttempt();
   const [tries, setTries] = useState(0);
   const [tip, setTip] = useState<string | null>(null);
@@ -144,7 +143,7 @@ export function LessonScreen({ packId, signId }: { packId: string; signId: strin
   return (
     <Screen>
       <Header title={`${label}`} subtitle={undefined} accent={accent} />
-      <PracticeStage refData={refData} phase={att.phase} count={att.count} windowMs={att.windowMs} showLive={c.paired} />
+      <PracticeStage signId={signId} phase={att.phase} count={att.count} windowMs={att.windowMs} showLive={c.paired} />
       <View style={styles.bannerBox}>{banner}</View>
       <SpatialNavigationRoot key={controlsKey}>
         <SpatialNavigationView direction="horizontal" style={styles.controls}>
@@ -157,7 +156,7 @@ export function LessonScreen({ packId, signId }: { packId: string; signId: strin
 }
 
 const styles = StyleSheet.create({
-  bannerBox: { minHeight: s(120), justifyContent: 'center' },
+  bannerBox: { minHeight: s(100), justifyContent: 'center' },
   banner: { fontSize: type.h2, fontWeight: '800' },
   desc: { color: colors.text, fontSize: type.body },
   unverified: { color: colors.textDim, fontSize: type.tiny },

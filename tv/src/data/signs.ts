@@ -1,4 +1,4 @@
-import { IS_FIXTURE, REFS, SIGNS_RAW, THRESHOLDS } from '../generated/model';
+import { IS_FIXTURE, REFS, SIGNS_RAW, THRESHOLDS, VIDEOS } from '../generated/model';
 
 export type Sign = {
   id: string;
@@ -10,7 +10,7 @@ export type Sign = {
 };
 
 /** Compact reference frame (see scripts/sync-model.js): unmirrored image coords, pose 11..24, hands x/y. */
-export type CFrame = { p: number[] | null; l: number[] | null; r: number[] | null };
+export type CFrame = { p: number[] | null; l: number[] | null; r: number[] | null; /** live only: pose 0..10 (head) */ f?: number[] | null };
 /** aspect = camera width/height (PROTOCOL.md section 2); absent means the 0.75 default. */
 export type RefData = { fps: number; aspect?: number; frames: CFrame[] };
 
@@ -33,6 +33,7 @@ export const SIGNS: Sign[] = SIGNS_RAW.filter((s) => s && s.id).map((s) => ({
 export const thresholds = { top: 3, minProb: 0.25, minHandFrac: 0.4, ...(THRESHOLDS || {}) };
 
 export const CREDIT_REAL = 'Recorded by Deaf signers - GISLR (D-PAN / Google), CC BY 4.0';
+export const CREDIT_VIDEO = 'Sign videos: PopSign ASL v1.0 (Georgia Tech & DPAN), performed by Deaf signers, CC BY 4.0';
 export const CREDIT_PLACEHOLDER = 'Placeholder motion, not a real sign (real recordings not bundled yet)';
 
 export function signsInPack(packId: string): Sign[] {
@@ -54,4 +55,17 @@ export function refFor(id: string): RefData | null {
   }
   refCache[id] = data;
   return data;
+}
+
+export type SignVideoData = { video: any; poster: any | null; credit: string | null; note: string | null; aspect: number };
+/** The real sign video for a sign (bundled asset modules), or null if this sign has none. */
+export function videoFor(id: string): SignVideoData | null {
+  const v = VIDEOS[id];
+  if (!v) return null;
+  try {
+    return { video: v.video(), poster: v.poster ? v.poster() : null, credit: v.credit, note: v.note, aspect: v.w / v.h };
+  } catch (e) {
+    console.warn('video load failed', id, e);
+    return null;
+  }
 }

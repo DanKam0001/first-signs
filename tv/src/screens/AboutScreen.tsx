@@ -31,9 +31,17 @@ export function AboutScreen() {
         <View style={styles.col}>
           <Text style={styles.h}>Thank you to the Deaf signers</Text>
           <Text style={styles.p}>
-            The reference signs come from the Google Isolated Sign Language Recognition (GISLR) dataset, recorded by Deaf signers
-            with the Deaf Professional Arts Network (D-PAN), Georgia Tech and Google, shared under CC BY 4.0. Only the hand and
-            arm points are shown, never faces.
+            <Text style={styles.b}>Sign videos:</Text> PopSign ASL v1.0 by Georgia Tech and the Deaf Professional Arts Network
+            (DPAN), performed by Deaf signers, CC BY 4.0 (creativecommons.org/licenses/by/4.0). Clips trimmed and re-encoded.
+            signdata.cc.gatech.edu
+          </Text>
+          <Text style={styles.p}>
+            <Text style={styles.b}>Sign checker:</Text> trained on the Isolated Sign Language Recognition corpus (GISLR) by DPAN,
+            Georgia Tech and Google, recorded by Deaf signers, CC BY 4.0. Only hand and arm points are used.
+          </Text>
+          <Text style={styles.small}>
+            Georgia Tech, DPAN, Google and the signers do not endorse First Signs. Sign descriptions were written for First
+            Signs as memory aids.
           </Text>
           {DATA_IS_PLACEHOLDER ? (
             <Text style={[styles.p, { color: colors.almost }]}>
@@ -62,5 +70,7 @@ const styles = StyleSheet.create({
   cols: { flex: 1, flexDirection: 'row' },
   col: { flex: 1, marginRight: s(60) },
   h: { color: colors.focus, fontSize: type.body, fontWeight: '800', marginBottom: s(12), marginTop: s(8) },
-  p: { color: colors.text, fontSize: s(30), lineHeight: s(44), marginBottom: s(20) },
+  p: { color: colors.text, fontSize: s(28), lineHeight: s(40), marginBottom: s(16) },
+  b: { color: colors.focus, fontWeight: '800' },
+  small: { color: colors.textDim, fontSize: s(22), lineHeight: s(30), marginBottom: s(16) },
 });

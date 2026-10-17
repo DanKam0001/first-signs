@@ -78,8 +78,13 @@ async function expect(needle, timeout = 10000) {
   await expect('Pick a sign');
   shot('04-pack');
   await key('ok', 1, 2000);
-  await expect('Your turn');
-  shot('05-lesson');
+  await sleep(2500); // lesson screens play video, so uiautomator can't dump them: screenshots only from here
+  shot('05-lesson-video');
+  await key('right');
+  await key('ok', 1, 1500);
+  shot('05b-lesson-video-slow');
+  await key('ok', 1, 800); // back to normal speed
+  await key('left');
   // uiautomator can't dump while the skeletons animate (the UI never goes idle), so the attempt
   // flow is checked with fixed waits + screenshots, and text checks resume on static screens.
   await key('ok', 1, 1500);
@@ -93,8 +98,8 @@ async function expect(needle, timeout = 10000) {
   await key('ok', 1, 500); // Try again (or Next on a success)
   await sleep(9000);
   shot('09-second-result');
-  await key('back', 1, 1200);
-  await expect('Pick a sign');
+  await key('back', 1, 2000);
+  shot('09b-back-to-pack');
   await key('back', 1, 1200);
   await expect('routine at a time');
   await key('down');

@@ -20,8 +20,14 @@
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#1E1A2E"
       },
-      "permissions": ["INTERNET", "ACCESS_NETWORK_STATE"],
-      "blockedPermissions": ["android.permission.RECORD_AUDIO", "android.permission.CAMERA"]
+      "permissions": [
+        "INTERNET",
+        "ACCESS_NETWORK_STATE"
+      ],
+      "blockedPermissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.CAMERA"
+      ]
     },
     "web": {
       "bundler": "metro",
@@ -52,6 +58,13 @@
         "expo-audio",
         {
           "microphonePermission": false
+        }
+      ],
+      [
+        "expo-video",
+        {
+          "supportsBackgroundPlayback": false,
+          "supportsPictureInPicture": false
         }
       ]
     ]

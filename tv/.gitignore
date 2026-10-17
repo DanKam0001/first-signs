@@ -5,3 +5,6 @@ dist-web/
 .expo/
 src/generated/
 *.apk
+dist-web-next/
+dist-web-prev/
+dist/

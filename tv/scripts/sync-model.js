@@ -13,6 +13,7 @@ const ROOT = path.resolve(__dirname, '..');
 const EXPORT = process.env.FS_MODEL_EXPORT || path.resolve(ROOT, '..', 'model', 'export');
 const OUT = path.join(ROOT, 'src', 'generated');
 const OUT_REFS = path.join(OUT, 'refs');
+const OUT_VIDEOS = path.join(OUT, 'videos');
 const FPS_OUT = 15;
 const POSE_IDX = [11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24];
 
@@ -179,6 +180,8 @@ module.exports = { syntheticRef };
 if (require.main === module) {
   fs.rmSync(OUT_REFS, { recursive: true, force: true });
   fs.mkdirSync(OUT_REFS, { recursive: true });
+  fs.rmSync(OUT_VIDEOS, { recursive: true, force: true });
+  fs.mkdirSync(OUT_VIDEOS, { recursive: true });
 
   let isFixture = false;
   let raw;
@@ -204,6 +207,33 @@ if (require.main === module) {
       refs[s.id] = safe;
     }
   }
+  // Real sign videos (PopSign ASL v1.0, CC BY 4.0): bundle <id>.mp4 + poster <id>.jpg as app assets.
+  const videos = {};
+  let videoBytes = 0;
+  let videoMeta = {};
+  try {
+    videoMeta = JSON.parse(fs.readFileSync(path.join(EXPORT, 'videos', 'videos.json'), 'utf8')).signs || {};
+  } catch {}
+  for (const s of isFixture ? [] : signs) {
+    const v = s.video;
+    if (!v || !v.src) continue;
+    const src = path.join(EXPORT, v.src);
+    if (!fs.existsSync(src)) {
+      missing.push(`${s.id} (video)`);
+      continue;
+    }
+    const safe = s.id.replace(/[^a-zA-Z0-9_]/g, '_').toLowerCase();
+    fs.copyFileSync(src, path.join(OUT_VIDEOS, `${safe}.mp4`));
+    videoBytes += fs.statSync(src).size;
+    const poster = v.poster ? path.join(EXPORT, v.poster) : null;
+    const hasPoster = !!poster && fs.existsSync(poster);
+    if (hasPoster) {
+      fs.copyFileSync(poster, path.join(OUT_VIDEOS, `${safe}.jpg`));
+      videoBytes += fs.statSync(poster).size;
+    }
+    const m = videoMeta[s.id] || {};
+    videos[s.id] = { safe, hasPoster, credit: v.credit || null, note: v.note || null, w: m.width || 540, h: m.height || 720 };
+  }
   const slim = signs.map(({ id, label, packs, description, credit, verified }) => ({
     id,
     label,
@@ -218,6 +248,12 @@ if (require.main === module) {
     `export const SOURCE = ${JSON.stringify(isFixture ? 'scripts/fixture-signs.json (placeholder)' : 'model/export')};`,
     `export const SIGNS_RAW: any[] = ${JSON.stringify(slim, null, 1)};`,
     `export const THRESHOLDS: any = ${JSON.stringify(thresholds)};`,
+    'export const VIDEOS: Record<string, { video: () => any; poster: (() => any) | null; credit: string | null; note: string | null; w: number; h: number }> = {',
+    ...Object.entries(videos).map(
+      ([id, v]) =>
+        `  ${JSON.stringify(id)}: { video: () => require('./videos/${v.safe}.mp4'), poster: ${v.hasPoster ? `() => require('./videos/${v.safe}.jpg')` : 'null'}, credit: ${JSON.stringify(v.credit)}, note: ${JSON.stringify(v.note)}, w: ${v.w}, h: ${v.h} },`
+    ),
+    '};',
     'export const REFS: Record<string, () => any> = {',
     ...Object.entries(refs).map(([id, f]) => `  ${JSON.stringify(id)}: () => require('./refs/${f}.json'),`),
     '};',
@@ -226,7 +262,7 @@ if (require.main === module) {
   fs.writeFileSync(path.join(OUT, 'model.ts'), lines.join('\n'));
   console.log(
     `[sync-model] ${isFixture ? 'FIXTURE (model/export not found)' : 'model/export'}: ${signs.length} signs, ` +
-      `${Object.keys(refs).length} refs` +
+      `${Object.keys(refs).length} refs, ${Object.keys(videos).length} videos (${(videoBytes / 1e6).toFixed(1)} MB)` +
       (missing.length ? `, missing refs: ${missing.join(', ')}` : '')
   );
 }

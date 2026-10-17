@@ -17,8 +17,8 @@ so the same navigation code runs on Fire OS, the web and (later) Vega.
 | Pair | `hello` as `tv`, shows `phoneUrl` as a QR code plus the 4-digit code, waits for `paired`. "Just watch for now" skips. |
 | Home | The four packs (with learned counts), Family round, Progress, Connect phone, About, Settings. |
 | Pack | A grid of signs with 0-3 stars each. |
-| Lesson | The reference skeleton with its credit line and description. **Your turn** sends `attempt`, runs the 3-2-1 countdown and recording bar, draws the live skeleton from `frame`s, then shows the `pred` result: confetti if ok; if missed, "looked a bit like X" plus a `coach` tip. Also Try again, Slow motion and Next. Back cancels an attempt in flight (`cancel`). |
-| Family round | Pick players (Mum, Dad, Grandma...), a pack and the number of turns. Players take turns on random signs; a right answer scores 1, or 2 on a streak of 3 or more. "Show me first" lets you peek. Ends with a scoreboard. |
+| Lesson | **Watch:** the real sign video, recorded by a Deaf signer (PopSign ASL v1.0). It loops, is fitted without cropping on a dark letterbox, and shows its poster until the first frame. "Slow motion" plays it at 0.5x. The `video.note` caption and the credit line sit under it. **You:** a live mirror skeleton drawn from `frame`s, with a head (an ellipse from pose 0-10, plus mouth and chin markers), thick lines, and a large colour-coded close-up of the dominant hand. **Your turn** sends `attempt`, runs the 3-2-1 countdown and recording bar, and shows the `pred` result: confetti if ok; if missed, "looked a bit like X" plus a `coach` tip. Back cancels an attempt in flight (`cancel`). |
+| Family round | Pick players (Mum, Dad, Grandma...), a pack and the number of turns. Players take turns on random signs; a right answer scores 1, or 2 on a streak of 3 or more. "Show me first" plays the sign video; it also plays after each answer. Ends with a scoreboard. |
 | Progress | Signs learned per pack, stored on the TV (AsyncStorage). "Start over" asks you to press twice. |
 | About | Says this is a practice buddy and not a teacher, points families to Deaf-led ASL classes, credits the data, and explains privacy. |
 | Settings | Server URL (typed with the TV keyboard), voice prompts, mirror the teacher, slow motion, and connection info. |
@@ -27,6 +27,8 @@ Spoken prompts go TV -> `speak` -> `audio` URL (Polly mp3) and are played with `
 for the session. If the server doesn't answer, the app simply stays silent: every prompt is also shown on screen.
 
 ## Data
+Sign videos: `model/export/videos/<id>.mp4` + `<id>.jpg` (PopSign ASL v1.0, CC BY 4.0, see its `CREDITS.md`) are copied into `src/generated/videos/` by `npm run sync` and bundled as app assets (about 5.6 MB). The clip size comes from `videos.json`. If a sign has no video, the app falls back to the GISLR skeleton replay.
+
 `npm run sync` (it also runs automatically before every build) reads `../model/export/signs.json` and `refs/<id>.json`
 and writes a compact copy to `src/generated/`. The compact copy keeps only pose landmarks 11-24 and the two hands
 (x/y), resampled to 15 fps, and **never face landmarks**. Until the model export exists, the script falls back to
@@ -105,7 +107,7 @@ camera works on localhost. Then press **Start camera** on that page. Controls: a
 - The skeleton is one `<Svg>` with three `<Path>`s (arms, hand bones, joints) plus a head-guide circle. Incoming
   frames are written to a ref, and a 15 fps timer re-renders only the skeleton component.
 - The reference playback runs at 15 fps from pre-resampled data. Confetti and the recording bar use the native driver.
-- The old architecture (`newArchEnabled: false`), as in the Amazon sample. No reanimated, no video.
+- The old architecture (`newArchEnabled: false`), as in the Amazon sample. No reanimated. Sign videos use **expo-video** (Media3 ExoPlayer) with `surfaceType="textureView"`. react-native-video 6.19 was tried first: its `viewType` prop does nothing on Android, and its SurfaceView drew the clip zoomed and cropped on the Android TV emulator. Its stub DASH classes also clashed with expo-audio's Media3 (a "Type ... is defined multiple times" dex error).
 
 ## Vega OS (Fire TV with Vega) notes
 - The remote layer already has a `RemoteControlManager.kepler.ts` (Vega TVEventHandler) next to the Android and web
