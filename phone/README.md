@@ -32,6 +32,38 @@ camera, `?fps=18` sets the frame rate, `?autostart=1` starts the camera without 
 5. Reconnects automatically (backoff 0.5 s to 5 s) and re-sends `hello`. A `pred` made while offline is queued.
    `bad_code` shows "This code has expired, scan the new QR code".
 
+## Sign Together (duo mode, PROTOCOL §1b)
+
+- **Mode** comes from each `attempt` (`"mode":"duo"`, default solo) and stays until an attempt says otherwise. `?mode=duo`
+  starts in duo for testing. Switching calls `setOptions` on the landmarkers during the countdown.
+- **Detection:** solo stays at 2 hands + 1 pose. Duo runs 4 hands + 2 poses, and in duo the pose runs on every other
+  frame (hands use the previous pose in between) to keep the frame rate up.
+- **People and sides** (`lib/duo.js`): `"L"`/`"R"` = person on the camera image's left/right by shoulder midpoint.
+  Outside an attempt the sides follow image position. During an attempt the tracker is locked: it matches people by
+  nearest shoulder midpoint plus body size, so the sides never swap, even if the two people cross. A person the pose
+  model drops for up to 1 s keeps their last pose, so their hands still have a person to belong to.
+- **Hands** go to the person with the nearest pose wrist (2 at most per person; a hand more than 0.3 from every wrist is
+  dropped), then get left/right labels with the solo rule.
+- **Frame:** the top-level `pose`/`left`/`right` carry the larger (nearer) person, so solo consumers keep working, and
+  `people` lists each person found. Solo frames have no `people` and are unchanged.
+- **pred:** each side's window is classified on its own, with the same pack mask and §3 verdict:
+  `{"type":"pred","id","target","mode":"duo","people":[{"side":"L","top","ok","present"},{"side":"R",...}]}`. Both sides
+  are always listed. `present` = hands in at least `minHandFrac` of the window. A side with no hand frames is not run
+  through the model (`top: []`).
+- **Guidance:** in duo the phone shows "Stand side by side, both fully in view". If fewer than two people are seen for
+  2 s, it sends `phone_state` `"need_two"` and shows "We can only see one person".
+- **Cost**, measured in headless Chrome on the PC (GTX 1660) with a two-person clip at 18 fps target:
+
+  | | fps | detection per frame |
+  |---|---|---|
+  | solo, PC idle | 17.9-18.2 | 31-51 ms |
+  | duo, PC idle | 17.3-17.4 | 50 ms (hands 37, pose 13) |
+  | PC busy | duo 9.6-12.3, solo 14.9 | |
+
+  Duo costs about 1.6x solo. On a mid-range phone, where solo detection takes 40-60 ms, expect duo at about 10-15 fps.
+  Tests: `phone/test/duo.test.js`, which uses two real reference signers from `model/export/refs` placed side by side.
+  For an in-browser check, run `npm run e2e -- --mode duo --video <two-person clip.mjpeg>` in `server/`.
+
 ## The sign model (PROTOCOL §2, §3)
 
 The page loads `/model/signs.json`, `/model/preprocess.js`, `/model/labels.json` (optional) and `/model/model.onnx`. The

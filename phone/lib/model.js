@@ -4,6 +4,7 @@
 // logits, and the page shows a "STUB MODEL" badge.
 import { parseSigns } from "./signs.js";
 import { maskedSoftmax, handFraction, buildPred } from "./verdict.js";
+import { buildDuoPred } from "./duo.js";
 
 export const ORT_VERSION = "1.20.1";
 const ORT_BASE = `https://cdn.jsdelivr.net/npm/onnxruntime-web@${ORT_VERSION}/dist/`;
@@ -63,14 +64,22 @@ export async function loadModel({ forceStub = false, base = "/model/" } = {}) {
       return new Set(ids.length ? ids : labels); // unknown pack: rank everything rather than nothing
     },
 
-    // attempt: {id, target, pack}. frames: the window's full-precision frame objects.
-    async predict(attempt, frames) {
+    async rank(attempt, frames) {
       const allowed = this.packLabels(attempt.pack);
       allowed.add(attempt.target);
-      let ranked = [];
-      try { ranked = maskedSoftmax(await this.logits(frames), labels, allowed); }
-      catch (err) { console.error("[model] inference failed", err); }
+      try { return maskedSoftmax(await this.logits(frames), labels, allowed); }
+      catch (err) { console.error("[model] inference failed", err); return []; }
+    },
+
+    // attempt: {id, target, pack}. frames: the window's full-precision frame objects.
+    async predict(attempt, frames) {
+      const ranked = await this.rank(attempt, frames);
       return buildPred({ id: attempt.id, target: attempt.target, ranked, handFrac: handFraction(frames), thresholds: signs.thresholds });
+    },
+
+    // Sign Together (PROTOCOL §1b): each side's window is classified on its own, same pack mask and §3 verdict.
+    predictDuo(attempt, frames) {
+      return buildDuoPred(attempt, frames, (a, f) => this.rank(a, f), signs.thresholds);
     },
   };
   return model;

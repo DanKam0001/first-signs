@@ -40,7 +40,7 @@
       <div class="row big" id="phoneState">phone: -</div>
     </div>
     <div class="box" style="margin-top:12px">
-      <div class="row"><select id="pack"></select><select id="target"></select></div>
+      <div class="row"><select id="pack"></select><select id="target"></select><select id="mode"><option value="solo">solo</option><option value="duo">duo (Sign Together)</option></select></div>
       <div class="row">countdown <input id="cdMs" type="number" value="3000" style="width:80px"> window <input id="winMs" type="number" value="2500" style="width:80px"></div>
       <div class="row"><button id="attemptBtn">Send attempt</button><button id="cancelBtn">Cancel</button></div>
       <div class="big" id="pred">-</div>
@@ -95,7 +95,11 @@ function connect() {
     else if (m.type === "phone_state") { S.phoneState = m.state; $("phoneState").textContent = "phone: " + m.state; }
     else if (m.type === "pred") {
       S.preds.push({ ...m, at: Date.now() });
-      $("pred").innerHTML = `<span class="${m.ok ? "ok" : "bad"}">${m.ok ? "Got it" : "Not yet"}</span> (${m.target})`;
+      if (m.mode === "duo") {
+        // PROTOCOL §1b: person "L" is on the camera's left, so on the (mirrored) TV it is the right-hand pane.
+        $("pred").innerHTML = m.people.map((p) => `${p.side === "L" ? "TV-right" : "TV-left"} (${p.side}): ` +
+          (p.present === false ? `<span class="bad">step into view</span>` : `<span class="${p.ok ? "ok" : "bad"}">${p.ok ? "Got it" : "Not yet"}</span>`)).join("<br>");
+      } else $("pred").innerHTML = `<span class="${m.ok ? "ok" : "bad"}">${m.ok ? "Got it" : "Not yet"}</span> (${m.target})`;
       $("predRaw").textContent = JSON.stringify(m);
     } else if (m.type === "audio") {
       S.audio.push(m);
@@ -128,11 +132,11 @@ function render() {
 render();
 
 const send = (o) => ws && ws.readyState === 1 && ws.send(JSON.stringify(o));
-window.sendAttempt = (target = $("target").value, pack = $("pack").value) => {
+window.sendAttempt = (target = $("target").value, pack = $("pack").value, mode = $("mode").value) => {
   const id = crypto.randomUUID();
   attempts++;
   S.lastAttemptId = id;
-  send({ type: "attempt", id, target, pack, countdownMs: Number($("cdMs").value), windowMs: Number($("winMs").value) });
+  send({ type: "attempt", id, target, pack, mode, countdownMs: Number($("cdMs").value), windowMs: Number($("winMs").value) });
   $("pred").textContent = "waiting for phone...";
   return id;
 };

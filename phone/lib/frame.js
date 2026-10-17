@@ -43,5 +43,6 @@ export function wireFrame(f) {
   const pts = (arr) => (arr ? arr.map((p) => p.map(r4)) : null);
   const out = { type: "frame", t: f.t, pose: pts(f.pose), left: pts(f.left), right: pts(f.right) };
   if (f.aspect) out.aspect = r4(f.aspect);
+  if (f.people) out.people = f.people.map((p) => ({ side: p.side, pose: pts(p.pose), left: pts(p.left), right: pts(p.right) })); // duo only
   return JSON.stringify(out);
 }

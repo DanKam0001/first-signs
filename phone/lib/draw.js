@@ -30,12 +30,16 @@ export function drawFrame(ctx, frame, { mirror = false, width = ctx.canvas.width
     }
     ctx.stroke();
   };
-  if (frame.pose) edges(frame.pose, POSE_EDGES, COLORS.pose, lineWidth, 0.3);
-  for (const side of ["left", "right"]) {
-    const h = frame[side];
-    if (!h) continue;
-    edges(h, HAND_EDGES, COLORS[side], lineWidth);
-    ctx.fillStyle = COLORS[side];
-    for (const p of h) { ctx.beginPath(); ctx.arc(X(p), Y(p), lineWidth * 0.8, 0, Math.PI * 2); ctx.fill(); }
+  // Duo frames (PROTOCOL §1b) carry everyone in `people`; solo frames only have the top level.
+  const bodies = frame.people && frame.people.length ? frame.people : [frame];
+  for (const b of bodies) {
+    if (b.pose) edges(b.pose, POSE_EDGES, COLORS.pose, lineWidth, 0.3);
+    for (const side of ["left", "right"]) {
+      const h = b[side];
+      if (!h) continue;
+      edges(h, HAND_EDGES, COLORS[side], lineWidth);
+      ctx.fillStyle = COLORS[side];
+      for (const p of h) { ctx.beginPath(); ctx.arc(X(p), Y(p), lineWidth * 0.8, 0, Math.PI * 2); ctx.fill(); }
+    }
   }
 }

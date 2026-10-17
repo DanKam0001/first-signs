@@ -21,7 +21,9 @@ const seconds = Number(arg("seconds", 10));
 const video = arg("video", "");
 const chrome = arg("chrome", process.env.CHROME || "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe");
 const target = arg("target", "milk"), pack = arg("pack", "mealtime");
-const extra = arg("query", "");
+const mode = arg("mode", "solo"); // duo = Sign Together (PROTOCOL §1b): starts the page in duo and sends a duo attempt
+let extra = arg("query", "");
+if (mode === "duo") extra = [extra, "mode=duo"].filter(Boolean).join("&");
 
 // --tv-base lets the TV side connect differently from the phone, e.g. over the LAN like the real Fire TV.
 const tvBase = arg("tv-base", base);
@@ -36,7 +38,7 @@ let room, onPred;
 tv.on("message", (d) => {
   const recvAt = Date.now();
   const m = JSON.parse(d.toString());
-  if (m.type === "frame") { frames.push({ recvAt, t: m.t, left: !!m.left, right: !!m.right, pose: !!m.pose, aspect: m.aspect, bytes: d.length }); return; }
+  if (m.type === "frame") { frames.push({ recvAt, t: m.t, left: !!m.left, right: !!m.right, pose: !!m.pose, aspect: m.aspect, people: (m.people || []).map((p) => p.side).join(""), bytes: d.length }); return; }
   events.push({ at: recvAt, ...m });
   if (m.type === "room") room = m;
   if (m.type === "pred" && onPred) onPred(m);
@@ -47,7 +49,8 @@ while (!room) await new Promise((r) => setTimeout(r, 20));
 console.log(`[e2e] room ${room.code} -> ${room.phoneUrl}`);
 
 // ---- Phone side (Chrome) ----
-const args = ["--use-fake-ui-for-media-stream", "--autoplay-policy=no-user-gesture-required"];
+const args = ["--use-fake-ui-for-media-stream", "--autoplay-policy=no-user-gesture-required",
+  ...(arg("chrome-args", "") ? arg("chrome-args", "").split(" ") : [])];
 if (video) args.push("--use-fake-device-for-media-stream", `--use-file-for-fake-video-capture=${path.resolve(video)}`);
 const browser = await puppeteer.launch({ executablePath: chrome, headless: !flag("headful"), args });
 const page = await browser.newPage();
@@ -94,13 +97,13 @@ if (flag("reconnect")) {
 const id = `e2e-${Date.now()}`;
 const predP = new Promise((r) => { onPred = (m) => m.id === id && r(m); });
 const sentAt = Date.now();
-tv.send(JSON.stringify({ type: "attempt", id, target, pack, countdownMs: 1500, windowMs: 2000 }));
+tv.send(JSON.stringify({ type: "attempt", id, target, pack, countdownMs: 1500, windowMs: 2000, ...(mode === "duo" ? { mode } : {}) }));
 const pred = await Promise.race([predP, new Promise((r) => setTimeout(() => r(null), 15000))]);
 const states = events.filter((e) => e.type === "phone_state" && e.at >= sentAt).map((e) => e.state);
 const phone = await page.evaluate(() => JSON.parse(JSON.stringify(window.__firstSigns)));
 
 const summary = {
-  base, tvBase, room: room.code,
+  base, tvBase, mode, room: room.code,
   framesMeasured: win.length,
   fps: +(win.length / seconds).toFixed(1),
   latencyMs: { p50: pct(lat, 0.5), p95: pct(lat, 0.95), max: Math.max(...lat) },
@@ -109,6 +112,8 @@ const summary = {
   withHands: win.filter((f) => f.left || f.right).length,
   withPose: win.filter((f) => f.pose).length,
   aspects: [...new Set(win.map((f) => f.aspect))],
+  statesBeforeAttempt: [...new Set(events.filter((e) => e.type === "phone_state" && e.at < sentAt).map((e) => e.state))],
+  peopleSeen: win.reduce((m, f) => { m[f.people || "-"] = (m[f.people || "-"] || 0) + 1; return m; }, {}),
   phone: { detectMs: +phone.detectMs.toFixed(1), handMs: +(phone.handMs || 0).toFixed(1), poseMs: +(phone.poseMs || 0).toFixed(1), fpsOnPhone: phone.fps, delegate: phone.delegate, camera: phone.camera, stub: phone.stub, methods: phone.methods, handedness: phone.handedness, sides: phone.sides, handFramesOnPhone: phone.handFrames, error: phone.error },
   reconnect,
   attempt: { statesSeen: states, pred, predAfterMs: pred ? Date.now() - sentAt : null, expectedMs: 3500 },

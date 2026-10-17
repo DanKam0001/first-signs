@@ -3,6 +3,7 @@
 import { FilesetResolver, HandLandmarker, PoseLandmarker } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/vision_bundle.mjs";
 import { Conn } from "./lib/conn.js";
 import { buildFrame, wireFrame } from "./lib/frame.js";
+import { buildDuoFrame, SideTracker } from "./lib/duo.js";
 import { assignHands } from "./lib/hands.js";
 import { drawFrame } from "./lib/draw.js";
 import { loadModel } from "./lib/model.js";
@@ -18,10 +19,17 @@ const code = (location.pathname.match(/\/p\/(\d{4})/) || [])[1] || params.get("c
 const wsUrl = params.get("ws") || `${location.protocol === "https:" ? "wss" : "ws"}://${location.host}/ws`;
 if (params.get("debug") === "1") $("debug").hidden = false;
 
+// Sign Together (PROTOCOL §1b). The mode comes from each `attempt` and stays until an attempt says otherwise.
+// Solo runs 2 hands + 1 pose; duo runs 4 hands + 2 poses, so solo keeps its speed. `?mode=duo` starts in duo (testing).
+let mode = params.get("mode") === "duo" ? "duo" : "solo";
+let switching = false;
+const tracker = new SideTracker();
+let lastTwoAt = 0;
+
 // Shared stats, also read by server/scripts/e2e.mjs.
 const stats = window.__firstSigns = {
   code, framesSent: 0, framesDropped: 0, detectMs: 0, fps: 0, methods: { pose: 0, label: 0, none: 0 },
-  handFrames: 0, handedness: { agree: 0, disagree: 0 }, sides: { left: 0, right: 0, both: 0, rightOnImageLeft: 0 }, preds: [], state: null, paired: false, stub: null, camera: null, error: null,
+  mode, people: 0, handFrames: 0, handedness: { agree: 0, disagree: 0 }, sides: { left: 0, right: 0, both: 0, rightOnImageLeft: 0 }, preds: [], state: null, paired: false, stub: null, camera: null, error: null,
 };
 
 // ---------------- UI helpers ----------------
@@ -57,7 +65,7 @@ function onMessage(m) {
       stats.paired = true;
       pill("Paired with TV", "on");
       sendState(true);
-      if (cameraOn) card("Look at the TV", "Your TV will tell you when to sign.", "good");
+      if (cameraOn) idleCard();
       break;
     case "peer_left":
       if (m.role === "tv") { stats.paired = false; pill("TV disconnected", "bad"); }
@@ -82,7 +90,21 @@ function onMessage(m) {
 let lastSentState = null;
 let lastHandAt = 0;
 function presenceState() {
-  return performance.now() - lastHandAt < 1000 ? "ready" : "no_hands";
+  const now = performance.now();
+  if (mode === "duo" && cameraOn && now - lastTwoAt > 2000) return "need_two"; // only one person for 2 s
+  return now - lastHandAt < 1000 ? "ready" : "no_hands";
+}
+// The big card when no attempt is running.
+let lastCard = "";
+const cardKey = () => `${mode}:${stats.state === "need_two"}:${stats.paired}`;
+function idleCard() {
+  const key = cardKey();
+  if (key === lastCard) return;
+  lastCard = key;
+  if (mode === "duo" && stats.state === "need_two") card("We can only see one person", "Stand side by side, both fully in view.", "bad");
+  else if (mode === "duo") card("Sign Together", "Stand side by side, both fully in view, and look at the TV.", "good");
+  else if (stats.paired) card("Look at the TV", "Your TV will tell you when to sign.", "good");
+  else card("Camera is on", "Waiting for the TV to connect...");
 }
 function currentState() {
   return attempt ? attempt.phase : presenceState();
@@ -90,6 +112,7 @@ function currentState() {
 function sendState(force = false) {
   const s = currentState();
   stats.state = s;
+  if (!attempt && cameraOn) idleCard();
   if (!conn || (!force && s === lastSentState)) return;
   lastSentState = s;
   conn.send({ type: "phone_state", state: s });
@@ -116,12 +139,12 @@ async function makeLandmarkers() {
   const make = async (delegate) => Promise.all([
     HandLandmarker.createFromOptions(fileset, {
       baseOptions: { modelAssetPath: HAND_MODEL, delegate },
-      runningMode: "VIDEO", numHands: 2,
+      runningMode: "VIDEO", numHands: mode === "duo" ? 4 : 2,
       minHandDetectionConfidence: 0.5, minHandPresenceConfidence: 0.5, minTrackingConfidence: 0.5,
     }),
     PoseLandmarker.createFromOptions(fileset, {
       baseOptions: { modelAssetPath: POSE_MODEL, delegate },
-      runningMode: "VIDEO", numPoses: 1,
+      runningMode: "VIDEO", ...poseOptions(),
     }),
   ]);
   try { [hands, pose] = await make("GPU"); stats.delegate = "GPU"; }
@@ -138,6 +161,29 @@ const mpReady = makeLandmarkers().then(() => {
   card("Could not load the hand tracker", "Check your internet connection, then reload this page.", "bad");
   console.error(err);
 });
+
+// Duo: 2 poses, with lower confidence thresholds (two smaller people in frame are found less confidently).
+function poseOptions() {
+  return mode === "duo"
+    ? { numPoses: 2, minPoseDetectionConfidence: 0.5, minPosePresenceConfidence: 0.5, minTrackingConfidence: 0.5 }
+    : { numPoses: 1, minPoseDetectionConfidence: 0.5, minPosePresenceConfidence: 0.5, minTrackingConfidence: 0.5 };
+}
+
+async function setMode(next) {
+  next = next === "duo" ? "duo" : "solo";
+  if (next === mode) return;
+  mode = stats.mode = next;
+  lastPoseRes = null;
+  tracker.reset();
+  lastTwoAt = performance.now(); // 2 s grace before "need_two"
+  lastCard = "";
+  if (!hands) return; // makeLandmarkers() will read `mode`
+  switching = true;
+  try {
+    await Promise.all([hands.setOptions({ numHands: mode === "duo" ? 4 : 2 }), pose.setOptions(poseOptions())]);
+  } catch (err) { console.error("[mp] could not switch mode", err); }
+  switching = false;
+}
 
 // ---------------- Camera ----------------
 const video = $("video");
@@ -178,7 +224,9 @@ async function startCamera() {
   stats.camera = { width: video.videoWidth, height: video.videoHeight, fps: settings.frameRate, facing: actualFacing, label: stream.getVideoTracks()[0].label };
   cameraOn = true;
   $("viewWrap").hidden = false;
-  card(stats.paired ? "Look at the TV" : "Camera is on", stats.paired ? "Your TV will tell you when to sign." : "Waiting for the TV to connect...", stats.paired ? "good" : "");
+  lastCard = "";
+  if (mode === "duo") lastTwoAt = performance.now();
+  idleCard();
   keepAwake();
   scheduleNext();
 }
@@ -202,7 +250,7 @@ $("previewBtn").onclick = () => {
 };
 
 // ---------------- Frame loop ----------------
-let nextDue = 0, lastTs = 0, fpsWindow = [];
+let nextDue = 0, lastTs = 0, fpsWindow = [], frameNo = 0, lastPoseRes = null;
 function scheduleNext() {
   if (!cameraOn) return;
   if (video.requestVideoFrameCallback) video.requestVideoFrameCallback(tick);
@@ -214,7 +262,7 @@ function tick() {
   scheduleNext();
   const now = performance.now();
   // Pace to FPS on average: a camera frame is processed if it is no more than half a camera frame early.
-  if (video.readyState < 2 || !hands || now < nextDue - 16) return;
+  if (video.readyState < 2 || !hands || switching || now < nextDue - 16) return;
   nextDue = Math.max(nextDue + 1000 / FPS, now - 1000 / FPS);
   const t = Date.now();
   const ts = Math.max(now, lastTs + 1); // MediaPipe needs strictly increasing timestamps
@@ -223,7 +271,11 @@ function tick() {
   try {
     handRes = hands.detectForVideo(video, ts);
     tHand = performance.now();
-    poseRes = pose.detectForVideo(video, ts);
+    // Duo costs about twice solo, so pose runs on every other frame there and hands reuse the previous pose
+    // (people move little in 1/18 s; hands are still tracked every frame). Solo is unchanged.
+    frameNo++;
+    if (mode === "duo" && frameNo % 2 === 0 && lastPoseRes) poseRes = lastPoseRes;
+    else poseRes = lastPoseRes = pose.detectForVideo(video, ts);
   } catch (err) { console.error(err); return; }
   const ema = (old, v) => (old ? old * 0.9 + v * 0.1 : v);
   stats.handMs = ema(stats.handMs, tHand - now);
@@ -233,7 +285,14 @@ function tick() {
   // Read the decoded frame size every time, so a camera switch or phone rotation updates `aspect` straight away.
   const vw = video.videoWidth, vh = video.videoHeight;
   if (vw && vh && (overlay.width !== vw || overlay.height !== vh)) { overlay.width = vw; overlay.height = vh; stats.camera && Object.assign(stats.camera, { width: vw, height: vh }); }
-  const { frame, method, hands: found, assigned } = buildFrame(t, handRes, poseRes, vw && vh ? vw / vh : undefined);
+  const aspect = vw && vh ? vw / vh : undefined;
+  if (mode === "duo") {
+    const { frame, count } = buildDuoFrame(t, handRes, poseRes, aspect, tracker, now);
+    stats.people = count;
+    if (count >= 2) lastTwoAt = now;
+    return afterFrame(frame, now, "duo");
+  }
+  const { frame, method, hands: found, assigned } = buildFrame(t, handRes, poseRes, aspect);
   stats.methods[method]++;
   if (frame.left) stats.sides.left++;
   if (frame.right) stats.sides.right++;
@@ -247,19 +306,24 @@ function tick() {
       stats.handedness[k]++;
     }
   }
-  if (frame.left || frame.right) { lastHandAt = now; stats.handFrames++; }
+  afterFrame(frame, now, method);
+}
+
+function afterFrame(frame, now, method) {
+  const anyHand = frame.left || frame.right || (frame.people || []).some((p) => p.left || p.right);
+  if (anyHand) { lastHandAt = now; stats.handFrames++; }
   if (conn && stats.paired) { if (conn.sendFrame(wireFrame(frame))) stats.framesSent++; else stats.framesDropped++; }
   if (attempt && attempt.phase === "recording") attempt.frames.push(frame);
 
   drawFrame(octx, frame, { lineWidth: Math.max(2, overlay.width / 160) });
-  $("frameHint").hidden = !!(frame.left || frame.right || frame.pose);
+  $("frameHint").hidden = !!(anyHand || frame.pose);
   if (!attempt) sendState();
 
   fpsWindow.push(now);
   while (fpsWindow.length && now - fpsWindow[0] > 1000) fpsWindow.shift();
   stats.fps = fpsWindow.length;
   if (!$("debug").hidden) {
-    $("debug").textContent = `${stats.fps} fps · detect ${stats.detectMs.toFixed(0)} ms · ${stats.delegate} · sent ${stats.framesSent} · hands via ${method}`;
+    $("debug").textContent = `${mode} · ${stats.fps} fps · detect ${stats.detectMs.toFixed(0)} ms · ${stats.delegate} · sent ${stats.framesSent} · ${mode === "duo" ? stats.people + " people" : "hands via " + method}`;
   }
 }
 
@@ -277,6 +341,7 @@ function endAttempt() {
   attempt.timers.forEach(clearTimeout);
   cancelAnimationFrame(attempt.raf);
   attempt = null;
+  tracker.locked = false;
   cd.hidden = true;
   cd.classList.remove("rec");
   sendState(true);
@@ -284,14 +349,17 @@ function endAttempt() {
 
 async function runAttempt(m) {
   endAttempt();
-  const a = attempt = { ...m, phase: "countdown", frames: [], timers: [], raf: 0 };
+  const a = attempt = { ...m, mode: m.mode === "duo" ? "duo" : "solo", phase: "countdown", frames: [], timers: [], raf: 0 };
+  setMode(a.mode); // switches the landmarkers during the countdown
+  tracker.locked = a.mode === "duo"; // sides never swap mid-attempt
   const countdownMs = Math.max(0, Number(m.countdownMs) || 3000);
   const windowMs = Math.max(300, Number(m.windowMs) || 2500);
   sendState(true);
   cd.hidden = false;
   cd.classList.remove("rec");
   $("barWrap").hidden = true;
-  $("countLabel").textContent = cameraOn ? `Get ready to sign "${m.target}"` : "Tap Start camera first";
+  $("countLabel").textContent = !cameraOn ? "Tap Start camera first"
+    : a.mode === "duo" ? `Get ready to sign "${m.target}" together` : `Get ready to sign "${m.target}"`;
   const start = performance.now();
   const step = () => {
     if (attempt !== a) return;
@@ -321,12 +389,14 @@ async function runAttempt(m) {
     $("barWrap").hidden = true;
     const model = await modelReady;
     let pred;
-    if (model) pred = await model.predict(a, a.frames);
+    if (model) pred = a.mode === "duo" ? await model.predictDuo(a, a.frames) : await model.predict(a, a.frames);
+    else if (a.mode === "duo") pred = { type: "pred", id: a.id, target: a.target, mode: "duo", people: ["L", "R"].map((side) => ({ side, top: [], ok: false, present: false })) };
     else pred = { type: "pred", id: a.id, target: a.target, top: [], ok: false };
     if (attempt !== a) return; // cancelled while thinking
     stats.preds.push({ ...pred, frames: a.frames.length });
     conn && conn.send(pred, { queue: true });
     endAttempt();
     card("Look at the TV", "Your result is on the TV.", "good");
+    lastCard = cardKey(); // keep this card until something changes
   }, countdownMs + windowMs));
 }
