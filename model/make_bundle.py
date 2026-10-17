@@ -94,6 +94,9 @@ def main():
     th = dict(THRESHOLDS)
     if a.thresholds:
         th.update(json.loads(a.thresholds))
+    # real-video references (export/videos/videos.json, PopSign ASL v1.0) are kept when the bundle is rebuilt
+    vpath = os.path.join(EXPORT, "videos", "videos.json")
+    videos = json.load(open(vpath, encoding="utf-8")).get("signs", {}) if os.path.exists(vpath) else {}
     signs = []
     for s in labels:
         d = desc.get(s, {})
@@ -104,6 +107,11 @@ def main():
             entry["sources"] = d["sources"]
         if d.get("note"):
             entry["note"] = d["note"]
+        if s in videos:
+            v = videos[s]
+            entry["video"] = {"src": v["video"], "poster": v["poster"], "credit": v["credit"]}
+            if v.get("note"):
+                entry["video"]["note"] = v["note"]
         signs.append(entry)
     out = {
         "_thresholds": th,

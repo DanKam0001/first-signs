@@ -86,7 +86,12 @@
     "https://www.lifeprint.com/asl101/pages-signs/m/milk.htm",
     "https://www.handspeak.com/word/1382/"
    ],
-   "note": "Fist-squeeze can look like YES (fist nodding at the wrist) at low frame rates; MILK opens and closes, YES bobs."
+   "note": "Fist-squeeze can look like YES (fist nodding at the wrist) at low frame rates; MILK opens and closes, YES bobs.",
+   "video": {
+    "src": "videos/milk.mp4",
+    "poster": "videos/milk.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8033, CC BY 4.0"
+   }
   },
   {
    "id": "drink",
@@ -101,7 +106,12 @@
     "https://www.lifeprint.com/asl101/pages-signs/d/drink.htm",
     "https://www.handspeak.com/word/627/"
    ],
-   "note": "Noun 'a drink' is often done with a small double movement. Alcohol variants use other handshapes."
+   "note": "Noun 'a drink' is often done with a small double movement. Alcohol variants use other handshapes.",
+   "video": {
+    "src": "videos/drink.mp4",
+    "poster": "videos/drink.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8037, CC BY 4.0"
+   }
   },
   {
    "id": "water",
@@ -116,7 +126,12 @@
     "https://www.lifeprint.com/asl101/pages-signs/w/water.htm",
     "https://www.handspeak.com/word/2360/"
    ],
-   "note": "Lifeprint says lips, HandSpeak says chin; both are near the mouth."
+   "note": "Lifeprint says lips, HandSpeak says chin; both are near the mouth.",
+   "video": {
+    "src": "videos/water.mp4",
+    "poster": "videos/water.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8039, CC BY 4.0"
+   }
   },
   {
    "id": "food",
@@ -131,7 +146,12 @@
     "https://www.handspeak.com/word/837/",
     "https://www.lifeprint.com/asl101/pages-signs/f/food.htm"
    ],
-   "note": "Same sign as EAT (HandSpeak). Lifeprint notes fluent signers often use just one tap. Lifeprint's page shows video only, so the handshape detail comes from HandSpeak."
+   "note": "Same sign as EAT (HandSpeak). Lifeprint notes fluent signers often use just one tap. Lifeprint's page shows video only, so the handshape detail comes from HandSpeak.",
+   "video": {
+    "src": "videos/food.mp4",
+    "poster": "videos/food.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8038, CC BY 4.0"
+   }
   },
   {
    "id": "hungry",
@@ -146,7 +166,12 @@
     "https://www.lifeprint.com/asl101/pages-signs/h/hungry.htm",
     "https://www.handspeak.com/word/1076/"
    ],
-   "note": "Same or nearly the same sign as WISH (both sources)."
+   "note": "Same or nearly the same sign as WISH (both sources).",
+   "video": {
+    "src": "videos/hungry.mp4",
+    "poster": "videos/hungry.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8035, CC BY 4.0"
+   }
   },
   {
    "id": "thirsty",
@@ -161,7 +186,12 @@
     "https://www.lifeprint.com/asl101/pages-signs/t/thirsty.htm",
     "https://www.handspeak.com/word/2205/"
    ],
-   "note": "A stronger movement with an intense face means CRAVE."
+   "note": "A stronger movement with an intense face means CRAVE.",
+   "video": {
+    "src": "videos/thirsty.mp4",
+    "poster": "videos/thirsty.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8033, CC BY 4.0"
+   }
   },
   {
    "id": "apple",
@@ -176,7 +206,12 @@
     "https://www.lifeprint.com/asl101/pages-signs/a/apple.htm",
     "https://www.handspeak.com/word/97/"
    ],
-   "note": "Lifeprint says cheek, HandSpeak says chin area. Some people use a fist instead of the hooked finger (Lifeprint calls that Signed English)."
+   "note": "Lifeprint says cheek, HandSpeak says chin area. Some people use a fist instead of the hooked finger (Lifeprint calls that Signed English).",
+   "video": {
+    "src": "videos/apple.mp4",
+    "poster": "videos/apple.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8037, CC BY 4.0"
+   }
   },
   {
    "id": "finish",
@@ -191,7 +226,13 @@
     "https://www.lifeprint.com/asl101/pages-signs/f/finish.htm",
     "https://www.handspeak.com/word/795/"
    ],
-   "note": "Used for 'all done'. One twist feels more final; a sharp one-handed version means 'stop it!'."
+   "note": "Used for 'all done'. One twist feels more final; a sharp one-handed version means 'stop it!'.",
+   "video": {
+    "src": "videos/finish.mp4",
+    "poster": "videos/finish.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8037, CC BY 4.0",
+    "note": "Signed one-handed here (the signer is holding a phone). In everyday ASL, use both hands."
+   }
   },
   {
    "id": "please",
@@ -206,7 +247,12 @@
     "https://www.lifeprint.com/asl101/pages-signs/p/please.htm",
     "https://www.handspeak.com/word/1658/"
    ],
-   "note": "Two hands means ENJOY. Very close to HAPPY (flat hand brushing up the chest). Doing it with a fist instead is SORRY."
+   "note": "Two hands means ENJOY. Very close to HAPPY (flat hand brushing up the chest). Doing it with a fist instead is SORRY.",
+   "video": {
+    "src": "videos/please.mp4",
+    "poster": "videos/please.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8037, CC BY 4.0"
+   }
   },
   {
    "id": "thankyou",
@@ -220,7 +266,12 @@
    "sources": [
     "https://www.lifeprint.com/asl101/pages-signs/t/thank-you.htm"
    ],
-   "note": "Lifeprint notes it looks very similar to GOOD. HandSpeak's entry (https://www.handspeak.com/word/2186/) has no written description we could extract."
+   "note": "Lifeprint notes it looks very similar to GOOD. HandSpeak's entry (https://www.handspeak.com/word/2186/) has no written description we could extract.",
+   "video": {
+    "src": "videos/thankyou.mp4",
+    "poster": "videos/thankyou.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8039, CC BY 4.0"
+   }
   },
   {
    "id": "sleep",
@@ -235,7 +286,12 @@
     "https://www.lifeprint.com/asl101/pages-signs/s/sleep.htm",
     "https://www.handspeak.com/word/1985/"
    ],
-   "note": "Hand ends in a bunched 'flattened O', not a fist. Similar to SLEEPY (fingers droop repeatedly) and to SAD (both open hands move down the face)."
+   "note": "Hand ends in a bunched 'flattened O', not a fist. Similar to SLEEPY (fingers droop repeatedly) and to SAD (both open hands move down the face).",
+   "video": {
+    "src": "videos/sleep.mp4",
+    "poster": "videos/sleep.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8039, CC BY 4.0"
+   }
   },
   {
    "id": "bed",
@@ -250,7 +306,12 @@
     "https://www.lifeprint.com/asl101/pages-signs/b/bed.htm",
     "https://www.handspeak.com/word/175/"
    ],
-   "note": "Lifeprint shows both one-hand and two-hand versions on either side of the head. Overlaps with the common 'sleeping' gesture."
+   "note": "Lifeprint shows both one-hand and two-hand versions on either side of the head. Overlaps with the common 'sleeping' gesture.",
+   "video": {
+    "src": "videos/bed.mp4",
+    "poster": "videos/bed.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8033, CC BY 4.0"
+   }
   },
   {
    "id": "pajamas",
@@ -265,7 +326,13 @@
     "https://www.signingsavvy.com/sign/pajamas/2021/1",
     "https://signingtime.com/blogs/dictionary/pajamas"
    ],
-   "note": "Not verified. Signing Savvy confirms PAJAMAS is an ASL compound, but its description is members-only. The SLEEP+CLOTHES parts come from Signing Time, which is not on our list. Lifeprint's page is empty and HandSpeak (https://www.handspeak.com/word/3673/) is video-only. A fingerspelled P-J is also used."
+   "note": "Not verified. Signing Savvy confirms PAJAMAS is an ASL compound, but its description is members-only. The SLEEP+CLOTHES parts come from Signing Time, which is not on our list. Lifeprint's page is empty and HandSpeak (https://www.handspeak.com/word/3673/) is video-only. A fingerspelled P-J is also used.",
+   "video": {
+    "src": "videos/pajamas.mp4",
+    "poster": "videos/pajamas.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8031, CC BY 4.0",
+    "note": "This clip shows a P handshape followed by a J movement (PJs). We could not confirm this form on Lifeprint or HandSpeak, and the description (SLEEP + CLOTHES) is also unverified; check with a Deaf teacher."
+   }
   },
   {
    "id": "book",
@@ -280,7 +347,13 @@
     "https://www.lifeprint.com/asl101/pages-signs/b/book.htm",
     "https://www.handspeak.com/word/210/"
    ],
-   "note": "A double movement is the noun BOOK; a single opening can mean OPEN-BOOK. Reversed (open to closed) means CLOSE-BOOK."
+   "note": "A double movement is the noun BOOK; a single opening can mean OPEN-BOOK. Reversed (open to closed) means CLOSE-BOOK.",
+   "video": {
+    "src": "videos/book.mp4",
+    "poster": "videos/book.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8039, CC BY 4.0",
+    "note": "Signed one-handed here (the signer is holding a phone). In everyday ASL, use both hands."
+   }
   },
   {
    "id": "night",
@@ -295,7 +368,13 @@
     "https://www.lifeprint.com/asl101/pages-signs/n/night.htm",
     "https://www.handspeak.com/word/1492/"
    ],
-   "note": "Sliding along the arm means EVERY-NIGHT. TONIGHT = NOW + NIGHT. Mirror image of MORNING (hand rising)."
+   "note": "Sliding along the arm means EVERY-NIGHT. TONIGHT = NOW + NIGHT. Mirror image of MORNING (hand rising).",
+   "video": {
+    "src": "videos/night.mp4",
+    "poster": "videos/night.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8038, CC BY 4.0",
+    "note": "Signed one-handed here (the signer is holding a phone). In everyday ASL, use both hands."
+   }
   },
   {
    "id": "kiss",
@@ -310,7 +389,12 @@
     "https://www.handspeak.com/word/1198/",
     "https://www.lifeprint.com/asl101/pages-signs/k/kiss.htm"
    ],
-   "note": "Sources disagree. HandSpeak's citation form is the cheek version above. Lifeprint's main version brings the fingertips of both bunched hands together in front of you with puckered lips (looks like MORE), and a one-hand version looks like HOME. Lifeprint says there are many variants."
+   "note": "Sources disagree. HandSpeak's citation form is the cheek version above. Lifeprint's main version brings the fingertips of both bunched hands together in front of you with puckered lips (looks like MORE), and a one-hand version looks like HOME. Lifeprint says there are many variants.",
+   "video": {
+    "src": "videos/kiss.mp4",
+    "poster": "videos/kiss.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8037, CC BY 4.0"
+   }
   },
   {
    "id": "moon",
@@ -325,7 +409,12 @@
     "https://www.handspeak.com/word/1435/",
     "https://www.lifeprint.com/asl101/pages-signs/m/moon.htm"
    ],
-   "note": "Lifeprint: same small-C handshape (crescent), with a version tapping around the eye. HandSpeak also lists a variant arcing outward from the forehead."
+   "note": "Lifeprint: same small-C handshape (crescent), with a version tapping around the eye. HandSpeak also lists a variant arcing outward from the forehead.",
+   "video": {
+    "src": "videos/moon.mp4",
+    "poster": "videos/moon.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8039, CC BY 4.0"
+   }
   },
   {
    "id": "shhh",
@@ -340,7 +429,12 @@
     "https://www.lifeprint.com/asl101/pages-signs/s/shh.htm",
     "https://www.handspeak.com/word/7606/"
    ],
-   "note": "Same as the everyday hearing gesture. Lifeprint uses it for 'be quiet', so it can be the first part of QUIET."
+   "note": "Same as the everyday hearing gesture. Lifeprint uses it for 'be quiet', so it can be the first part of QUIET.",
+   "video": {
+    "src": "videos/shhh.mp4",
+    "poster": "videos/shhh.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8033, CC BY 4.0"
+   }
   },
   {
    "id": "wake",
@@ -355,7 +449,13 @@
     "https://www.handspeak.com/word/3843/",
     "https://www.lifeprint.com/asl101/pages-signs/w/wake-up.htm"
    ],
-   "note": "Lifeprint's WAKE-UP page shows it as opening eyes and glosses it as both 'wake up' and 'to be awake'. Similar to SURPRISE, which adds a surprised face."
+   "note": "Lifeprint's WAKE-UP page shows it as opening eyes and glosses it as both 'wake up' and 'to be awake'. Similar to SURPRISE, which adds a surprised face.",
+   "video": {
+    "src": "videos/wake.mp4",
+    "poster": "videos/wake.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8033, CC BY 4.0",
+    "note": "Signed one-handed here (the signer is holding a phone). In everyday ASL, use both hands."
+   }
   },
   {
    "id": "morning",
@@ -370,7 +470,13 @@
     "https://www.lifeprint.com/asl101/pages-signs/m/morning.htm",
     "https://www.handspeak.com/word/1436/"
    ],
-   "note": "The movement is small. Mirror idea of NIGHT. A bigger movement means ALL-MORNING; a sideways sweep means EVERY-MORNING."
+   "note": "The movement is small. Mirror idea of NIGHT. A bigger movement means ALL-MORNING; a sideways sweep means EVERY-MORNING.",
+   "video": {
+    "src": "videos/morning.mp4",
+    "poster": "videos/morning.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8031, CC BY 4.0",
+    "note": "Signed one-handed here (the signer is holding a phone). In everyday ASL, use both hands."
+   }
   },
   {
    "id": "bath",
@@ -385,7 +491,13 @@
     "https://www.lifeprint.com/asl101/pages-signs/b/bath.htm",
     "https://www.handspeak.com/word/164/"
    ],
-   "note": "Lifeprint warns it looks like ADDRESS/LIVE. BATH is a rubbing up-down-up movement, while ADDRESS is two quick upward thrusts."
+   "note": "Lifeprint warns it looks like ADDRESS/LIVE. BATH is a rubbing up-down-up movement, while ADDRESS is two quick upward thrusts.",
+   "video": {
+    "src": "videos/bath.mp4",
+    "poster": "videos/bath.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8039, CC BY 4.0",
+    "note": "Signed one-handed here (the signer is holding a phone). In everyday ASL, use both hands."
+   }
   },
   {
    "id": "wet",
@@ -400,7 +512,13 @@
     "https://www.handspeak.com/word/3977/",
     "https://www.lifeprint.com/asl101/pages-signs/w/wet.htm"
    ],
-   "note": "Lifeprint adds that many people start by touching a loose W to the chin (from WATER). Done gently it can mean SOFT, and a double movement can mean HUMID."
+   "note": "Lifeprint adds that many people start by touching a loose W to the chin (from WATER). Done gently it can mean SOFT, and a double movement can mean HUMID.",
+   "video": {
+    "src": "videos/wet.mp4",
+    "poster": "videos/wet.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8038, CC BY 4.0",
+    "note": "Signed one-handed here (the signer is holding a phone). In everyday ASL, use both hands. This clip begins with WATER (a W handshape at the chin) before WET; WET alone is the closing-hand part."
+   }
   },
   {
    "id": "dry",
@@ -415,7 +533,12 @@
     "https://www.lifeprint.com/asl101/pages-signs/d/dry.htm",
     "https://www.handspeak.com/word/635/"
    ],
-   "note": "Opposite direction to CEREAL, which also bends back and forth. UGLY is similar but done higher, under the nose, with a sour face."
+   "note": "Opposite direction to CEREAL, which also bends back and forth. UGLY is similar but done higher, under the nose, with a sour face.",
+   "video": {
+    "src": "videos/dry.mp4",
+    "poster": "videos/dry.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8039, CC BY 4.0"
+   }
   },
   {
    "id": "toothbrush",
@@ -429,7 +552,12 @@
    "sources": [
     "https://www.lifeprint.com/asl101/pages-signs/b/brush-teeth.htm"
    ],
-   "note": "Not verified as TOOTHBRUSH. The description matches Lifeprint's BRUSH-TEETH text, but Lifeprint's toothbrush page is empty and HandSpeak's (https://www.handspeak.com/word/4739/) is video-only. Commonly the same sign as BRUSH-TEETH. Differs from TOOTH (a hooked finger tapping the teeth) mainly in the side-to-side movement."
+   "note": "Not verified as TOOTHBRUSH. The description matches Lifeprint's BRUSH-TEETH text, but Lifeprint's toothbrush page is empty and HandSpeak's (https://www.handspeak.com/word/4739/) is video-only. Commonly the same sign as BRUSH-TEETH. Differs from TOOTH (a hooked finger tapping the teeth) mainly in the side-to-side movement.",
+   "video": {
+    "src": "videos/toothbrush.mp4",
+    "poster": "videos/toothbrush.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8033, CC BY 4.0"
+   }
   },
   {
    "id": "potty",
@@ -445,7 +573,12 @@
     "https://www.handspeak.com/word/2230/",
     "https://www.lifeprint.com/asl101/pages-signs/t/toilet.htm"
    ],
-   "note": "HandSpeak's POTTY entry says it is the TOILET sign, used for all ages. Lifeprint: the same sign means BATHROOM/TOILET, and some people twist instead of shaking."
+   "note": "HandSpeak's POTTY entry says it is the TOILET sign, used for all ages. Lifeprint: the same sign means BATHROOM/TOILET, and some people twist instead of shaking.",
+   "video": {
+    "src": "videos/potty.mp4",
+    "poster": "videos/potty.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8033, CC BY 4.0"
+   }
   },
   {
    "id": "shower",
@@ -460,7 +593,12 @@
     "https://www.handspeak.com/word/3071/",
     "https://www.lifeprint.com/asl101/pages-signs/s/shower.htm"
    ],
-   "note": "Lifeprint (animation only) says fluent signers use one or two movements. HandSpeak lists different signs for rain shower and baby/bridal shower."
+   "note": "Lifeprint (animation only) says fluent signers use one or two movements. HandSpeak lists different signs for rain shower and baby/bridal shower.",
+   "video": {
+    "src": "videos/shower.mp4",
+    "poster": "videos/shower.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8037, CC BY 4.0"
+   }
   },
   {
    "id": "clean",
@@ -475,7 +613,12 @@
     "https://www.lifeprint.com/asl101/pages-signs/c/clean.htm",
     "https://www.handspeak.com/word/4017/"
    ],
-   "note": "Same sign as NICE. A repeated movement means CLEAN-UP / cleaning."
+   "note": "Same sign as NICE. A repeated movement means CLEAN-UP / cleaning.",
+   "video": {
+    "src": "videos/clean.mp4",
+    "poster": "videos/clean.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8036, CC BY 4.0"
+   }
   },
   {
    "id": "dirty",
@@ -490,7 +633,12 @@
     "https://www.lifeprint.com/asl101/pages-signs/d/dirty.htm",
     "https://www.handspeak.com/word/582/"
    ],
-   "note": "DIRT/soil is a different sign (thumbs rubbing fingertips)."
+   "note": "DIRT/soil is a different sign (thumbs rubbing fingertips).",
+   "video": {
+    "src": "videos/dirty.mp4",
+    "poster": "videos/dirty.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8039, CC BY 4.0"
+   }
   },
   {
    "id": "mom",
@@ -505,7 +653,12 @@
     "https://www.lifeprint.com/asl101/pages-signs/m/mom.htm",
     "https://www.handspeak.com/word/1439/"
    ],
-   "note": "Variants: a single touch, wiggling fingers, or starting from a fist. Differs from DAD only in location (chin vs forehead). GRANDMA adds forward arcs."
+   "note": "Variants: a single touch, wiggling fingers, or starting from a fist. Differs from DAD only in location (chin vs forehead). GRANDMA adds forward arcs.",
+   "video": {
+    "src": "videos/mom.mp4",
+    "poster": "videos/mom.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8039, CC BY 4.0"
+   }
   },
   {
    "id": "dad",
@@ -520,7 +673,12 @@
     "https://www.lifeprint.com/asl101/pages-signs/d/dad.htm",
     "https://www.handspeak.com/word/758/"
    ],
-   "note": "HandSpeak places it at the side of the forehead for citation. Wiggling the fingers is a common variant. Differs from MOM only by location; GRANDPA adds forward arcs."
+   "note": "HandSpeak places it at the side of the forehead for citation. Wiggling the fingers is a common variant. Differs from MOM only by location; GRANDPA adds forward arcs.",
+   "video": {
+    "src": "videos/dad.mp4",
+    "poster": "videos/dad.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8031, CC BY 4.0"
+   }
   },
   {
    "id": "grandma",
@@ -535,7 +693,12 @@
     "https://www.lifeprint.com/asl101/pages-signs/g/grandma.htm",
     "https://www.handspeak.com/word/940/"
    ],
-   "note": "Lifeprint says one big arc is also fine. A near-minimal pair with MOM and GRANDPA."
+   "note": "Lifeprint says one big arc is also fine. A near-minimal pair with MOM and GRANDPA.",
+   "video": {
+    "src": "videos/grandma.mp4",
+    "poster": "videos/grandma.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8039, CC BY 4.0"
+   }
   },
   {
    "id": "grandpa",
@@ -550,7 +713,12 @@
     "https://www.lifeprint.com/asl101/pages-signs/g/grandpa.htm",
     "https://www.handspeak.com/word/939/"
    ],
-   "note": "One big arc or a straight move forward is also used. A near-minimal pair with DAD and GRANDMA."
+   "note": "One big arc or a straight move forward is also used. A near-minimal pair with DAD and GRANDMA.",
+   "video": {
+    "src": "videos/grandpa.mp4",
+    "poster": "videos/grandpa.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8037, CC BY 4.0"
+   }
   },
   {
    "id": "brother",
@@ -565,7 +733,13 @@
     "https://www.lifeprint.com/asl101/pages-signs/b/brother.htm",
     "https://www.handspeak.com/word/264/"
    ],
-   "note": "Both sources list a couple of handshape variants for the starting hand. SISTER is the same movement starting at the cheek/jaw."
+   "note": "Both sources list a couple of handshape variants for the starting hand. SISTER is the same movement starting at the cheek/jaw.",
+   "video": {
+    "src": "videos/brother.mp4",
+    "poster": "videos/brother.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8031, CC BY 4.0",
+    "note": "Signed one-handed here (the signer is holding a phone). In everyday ASL, use both hands."
+   }
   },
   {
    "id": "hello",
@@ -580,7 +754,12 @@
     "https://www.handspeak.com/word/1015/",
     "https://www.lifeprint.com/asl101/pages-signs/h/hello.htm"
    ],
-   "note": "Sources differ: HandSpeak gives the salute-from-forehead citation form; Lifeprint says a natural side-to-side wave is used. The salute can resemble DAD (thumb on forehead); a wave can resemble BYE."
+   "note": "Sources differ: HandSpeak gives the salute-from-forehead citation form; Lifeprint says a natural side-to-side wave is used. The salute can resemble DAD (thumb on forehead); a wave can resemble BYE.",
+   "video": {
+    "src": "videos/hello.mp4",
+    "poster": "videos/hello.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8031, CC BY 4.0"
+   }
   },
   {
    "id": "bye",
@@ -595,7 +774,12 @@
     "https://www.lifeprint.com/asl101/pages-signs/g/goodbye.htm",
     "https://www.lifeprint.com/asl101/pages-signs/b/bye.htm"
    ],
-   "note": "Lifeprint: the natural wave; goodbye bends at the large knuckles or wrist, while hello sweeps side to side. HandSpeak's 'goodbye' entries are video-only."
+   "note": "Lifeprint: the natural wave; goodbye bends at the large knuckles or wrist, while hello sweeps side to side. HandSpeak's 'goodbye' entries are video-only.",
+   "video": {
+    "src": "videos/bye.mp4",
+    "poster": "videos/bye.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8032, CC BY 4.0"
+   }
   },
   {
    "id": "yes",
@@ -610,7 +794,12 @@
     "https://www.lifeprint.com/asl101/pages-signs/y/yes.htm",
     "https://www.handspeak.com/word/2443/"
    ],
-   "note": "HandSpeak: usually two nods. Fingerspelled Y-E-S is used for emphasis."
+   "note": "HandSpeak: usually two nods. Fingerspelled Y-E-S is used for emphasis.",
+   "video": {
+    "src": "videos/yes.mp4",
+    "poster": "videos/yes.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8033, CC BY 4.0"
+   }
   },
   {
    "id": "no",
@@ -625,7 +814,12 @@
     "https://www.lifeprint.com/asl101/pages-signs/n/no.htm",
     "https://www.handspeak.com/word/1496/"
    ],
-   "note": "One firm snap = a strong 'No!'. Gentle repeated snaps = a soft 'no, no' for a child. It comes from fingerspelled N-O."
+   "note": "One firm snap = a strong 'No!'. Gentle repeated snaps = a soft 'no, no' for a child. It comes from fingerspelled N-O.",
+   "video": {
+    "src": "videos/no.mp4",
+    "poster": "videos/no.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8037, CC BY 4.0"
+   }
   },
   {
    "id": "happy",
@@ -640,7 +834,12 @@
     "https://www.lifeprint.com/asl101/pages-signs/h/happy.htm",
     "https://www.handspeak.com/word/982/"
    ],
-   "note": "One- and two-handed versions are both common. Close to PLEASE (one flat hand circling on the chest), which is a key confusable pair."
+   "note": "One- and two-handed versions are both common. Close to PLEASE (one flat hand circling on the chest), which is a key confusable pair.",
+   "video": {
+    "src": "videos/happy.mp4",
+    "poster": "videos/happy.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8037, CC BY 4.0"
+   }
   },
   {
    "id": "sad",
@@ -655,7 +854,13 @@
     "https://www.lifeprint.com/asl101/pages-signs/s/sad.htm",
     "https://www.handspeak.com/word/1866/"
    ],
-   "note": "A one-handed informal version exists (HandSpeak), which looks a lot like SLEEP without the closing fingers."
+   "note": "A one-handed informal version exists (HandSpeak), which looks a lot like SLEEP without the closing fingers.",
+   "video": {
+    "src": "videos/sad.mp4",
+    "poster": "videos/sad.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8033, CC BY 4.0",
+    "note": "Signed one-handed here (the signer is holding a phone). In everyday ASL, use both hands."
+   }
   },
   {
    "id": "cry",
@@ -670,7 +875,12 @@
     "https://www.lifeprint.com/asl101/pages-signs/c/cry.htm",
     "https://www.handspeak.com/word/3073/"
    ],
-   "note": "Alternating hands, four fingers, or wiggling fingers mean crying hard or bawling."
+   "note": "Alternating hands, four fingers, or wiggling fingers mean crying hard or bawling.",
+   "video": {
+    "src": "videos/cry.mp4",
+    "poster": "videos/cry.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8039, CC BY 4.0"
+   }
   }
  ]
 }

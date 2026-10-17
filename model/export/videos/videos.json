@@ -1,0 +1,855 @@
+{
+ "_note": "Real-video sign references. Clips trimmed and re-encoded from PopSign ASL v1.0 (CC BY 4.0). See CREDITS.md.",
+ "signs": {
+  "milk": {
+   "video": "videos/milk.mp4",
+   "poster": "videos/milk.jpg",
+   "width": 540,
+   "height": 720,
+   "fps": 30,
+   "duration_s": 1.57,
+   "bytes": 132418,
+   "source": {
+    "dataset": "PopSign ASL v1.0",
+    "split": "game/test",
+    "file": "gtsignstudy4a.8033-milk-2023_01_29_11_36_38.120-0.mp4",
+    "signer": "gtsignstudy4a.8033",
+    "source_fps": 29.83,
+    "trim_frames": [
+     8,
+     55
+    ]
+   },
+   "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8033, CC BY 4.0"
+  },
+  "drink": {
+   "video": "videos/drink.mp4",
+   "poster": "videos/drink.jpg",
+   "width": 406,
+   "height": 720,
+   "fps": 30,
+   "duration_s": 1.53,
+   "bytes": 80933,
+   "source": {
+    "dataset": "PopSign ASL v1.0",
+    "split": "game/test",
+    "file": "gtsignstudy4a.8037-drink-2023_01_28_13_34_11.834-0.mp4",
+    "signer": "gtsignstudy4a.8037",
+    "source_fps": 30.0,
+    "trim_frames": [
+     0,
+     46
+    ]
+   },
+   "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8037, CC BY 4.0"
+  },
+  "water": {
+   "video": "videos/water.mp4",
+   "poster": "videos/water.jpg",
+   "width": 406,
+   "height": 720,
+   "fps": 30,
+   "duration_s": 1.63,
+   "bytes": 84627,
+   "source": {
+    "dataset": "PopSign ASL v1.0",
+    "split": "game/test",
+    "file": "gtsignstudy4a.8039-water-2023_01_23_10_56_46.984-0.mp4",
+    "signer": "gtsignstudy4a.8039",
+    "source_fps": 120.0,
+    "trim_frames": [
+     48,
+     242
+    ]
+   },
+   "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8039, CC BY 4.0"
+  },
+  "food": {
+   "video": "videos/food.mp4",
+   "poster": "videos/food.jpg",
+   "width": 406,
+   "height": 720,
+   "fps": 30,
+   "duration_s": 2.0,
+   "bytes": 107543,
+   "source": {
+    "dataset": "PopSign ASL v1.0",
+    "split": "game/test",
+    "file": "gtsignstudy4a.8038-food-2023_01_25_19_18_52.327-0.mp4",
+    "signer": "gtsignstudy4a.8038",
+    "source_fps": 29.83,
+    "trim_frames": [
+     0,
+     60
+    ]
+   },
+   "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8038, CC BY 4.0"
+  },
+  "hungry": {
+   "video": "videos/hungry.mp4",
+   "poster": "videos/hungry.jpg",
+   "width": 540,
+   "height": 720,
+   "fps": 30,
+   "duration_s": 1.3,
+   "bytes": 77277,
+   "source": {
+    "dataset": "PopSign ASL v1.0",
+    "split": "game/test",
+    "file": "gtsignstudy4a.8035-hungry-2023_01_31_10_46_18.188-0.mp4",
+    "signer": "gtsignstudy4a.8035",
+    "source_fps": 29.83,
+    "trim_frames": [
+     14,
+     53
+    ]
+   },
+   "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8035, CC BY 4.0"
+  },
+  "thirsty": {
+   "video": "videos/thirsty.mp4",
+   "poster": "videos/thirsty.jpg",
+   "width": 540,
+   "height": 720,
+   "fps": 30,
+   "duration_s": 1.17,
+   "bytes": 94459,
+   "source": {
+    "dataset": "PopSign ASL v1.0",
+    "split": "game/test",
+    "file": "gtsignstudy4a.8033-thirsty-2023_01_29_12_44_39.948-0.mp4",
+    "signer": "gtsignstudy4a.8033",
+    "source_fps": 29.67,
+    "trim_frames": [
+     10,
+     45
+    ]
+   },
+   "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8033, CC BY 4.0"
+  },
+  "apple": {
+   "video": "videos/apple.mp4",
+   "poster": "videos/apple.jpg",
+   "width": 406,
+   "height": 720,
+   "fps": 30,
+   "duration_s": 1.4,
+   "bytes": 70847,
+   "source": {
+    "dataset": "PopSign ASL v1.0",
+    "split": "game/test",
+    "file": "gtsignstudy4a.8037-apple-2023_01_28_13_44_21.778-0.mp4",
+    "signer": "gtsignstudy4a.8037",
+    "source_fps": 30.0,
+    "trim_frames": [
+     0,
+     42
+    ]
+   },
+   "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8037, CC BY 4.0"
+  },
+  "finish": {
+   "video": "videos/finish.mp4",
+   "poster": "videos/finish.jpg",
+   "width": 406,
+   "height": 720,
+   "fps": 30,
+   "duration_s": 1.4,
+   "bytes": 80383,
+   "source": {
+    "dataset": "PopSign ASL v1.0",
+    "split": "game/test",
+    "file": "gtsignstudy4a.8037-finish-2023_01_28_13_39_23.429-0.mp4",
+    "signer": "gtsignstudy4a.8037",
+    "source_fps": 30.0,
+    "trim_frames": [
+     0,
+     42
+    ]
+   },
+   "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8037, CC BY 4.0",
+   "note": "Signed one-handed here (the signer is holding a phone). In everyday ASL, use both hands."
+  },
+  "please": {
+   "video": "videos/please.mp4",
+   "poster": "videos/please.jpg",
+   "width": 406,
+   "height": 720,
+   "fps": 30,
+   "duration_s": 1.6,
+   "bytes": 94938,
+   "source": {
+    "dataset": "PopSign ASL v1.0",
+    "split": "game/test",
+    "file": "gtsignstudy4a.8037-please-2023_01_28_15_15_39.970-0.mp4",
+    "signer": "gtsignstudy4a.8037",
+    "source_fps": 30.0,
+    "trim_frames": [
+     0,
+     48
+    ]
+   },
+   "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8037, CC BY 4.0"
+  },
+  "thankyou": {
+   "video": "videos/thankyou.mp4",
+   "poster": "videos/thankyou.jpg",
+   "width": 406,
+   "height": 720,
+   "fps": 30,
+   "duration_s": 1.6,
+   "bytes": 90341,
+   "source": {
+    "dataset": "PopSign ASL v1.0",
+    "split": "game/test",
+    "file": "gtsignstudy4a.8039-thankyou-2023_01_24_14_25_44.756-0.mp4",
+    "signer": "gtsignstudy4a.8039",
+    "source_fps": 30.0,
+    "trim_frames": [
+     10,
+     58
+    ]
+   },
+   "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8039, CC BY 4.0"
+  },
+  "sleep": {
+   "video": "videos/sleep.mp4",
+   "poster": "videos/sleep.jpg",
+   "width": 406,
+   "height": 720,
+   "fps": 30,
+   "duration_s": 1.4,
+   "bytes": 87134,
+   "source": {
+    "dataset": "PopSign ASL v1.0",
+    "split": "game/test",
+    "file": "gtsignstudy4a.8039-sleep-2023_01_23_10_59_02.102-0.mp4",
+    "signer": "gtsignstudy4a.8039",
+    "source_fps": 30.0,
+    "trim_frames": [
+     12,
+     54
+    ]
+   },
+   "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8039, CC BY 4.0"
+  },
+  "bed": {
+   "video": "videos/bed.mp4",
+   "poster": "videos/bed.jpg",
+   "width": 540,
+   "height": 720,
+   "fps": 30,
+   "duration_s": 1.63,
+   "bytes": 163843,
+   "source": {
+    "dataset": "PopSign ASL v1.0",
+    "split": "game/test",
+    "file": "gtsignstudy4a.8033-bed-2023_01_29_11_42_29.576-0.mp4",
+    "signer": "gtsignstudy4a.8033",
+    "source_fps": 29.97,
+    "trim_frames": [
+     0,
+     49
+    ]
+   },
+   "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8033, CC BY 4.0"
+  },
+  "pajamas": {
+   "video": "videos/pajamas.mp4",
+   "poster": "videos/pajamas.jpg",
+   "width": 406,
+   "height": 720,
+   "fps": 30,
+   "duration_s": 1.5,
+   "bytes": 89302,
+   "source": {
+    "dataset": "PopSign ASL v1.0",
+    "split": "game/test",
+    "file": "gtsignstudy4a.8031-pajamas-2023_01_25_18_27_51.259-0.mp4",
+    "signer": "gtsignstudy4a.8031",
+    "source_fps": 29.92,
+    "trim_frames": [
+     4,
+     49
+    ]
+   },
+   "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8031, CC BY 4.0",
+   "note": "This clip shows a P handshape followed by a J movement (PJs). We could not confirm this form on Lifeprint or HandSpeak, and the description (SLEEP + CLOTHES) is also unverified; check with a Deaf teacher."
+  },
+  "book": {
+   "video": "videos/book.mp4",
+   "poster": "videos/book.jpg",
+   "width": 406,
+   "height": 720,
+   "fps": 30,
+   "duration_s": 1.97,
+   "bytes": 98705,
+   "source": {
+    "dataset": "PopSign ASL v1.0",
+    "split": "game/test",
+    "file": "gtsignstudy4a.8039-book-2023_01_25_13_43_29.777-0.mp4",
+    "signer": "gtsignstudy4a.8039",
+    "source_fps": 120.0,
+    "trim_frames": [
+     36,
+     272
+    ]
+   },
+   "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8039, CC BY 4.0",
+   "note": "Signed one-handed here (the signer is holding a phone). In everyday ASL, use both hands."
+  },
+  "night": {
+   "video": "videos/night.mp4",
+   "poster": "videos/night.jpg",
+   "width": 406,
+   "height": 720,
+   "fps": 30,
+   "duration_s": 1.93,
+   "bytes": 100196,
+   "source": {
+    "dataset": "PopSign ASL v1.0",
+    "split": "game/test",
+    "file": "gtsignstudy4a.8038-night-2023_01_25_19_55_42.774-0.mp4",
+    "signer": "gtsignstudy4a.8038",
+    "source_fps": 29.83,
+    "trim_frames": [
+     0,
+     58
+    ]
+   },
+   "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8038, CC BY 4.0",
+   "note": "Signed one-handed here (the signer is holding a phone). In everyday ASL, use both hands."
+  },
+  "kiss": {
+   "video": "videos/kiss.mp4",
+   "poster": "videos/kiss.jpg",
+   "width": 406,
+   "height": 720,
+   "fps": 30,
+   "duration_s": 1.4,
+   "bytes": 78169,
+   "source": {
+    "dataset": "PopSign ASL v1.0",
+    "split": "game/test",
+    "file": "gtsignstudy4a.8037-kiss-2023_01_28_13_17_10.098-0.mp4",
+    "signer": "gtsignstudy4a.8037",
+    "source_fps": 30.0,
+    "trim_frames": [
+     0,
+     42
+    ]
+   },
+   "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8037, CC BY 4.0"
+  },
+  "moon": {
+   "video": "videos/moon.mp4",
+   "poster": "videos/moon.jpg",
+   "width": 406,
+   "height": 720,
+   "fps": 30,
+   "duration_s": 1.63,
+   "bytes": 105198,
+   "source": {
+    "dataset": "PopSign ASL v1.0",
+    "split": "game/test",
+    "file": "gtsignstudy4a.8039-moon-2023_01_23_10_58_33.259-0.mp4",
+    "signer": "gtsignstudy4a.8039",
+    "source_fps": 30.0,
+    "trim_frames": [
+     0,
+     49
+    ]
+   },
+   "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8039, CC BY 4.0"
+  },
+  "shhh": {
+   "video": "videos/shhh.mp4",
+   "poster": "videos/shhh.jpg",
+   "width": 540,
+   "height": 720,
+   "fps": 30,
+   "duration_s": 1.3,
+   "bytes": 101025,
+   "source": {
+    "dataset": "PopSign ASL v1.0",
+    "split": "game/test",
+    "file": "gtsignstudy4a.8033-shhh-2023_01_29_12_44_19.994-0.mp4",
+    "signer": "gtsignstudy4a.8033",
+    "source_fps": 29.75,
+    "trim_frames": [
+     12,
+     51
+    ]
+   },
+   "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8033, CC BY 4.0"
+  },
+  "wake": {
+   "video": "videos/wake.mp4",
+   "poster": "videos/wake.jpg",
+   "width": 540,
+   "height": 720,
+   "fps": 30,
+   "duration_s": 1.43,
+   "bytes": 133897,
+   "source": {
+    "dataset": "PopSign ASL v1.0",
+    "split": "game/test",
+    "file": "gtsignstudy4a.8033-wake-2023_01_29_11_45_52.980-0.mp4",
+    "signer": "gtsignstudy4a.8033",
+    "source_fps": 29.83,
+    "trim_frames": [
+     6,
+     49
+    ]
+   },
+   "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8033, CC BY 4.0",
+   "note": "Signed one-handed here (the signer is holding a phone). In everyday ASL, use both hands."
+  },
+  "morning": {
+   "video": "videos/morning.mp4",
+   "poster": "videos/morning.jpg",
+   "width": 406,
+   "height": 720,
+   "fps": 30,
+   "duration_s": 1.37,
+   "bytes": 85994,
+   "source": {
+    "dataset": "PopSign ASL v1.0",
+    "split": "game/test",
+    "file": "gtsignstudy4a.8031-morning-2023_01_25_13_48_49.012-0.mp4",
+    "signer": "gtsignstudy4a.8031",
+    "source_fps": 29.92,
+    "trim_frames": [
+     0,
+     41
+    ]
+   },
+   "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8031, CC BY 4.0",
+   "note": "Signed one-handed here (the signer is holding a phone). In everyday ASL, use both hands."
+  },
+  "bath": {
+   "video": "videos/bath.mp4",
+   "poster": "videos/bath.jpg",
+   "width": 406,
+   "height": 720,
+   "fps": 30,
+   "duration_s": 2.07,
+   "bytes": 111138,
+   "source": {
+    "dataset": "PopSign ASL v1.0",
+    "split": "game/test",
+    "file": "gtsignstudy4a.8039-bath-2023_01_23_10_54_02.096-0.mp4",
+    "signer": "gtsignstudy4a.8039",
+    "source_fps": 30.0,
+    "trim_frames": [
+     4,
+     66
+    ]
+   },
+   "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8039, CC BY 4.0",
+   "note": "Signed one-handed here (the signer is holding a phone). In everyday ASL, use both hands."
+  },
+  "wet": {
+   "video": "videos/wet.mp4",
+   "poster": "videos/wet.jpg",
+   "width": 406,
+   "height": 720,
+   "fps": 30,
+   "duration_s": 1.8,
+   "bytes": 88355,
+   "source": {
+    "dataset": "PopSign ASL v1.0",
+    "split": "game/test",
+    "file": "gtsignstudy4a.8038-wet-2023_01_26_11_21_59.367-0.mp4",
+    "signer": "gtsignstudy4a.8038",
+    "source_fps": 29.83,
+    "trim_frames": [
+     0,
+     54
+    ]
+   },
+   "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8038, CC BY 4.0",
+   "note": "Signed one-handed here (the signer is holding a phone). In everyday ASL, use both hands. This clip begins with WATER (a W handshape at the chin) before WET; WET alone is the closing-hand part."
+  },
+  "dry": {
+   "video": "videos/dry.mp4",
+   "poster": "videos/dry.jpg",
+   "width": 406,
+   "height": 720,
+   "fps": 30,
+   "duration_s": 1.6,
+   "bytes": 91225,
+   "source": {
+    "dataset": "PopSign ASL v1.0",
+    "split": "game/test",
+    "file": "gtsignstudy4a.8039-dry-2023_01_25_13_42_18.159-0.mp4",
+    "signer": "gtsignstudy4a.8039",
+    "source_fps": 120.0,
+    "trim_frames": [
+     36,
+     226
+    ]
+   },
+   "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8039, CC BY 4.0"
+  },
+  "toothbrush": {
+   "video": "videos/toothbrush.mp4",
+   "poster": "videos/toothbrush.jpg",
+   "width": 540,
+   "height": 720,
+   "fps": 30,
+   "duration_s": 1.63,
+   "bytes": 133632,
+   "source": {
+    "dataset": "PopSign ASL v1.0",
+    "split": "game/test",
+    "file": "gtsignstudy4a.8033-toothbrush-2023_01_29_13_38_54.616-0.mp4",
+    "signer": "gtsignstudy4a.8033",
+    "source_fps": 29.97,
+    "trim_frames": [
+     10,
+     59
+    ]
+   },
+   "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8033, CC BY 4.0"
+  },
+  "potty": {
+   "video": "videos/potty.mp4",
+   "poster": "videos/potty.jpg",
+   "width": 540,
+   "height": 720,
+   "fps": 30,
+   "duration_s": 1.37,
+   "bytes": 130116,
+   "source": {
+    "dataset": "PopSign ASL v1.0",
+    "split": "game/test",
+    "file": "gtsignstudy4a.8033-potty-2023_01_29_11_39_36.860-0.mp4",
+    "signer": "gtsignstudy4a.8033",
+    "source_fps": 29.83,
+    "trim_frames": [
+     10,
+     51
+    ]
+   },
+   "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8033, CC BY 4.0"
+  },
+  "shower": {
+   "video": "videos/shower.mp4",
+   "poster": "videos/shower.jpg",
+   "width": 406,
+   "height": 720,
+   "fps": 30,
+   "duration_s": 1.73,
+   "bytes": 107605,
+   "source": {
+    "dataset": "PopSign ASL v1.0",
+    "split": "game/test",
+    "file": "gtsignstudy4a.8037-shower-2023_01_28_15_18_06.773-0.mp4",
+    "signer": "gtsignstudy4a.8037",
+    "source_fps": 30.0,
+    "trim_frames": [
+     14,
+     66
+    ]
+   },
+   "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8037, CC BY 4.0"
+  },
+  "clean": {
+   "video": "videos/clean.mp4",
+   "poster": "videos/clean.jpg",
+   "width": 540,
+   "height": 720,
+   "fps": 30,
+   "duration_s": 1.8,
+   "bytes": 265923,
+   "source": {
+    "dataset": "PopSign ASL v1.0",
+    "split": "game/test",
+    "file": "gtsignstudy4a.8036-clean-2023_01_28_13_53_28.643-0.mp4",
+    "signer": "gtsignstudy4a.8036",
+    "source_fps": 30.0,
+    "trim_frames": [
+     0,
+     54
+    ]
+   },
+   "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8036, CC BY 4.0"
+  },
+  "dirty": {
+   "video": "videos/dirty.mp4",
+   "poster": "videos/dirty.jpg",
+   "width": 406,
+   "height": 720,
+   "fps": 30,
+   "duration_s": 1.73,
+   "bytes": 94880,
+   "source": {
+    "dataset": "PopSign ASL v1.0",
+    "split": "game/test",
+    "file": "gtsignstudy4a.8039-dirty-2023_01_23_10_59_02.102-0.mp4",
+    "signer": "gtsignstudy4a.8039",
+    "source_fps": 30.0,
+    "trim_frames": [
+     8,
+     60
+    ]
+   },
+   "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8039, CC BY 4.0"
+  },
+  "mom": {
+   "video": "videos/mom.mp4",
+   "poster": "videos/mom.jpg",
+   "width": 406,
+   "height": 720,
+   "fps": 30,
+   "duration_s": 1.67,
+   "bytes": 87020,
+   "source": {
+    "dataset": "PopSign ASL v1.0",
+    "split": "game/test",
+    "file": "gtsignstudy4a.8039-mom-2023_01_25_13_46_59.907-0.mp4",
+    "signer": "gtsignstudy4a.8039",
+    "source_fps": 120.0,
+    "trim_frames": [
+     24,
+     222
+    ]
+   },
+   "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8039, CC BY 4.0"
+  },
+  "dad": {
+   "video": "videos/dad.mp4",
+   "poster": "videos/dad.jpg",
+   "width": 406,
+   "height": 720,
+   "fps": 30,
+   "duration_s": 1.57,
+   "bytes": 91171,
+   "source": {
+    "dataset": "PopSign ASL v1.0",
+    "split": "game/test",
+    "file": "gtsignstudy4a.8031-dad-2023_01_25_13_37_07.599-0.mp4",
+    "signer": "gtsignstudy4a.8031",
+    "source_fps": 29.83,
+    "trim_frames": [
+     0,
+     47
+    ]
+   },
+   "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8031, CC BY 4.0"
+  },
+  "grandma": {
+   "video": "videos/grandma.mp4",
+   "poster": "videos/grandma.jpg",
+   "width": 406,
+   "height": 720,
+   "fps": 30,
+   "duration_s": 1.53,
+   "bytes": 95942,
+   "source": {
+    "dataset": "PopSign ASL v1.0",
+    "split": "game/test",
+    "file": "gtsignstudy4a.8039-grandma-2023_01_24_14_24_09.913-0.mp4",
+    "signer": "gtsignstudy4a.8039",
+    "source_fps": 30.0,
+    "trim_frames": [
+     8,
+     54
+    ]
+   },
+   "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8039, CC BY 4.0"
+  },
+  "grandpa": {
+   "video": "videos/grandpa.mp4",
+   "poster": "videos/grandpa.jpg",
+   "width": 406,
+   "height": 720,
+   "fps": 30,
+   "duration_s": 1.6,
+   "bytes": 99998,
+   "source": {
+    "dataset": "PopSign ASL v1.0",
+    "split": "game/test",
+    "file": "gtsignstudy4a.8037-grandpa-2023_01_28_13_19_34.314-0.mp4",
+    "signer": "gtsignstudy4a.8037",
+    "source_fps": 30.0,
+    "trim_frames": [
+     8,
+     56
+    ]
+   },
+   "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8037, CC BY 4.0"
+  },
+  "brother": {
+   "video": "videos/brother.mp4",
+   "poster": "videos/brother.jpg",
+   "width": 406,
+   "height": 720,
+   "fps": 30,
+   "duration_s": 1.3,
+   "bytes": 79179,
+   "source": {
+    "dataset": "PopSign ASL v1.0",
+    "split": "game/test",
+    "file": "gtsignstudy4a.8031-brother-2023_01_25_13_42_50.735-0.mp4",
+    "signer": "gtsignstudy4a.8031",
+    "source_fps": 29.83,
+    "trim_frames": [
+     8,
+     47
+    ]
+   },
+   "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8031, CC BY 4.0",
+   "note": "Signed one-handed here (the signer is holding a phone). In everyday ASL, use both hands."
+  },
+  "hello": {
+   "video": "videos/hello.mp4",
+   "poster": "videos/hello.jpg",
+   "width": 406,
+   "height": 720,
+   "fps": 30,
+   "duration_s": 1.1,
+   "bytes": 78072,
+   "source": {
+    "dataset": "PopSign ASL v1.0",
+    "split": "game/test",
+    "file": "gtsignstudy4a.8031-hello-2023_01_25_13_45_22.998-0.mp4",
+    "signer": "gtsignstudy4a.8031",
+    "source_fps": 29.92,
+    "trim_frames": [
+     2,
+     35
+    ]
+   },
+   "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8031, CC BY 4.0"
+  },
+  "bye": {
+   "video": "videos/bye.mp4",
+   "poster": "videos/bye.jpg",
+   "width": 406,
+   "height": 720,
+   "fps": 30,
+   "duration_s": 1.37,
+   "bytes": 88604,
+   "source": {
+    "dataset": "PopSign ASL v1.0",
+    "split": "game/test",
+    "file": "gtsignstudy4a.8032-bye-2023_01_25_21_11_53.095-0.mp4",
+    "signer": "gtsignstudy4a.8032",
+    "source_fps": 29.92,
+    "trim_frames": [
+     0,
+     41
+    ]
+   },
+   "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8032, CC BY 4.0"
+  },
+  "yes": {
+   "video": "videos/yes.mp4",
+   "poster": "videos/yes.jpg",
+   "width": 540,
+   "height": 720,
+   "fps": 30,
+   "duration_s": 1.5,
+   "bytes": 142587,
+   "source": {
+    "dataset": "PopSign ASL v1.0",
+    "split": "game/test",
+    "file": "gtsignstudy4a.8033-yes-2023_01_29_12_44_19.994-0.mp4",
+    "signer": "gtsignstudy4a.8033",
+    "source_fps": 29.75,
+    "trim_frames": [
+     6,
+     51
+    ]
+   },
+   "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8033, CC BY 4.0"
+  },
+  "no": {
+   "video": "videos/no.mp4",
+   "poster": "videos/no.jpg",
+   "width": 406,
+   "height": 720,
+   "fps": 30,
+   "duration_s": 1.2,
+   "bytes": 75752,
+   "source": {
+    "dataset": "PopSign ASL v1.0",
+    "split": "game/test",
+    "file": "gtsignstudy4a.8037-no-2023_01_28_13_42_57.161-0.mp4",
+    "signer": "gtsignstudy4a.8037",
+    "source_fps": 30.0,
+    "trim_frames": [
+     4,
+     40
+    ]
+   },
+   "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8037, CC BY 4.0"
+  },
+  "happy": {
+   "video": "videos/happy.mp4",
+   "poster": "videos/happy.jpg",
+   "width": 406,
+   "height": 720,
+   "fps": 30,
+   "duration_s": 1.47,
+   "bytes": 85909,
+   "source": {
+    "dataset": "PopSign ASL v1.0",
+    "split": "game/test",
+    "file": "gtsignstudy4a.8037-happy-2023_01_28_13_44_52.854-0.mp4",
+    "signer": "gtsignstudy4a.8037",
+    "source_fps": 30.0,
+    "trim_frames": [
+     0,
+     44
+    ]
+   },
+   "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8037, CC BY 4.0"
+  },
+  "sad": {
+   "video": "videos/sad.mp4",
+   "poster": "videos/sad.jpg",
+   "width": 540,
+   "height": 720,
+   "fps": 30,
+   "duration_s": 1.37,
+   "bytes": 142468,
+   "source": {
+    "dataset": "PopSign ASL v1.0",
+    "split": "game/test",
+    "file": "gtsignstudy4a.8033-sad-2023_01_29_11_38_35.852-0.mp4",
+    "signer": "gtsignstudy4a.8033",
+    "source_fps": 29.83,
+    "trim_frames": [
+     8,
+     49
+    ]
+   },
+   "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8033, CC BY 4.0",
+   "note": "Signed one-handed here (the signer is holding a phone). In everyday ASL, use both hands."
+  },
+  "cry": {
+   "video": "videos/cry.mp4",
+   "poster": "videos/cry.jpg",
+   "width": 406,
+   "height": 720,
+   "fps": 30,
+   "duration_s": 2.2,
+   "bytes": 107057,
+   "source": {
+    "dataset": "PopSign ASL v1.0",
+    "split": "game/test",
+    "file": "gtsignstudy4a.8039-cry-2023_01_25_13_47_25.292-0.mp4",
+    "signer": "gtsignstudy4a.8039",
+    "source_fps": 120.0,
+    "trim_frames": [
+     0,
+     262
+    ]
+   },
+   "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8039, CC BY 4.0"
+  }
+ }
+}
