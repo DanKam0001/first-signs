@@ -3,9 +3,11 @@
   python model/make_bundle.py --run D:/datasets/gislr/runs/final
 
 refs: for each sign, one clean, typical performance from the dataset, chosen automatically:
-  candidates = clips with hands in >= 60% of frames, length within the sign's middle 50%, from a
-  right-hand-dominant signer (so no mirroring is involved); pick the one the held-out-signer model
-  (cross-validation logits, so the clip's signer was unseen) was most confident about.
+  candidates = clips with hands in >= 60% of frames, from a right-hand-dominant signer (so no
+  mirroring is involved), that the held-out-signer model (cross-validation logits, so the clip's
+  signer was unseen) recognised with p >= 0.85; of those, the one whose length is closest to the
+  sign's 75th-percentile clip length (GISLR clips are short, so typical-but-longer reads better).
+  fps 30 is assumed (the dataset does not state it; the Pixel 4a records video at 30 fps).
   Frames are trimmed to the signing (first..last frame with a hand, plus 3 frames each side).
   Pose 0..24 and both hands only, never the face. GISLR has no pose visibility, so v = 1.0.
 """
@@ -66,9 +68,10 @@ def main():
             okl, okr = np.isfinite(l[:, 0, 0]), np.isfinite(r[:, 0, 0])
             info.append((j, len(l), (okl | okr).mean(), okr.sum() >= okl.sum()))
         lens = np.array([t[1] for t in info])
-        q1, q3 = np.percentile(lens, [25, 75])
-        cands = [t for t in info if t[2] >= 0.6 and q1 <= t[1] <= q3 and t[3]] or info
-        best = max(cands, key=lambda t: prob[t[0], c])
+        q75 = np.percentile(lens, 75)
+        cands = [t for t in info if t[2] >= 0.6 and t[3] and prob[t[0], c] >= 0.85] or info
+        # long enough to watch, but not an outlier: closest to the sign's 75th-percentile length, then confidence
+        best = min(cands, key=lambda t: (abs(t[1] - q75), -prob[t[0], c]))
         j = best[0]
         i = cat["items"][j]
         a0, b0 = off[i], off[i + 1]
@@ -76,7 +79,10 @@ def main():
         has = np.nonzero(np.isfinite(l[:, 0, 0]) | np.isfinite(r[:, 0, 0]))[0]
         lo, hi = max(0, has[0] - 3), min(b0 - a0 - 1, has[-1] + 3)
         frames = [frame_obj(P[a0 + k], L[a0 + k], R[a0 + k]) for k in range(lo, hi + 1)]
-        ref = {"fps": 30, "id": s, "frames": frames,
+        ref = {"fps": 30, "id": s,
+               "aspect_note": "GISLR does not publish its video size, so 'aspect' is omitted (PROTOCOL 1). "
+                              "Body proportions suggest a portrait frame of about 3:4 (0.75).",
+               "frames": frames,
                "source": {"dataset": "GISLR (Kaggle asl-signs) train", "participant_id": int(cat["pid"][j]),
                           "sequence_id": int(cat["sid"][j]), "heldout_model_p": round(float(prob[j, c]), 3)},
                "credit": CREDIT}

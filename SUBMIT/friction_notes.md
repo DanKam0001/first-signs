@@ -44,3 +44,16 @@ The Vega SDK on WSL2 has its own 17-step log in `../vega_test/FRICTION.md`. It n
   - **Actual:** only Google's `android-tv` / `google-tv` images are listed.
   - **Workaround:** `system-images;android-30;android-tv;x86` (Android 11, the same base as Fire OS 8) with WHPX, AVD stored on D:. The release APK installs and runs there and is fully driven with `adb shell input keyevent` (D-pad 19-23, Back 4). Fire-specific behaviour (the launcher banner in "Your Apps & Channels", the remote's menu keys, performance on a stick SoC) is unverified until the real device arrives.
   - **Suggestion:** say clearly in the Fire TV docs which Android TV emulator image best matches each Fire OS version.
+
+## Sign model data (model/, GISLR landmarks, MediaPipe), 2026-10-17
+
+- **GISLR landmarks come from legacy MediaPipe Holistic 0.9; the phone runs tasks-vision (Severity: Medium, not an Amazon tool).**
+  - **Task:** make training features from the GISLR parquet files match what the phone sends (PROTOCOL §1).
+  - **Steps:** compared GISLR `left_hand`/`right_hand` wrists with pose wrists 15/16 over 933k training frames and 332k test frames (`model/data/build_cache.py --check`).
+  - **Expected:** a documented hand-label convention and the same landmark fields as tasks-vision.
+  - **Actual:** the convention is undocumented on the dataset page. Measured: GISLR hand labels follow the pose body sides 99.6-99.9% of the time (`left_hand` sits on pose 15 and on the image's right side), so they are the signer's anatomical hands for an unmirrored image. GISLR has **no pose visibility** column, so `v` can't be used as a feature, and the video size isn't published, so coordinates normalised per axis can't be converted back to pixels.
+  - **Workaround:** the features ignore `v`, normalise x by shoulder width and y by the nose-to-shoulder height (this cancels any camera aspect ratio), and mirror left-dominant clips so the dominant hand is always "right". Training is then invariant to the hand-label and mirroring questions.
+- **Kaggle competition data needs an account and a rules click-through; anonymous mirrors are rate limited (Severity: Medium, not an Amazon tool).**
+  - **Steps:** about 3,400 anonymous per-file downloads via `kaggle.com/api/v1/datasets/download/<owner>/<slug>/<file>`, then 48 parallel workers.
+  - **Actual:** `HTTP 429` with `Retry-After: 240`.
+  - **Workaround:** one API call to get the dataset zip's signed GCS URL, then HTTP Range requests for just the files needed (`model/data/fetch_zip_ranges.py`): 31k files (17.8 GB) in about 35 minutes, with no further API calls.

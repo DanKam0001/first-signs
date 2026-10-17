@@ -16,7 +16,17 @@ CANDIDATE_PACKS = {
                "bye", "yes", "no", "happy", "sad", "cry"],
 }
 
-PACKS = None  # filled in after selection
+# Chosen 2026-10-17 from the 64-candidate 5-fold signer CV (runs/cand). Dropped and why:
+#   awake (signed like wake: 67% predicted as wake), nap and sleepy (24% / 21% predicted as sleep),
+#   quiet (shhh-like), lamp (confused with shhh; description unverified), snack (no dedicated ASL sign),
+#   child (52% top-1), all, yucky, cereal, napkin, empty, underwear (weak and/or unverified descriptions),
+#   story (overlaps book/read), read, icecream, duck, hair, tooth, aunt, uncle, boy, girl (to keep packs ~10).
+PACKS = {
+    "mealtime": ["milk", "drink", "water", "food", "hungry", "thirsty", "apple", "finish", "please", "thankyou"],
+    "bedtime": ["sleep", "bed", "pajamas", "book", "night", "kiss", "moon", "shhh", "wake", "morning"],
+    "bath": ["bath", "wet", "dry", "toothbrush", "potty", "shower", "clean", "dirty"],
+    "family": ["mom", "dad", "grandma", "grandpa", "brother", "hello", "bye", "yes", "no", "happy", "sad", "cry"],
+}
 
 
 def labels_of(packs):

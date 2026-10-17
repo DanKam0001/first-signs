@@ -229,7 +229,7 @@ def main():
 
     if args.cv:
         folds = make_folds(pids, args.cv)
-        json.dump({"folds": folds, **cfg}, open(os.path.join(args.out, "cv_config.json"), "w"), indent=1)
+        json.dump({**cfg, "folds": folds}, open(os.path.join(args.out, "cv_config.json"), "w"), indent=1)
         run = range(args.cv) if args.folds is None else [int(f) for f in args.folds.split(",")]
         for k in run:
             te = np.isin(pids, folds[k])
