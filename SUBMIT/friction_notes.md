@@ -57,3 +57,20 @@ The Vega SDK on WSL2 has its own 17-step log in `../vega_test/FRICTION.md`. It n
   - **Steps:** about 3,400 anonymous per-file downloads via `kaggle.com/api/v1/datasets/download/<owner>/<slug>/<file>`, then 48 parallel workers.
   - **Actual:** `HTTP 429` with `Retry-After: 240`.
   - **Workaround:** one API call to get the dataset zip's signed GCS URL, then HTTP Range requests for just the files needed (`model/data/fetch_zip_ranges.py`): 31k files (17.8 GB) in about 35 minutes, with no further API calls.
+
+## Sign reference videos (PopSign ASL v1.0), 2026-10-17
+
+- **PopSign only offers whole-sign tar files, up to 3 GB each (Severity: Medium, not an Amazon tool).**
+  - **Task:** get one clip of each of 40 signs.
+  - **Actual:** the download API stops at one tar per sign/split (the train tar for `milk` is 3.1 GB, test 0.6 GB). The guide says "We do not support downloading of individual sample videos". The preview videos on the site are downscaled and re-timed, and the site says they are not for reuse.
+  - **Workaround:** the server (lighttpd) supports HTTP Range. We walked each tar's 512-byte headers with Range requests (`model/data/popsign_videos/index_tars.py`), then fetched only the chosen members: 607 clips (2.4 GB) instead of about 1 TB.
+- **Mixed frame rates and colour ranges inside one dataset (Severity: Low).**
+  - **Actual:** 47 of 607 clips are 120 fps (the rest are 30 fps). One signer's clips are 1944x2592 full-range (`yuvj420p`); the others are 1080x1920.
+  - **Effect:** frame-based trimming and poster timing were wrong until they were made fps-aware. Full-range output can look washed out on Android decoders.
+  - **Workaround:** trim using each clip's own fps, then encode everything to 30 fps, limited range (`out_range=tv`).
+- **Every PopSign clip is filmed hand-held (Severity: Medium, content).**
+  - **Actual:** in the capture app, signers "tapped and held a record button", so one hand held the phone. Across 607 clips from the 8 test signers, both hands are visible in under 3% of frames. Two-handed signs (BOOK, NIGHT, MORNING, CLEAN, WET, FINISH, BATH, SAD, BROTHER, WAKE) appear in their one-handed form. They don't match our two-handed text descriptions.
+  - **Workaround:** none in this dataset. See the report to the user for options.
+- **`ffmpeg` single-image output errors on full-range input (Severity: Low).**
+  - **Actual:** `-frames:v 1 x.jpg` from a `yuvj420p` clip fails with "Non full-range YUV is non-standard".
+  - **Workaround:** pick poster frames with OpenCV (the sharpest frame by Laplacian variance) and write the JPEG from there.
