@@ -69,8 +69,8 @@ export function PackScreen({ packId }: { packId: string }) {
 
 const styles = StyleSheet.create({
   empty: { color: colors.textDim, fontSize: type.body },
-  row: { flexDirection: 'row', marginLeft: s(-14) },
-  card: { width: s(400), height: s(250) },
+  row: { flexDirection: 'row', paddingLeft: s(6) },
+  card: { width: s(392), height: s(250) },
   cardBody: { padding: s(28), flex: 1, justifyContent: 'center' },
   label: { color: colors.text, fontSize: s(60), fontWeight: '800' },
   stars: { fontSize: type.body, marginTop: s(8) },

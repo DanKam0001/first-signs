@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Platform, StyleSheet, Text, View } from 'react-native';
 import { DefaultFocus, SpatialNavigationRoot, SpatialNavigationView } from 'react-tv-space-navigation';
 import { QRCode } from '../components/QRCode';
 import { FocusButton, Header, Screen } from '../components/ui';
@@ -7,6 +7,8 @@ import { conn, useConn } from '../net/connection';
 import { speak } from '../net/voice';
 import { useRouter } from '../nav/router';
 import { colors, s, type } from '../theme';
+
+const WEB = Platform.OS === 'web';
 
 export function PairScreen() {
   const c = useConn();
@@ -54,12 +56,21 @@ export function PairScreen() {
           <Step n={2} text="Point the phone camera at this QR code and open the link." />
           <Step n={3} text="Allow the camera. Video stays on the phone - only hand and arm points are sent to the TV." />
           {c.phoneUrl ? <Text style={styles.url}>{c.phoneUrl}</Text> : null}
-          <SpatialNavigationRoot>
+          {/* keyed: the webcam button appears once a code exists, and spatial-nav orders nodes by mount time */}
+          <SpatialNavigationRoot key={WEB && c.code ? 'with-webcam' : 'plain'}>
             <SpatialNavigationView direction="horizontal" style={styles.buttons}>
               <DefaultFocus>
-                <FocusButton label={isRoot ? 'Just watch for now' : 'Back'} onSelect={leave} />
+                <FocusButton small={WEB} label={isRoot ? 'Just watch for now' : 'Back'} onSelect={leave} />
               </DefaultFocus>
-              <FocusButton label="Settings" onSelect={() => router.push({ name: 'settings' })} />
+              {Platform.OS === 'web' && c.code ? (
+                // Web/live-trial only: use this computer's webcam as "the phone" (camera works on http://localhost).
+                <FocusButton
+                  small
+                  label="Use this PC's webcam"
+                  onSelect={() => window.open(`${conn.httpBase()}/p/${c.code}`, 'first-signs-phone', 'width=900,height=800')}
+                />
+              ) : null}
+              <FocusButton small={WEB} label="Settings" onSelect={() => router.push({ name: 'settings' })} />
             </SpatialNavigationView>
           </SpatialNavigationRoot>
         </View>

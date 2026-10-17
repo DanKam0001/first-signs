@@ -77,6 +77,14 @@ The release build is signed with the debug key, which is fine for sideloading bu
 5. Useful while testing: `adb -s <ip>:5555 logcat *:S ReactNativeJS:V ReactNative:V` and
    `adb -s <ip>:5555 exec-out screencap -p > shot.png`.
 
+## Live trial on this PC (real server, webcam as the phone)
+```
+powershell -ExecutionPolicy Bypass -File tv\scripts\live-trial.ps1      # add -Tunnel to also pair a real phone over https
+```
+This starts `server/` on :8788 (or reuses one that's already running) and serves the TV web build on :8091, then opens
+the TV in Chrome. On the pairing screen, choose **Use this PC's webcam**: it opens `http://localhost:8788/p/<code>`, and the
+camera works on localhost. Then press **Start camera** on that page. Controls: arrows, Enter, Escape.
+
 ## Test without the stick or the real server
 - **Stub server:** `node scripts/stub-server.js --fake-phone [--port 8790]` implements PROTOCOL.md section 1. It pairs a
   fake phone after a couple of seconds, streams synthetic frames at 15 fps, answers each `attempt` with

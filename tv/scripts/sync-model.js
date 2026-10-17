@@ -48,8 +48,42 @@ function compactRef(ref) {
     const f = frames[Math.min(frames.length - 1, Math.round((k * fps) / FPS_OUT))] || {};
     out.push({ p: compactPose(f.pose), l: compactHand(f.left), r: compactHand(f.right) });
   }
+  fillGaps(out);
   const aspect = Number(ref.aspect);
   return { fps: FPS_OUT, ...(aspect > 0 ? { aspect } : {}), frames: out };
+}
+
+// MediaPipe drops a hand (or an elbow's visibility) for a frame or two, which makes the replay flicker.
+// Bridge short gaps (<= MAX_GAP output frames, ~0.4 s) by holding the nearest real value; longer gaps stay empty.
+const MAX_GAP = 6;
+function fillGaps(frames) {
+  const bridge = (get, set) => {
+    let last = -1;
+    for (let i = 0; i < frames.length; i++) {
+      if (get(i) == null) continue;
+      const gap = i - last - 1;
+      if (gap > 0 && gap <= MAX_GAP) {
+        for (let j = last + 1; j < i; j++) set(j, last >= 0 && j - last <= i - j ? get(last) : get(i));
+      }
+      last = i;
+    }
+    const tail = frames.length - 1 - last;
+    if (last >= 0 && tail > 0 && tail <= MAX_GAP) for (let j = last + 1; j < frames.length; j++) set(j, get(last));
+  };
+  for (const h of ['l', 'r']) bridge((i) => frames[i][h], (i, v) => (frames[i][h] = v));
+  for (let k = 0; k < POSE_IDX.length; k++) {
+    bridge(
+      (i) => {
+        const p = frames[i].p;
+        return p && p[k * 2] >= 0 ? [p[k * 2], p[k * 2 + 1]] : null;
+      },
+      (i, v) => {
+        if (!frames[i].p) frames[i].p = new Array(POSE_IDX.length * 2).fill(-1);
+        frames[i].p[k * 2] = v[0];
+        frames[i].p[k * 2 + 1] = v[1];
+      }
+    );
+  }
 }
 
 function parseSigns(raw) {
