@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#14182b">
+<title>First Signs camera</title>
+<link rel="stylesheet" href="/phone/style.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand">First Signs</div>
+  <div class="pills">
+    <span id="stubBadge" class="pill warn" hidden>STUB MODEL: random guesses</span>
+    <span id="connPill" class="pill">Connecting...</span>
+  </div>
+</header>
+
+<main>
+  <section id="card" class="card">
+    <h1 id="headline">Getting ready...</h1>
+    <p id="subline">Loading the hand tracker. This takes a few seconds the first time.</p>
+    <button id="startBtn" class="big" hidden>Start camera</button>
+  </section>
+
+  <section class="viewWrap" id="viewWrap" hidden>
+    <div class="stage" id="stage">
+      <video id="video" playsinline muted autoplay></video>
+      <canvas id="overlay"></canvas>
+      <div class="frameHint" id="frameHint" hidden>Step back so your hands and shoulders are in view</div>
+    </div>
+    <div class="controls">
+      <button id="flipBtn" class="soft">Flip camera</button>
+      <button id="previewBtn" class="soft">Hide preview</button>
+    </div>
+  </section>
+
+  <p class="privacy">Your video stays on this phone. Only hand and arm points are sent to your TV.</p>
+  <p class="debug" id="debug" hidden></p>
+</main>
+
+<div id="countdown" class="overlay" hidden>
+  <div class="count" id="countNum">3</div>
+  <div class="countLabel" id="countLabel">Get ready</div>
+  <div class="bar" id="barWrap" hidden><div id="bar"></div></div>
+</div>
+
+<script type="module" src="/phone/app.js"></script>
+</body>
+</html>

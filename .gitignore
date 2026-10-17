@@ -1,0 +1,15 @@
+node_modules/
+__pycache__/
+.venv/
+*.pyc
+# datasets, checkpoints and build outputs stay out of git (datasets live on D:)
+model/data/
+model/runs/
+model/checkpoints/
+*.parquet
+*.pt
+*.pth
+*.ckpt
+*.apk
+*.log
+.public_url

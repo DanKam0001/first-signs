@@ -1,0 +1,12 @@
+[
+  {"id":"milk","label":"milk","packs":["mealtime"],"description":"FIXTURE TEXT, NOT A REAL DESCRIPTION: placeholder for the milk sign.","credit":"Fixture only (stub). Real descriptions come from model/export/signs.json.","verified":false},
+  {"id":"more","label":"more","packs":["mealtime"],"description":"FIXTURE TEXT, NOT A REAL DESCRIPTION: placeholder for the more sign.","credit":"Fixture only (stub).","verified":false},
+  {"id":"eat","label":"eat","packs":["mealtime"],"description":"FIXTURE TEXT, NOT A REAL DESCRIPTION: placeholder for the eat sign.","credit":"Fixture only (stub).","verified":false},
+  {"id":"drink","label":"drink","packs":["mealtime"],"description":"FIXTURE TEXT, NOT A REAL DESCRIPTION: placeholder for the drink sign.","credit":"Fixture only (stub).","verified":false},
+  {"id":"sleep","label":"sleep","packs":["bedtime"],"description":"FIXTURE TEXT, NOT A REAL DESCRIPTION: placeholder for the sleep sign.","credit":"Fixture only (stub).","verified":false},
+  {"id":"bed","label":"bed","packs":["bedtime"],"description":"FIXTURE TEXT, NOT A REAL DESCRIPTION: placeholder for the bed sign.","credit":"Fixture only (stub).","verified":false},
+  {"id":"bath","label":"bath","packs":["bath"],"description":"FIXTURE TEXT, NOT A REAL DESCRIPTION: placeholder for the bath sign.","credit":"Fixture only (stub).","verified":false},
+  {"id":"mom","label":"mom","packs":["family"],"description":"FIXTURE TEXT, NOT A REAL DESCRIPTION: placeholder for the mom sign.","credit":"Fixture only (stub).","verified":false},
+  {"id":"dad","label":"dad","packs":["family"],"description":"FIXTURE TEXT, NOT A REAL DESCRIPTION: placeholder for the dad sign.","credit":"Fixture only (stub).","verified":false},
+  {"_thresholds":{"topK":3,"minProb":0.25,"minHandFrac":0.4}}
+]

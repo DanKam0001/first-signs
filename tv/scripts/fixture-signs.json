@@ -1,0 +1,30 @@
+{
+  "_fixture": true,
+  "_note": "PLACEHOLDER used only until model/export/signs.json exists. Descriptions are unverified; motions are synthetic, not recordings.",
+  "_thresholds": { "top": 3, "minProb": 0.25, "minHandFrac": 0.4 },
+  "signs": [
+    { "id": "milk", "label": "milk", "packs": ["mealtime"], "description": "Squeeze an open hand into a fist twice, like milking.", "verified": false },
+    { "id": "more", "label": "more", "packs": ["mealtime"], "description": "Tap the fingertips of both hands together, twice.", "verified": false },
+    { "id": "drink", "label": "drink", "packs": ["mealtime"], "description": "Hold a C hand like a cup and tip it toward your mouth.", "verified": false },
+    { "id": "food", "label": "food", "packs": ["mealtime"], "description": "Tap your bunched fingertips to your mouth.", "verified": false },
+    { "id": "water", "label": "water", "packs": ["mealtime", "bath"], "description": "Tap a W hand on your chin twice.", "verified": false },
+    { "id": "hungry", "label": "hungry", "packs": ["mealtime"], "description": "Move a C hand down the middle of your chest.", "verified": false },
+    { "id": "finish", "label": "all done", "packs": ["mealtime"], "description": "Hold both open hands up and twist them outward.", "verified": false },
+    { "id": "sleep", "label": "sleep", "packs": ["bedtime"], "description": "Draw an open hand down in front of your face, closing it.", "verified": false },
+    { "id": "bed", "label": "bed", "packs": ["bedtime"], "description": "Rest your cheek on your flat hand, like a pillow.", "verified": false },
+    { "id": "night", "label": "night", "packs": ["bedtime"], "description": "Bend one hand over the back of the other, like the sun going down.", "verified": false },
+    { "id": "moon", "label": "moon", "packs": ["bedtime"], "description": "Trace a crescent near your eye with your thumb and index finger.", "verified": false },
+    { "id": "wake", "label": "wake up", "packs": ["bedtime"], "description": "Open your pinched fingers beside your eyes, like eyes opening.", "verified": false },
+    { "id": "bath", "label": "bath", "packs": ["bath"], "description": "Rub both fists up and down on your chest, like scrubbing.", "verified": false },
+    { "id": "clean", "label": "clean", "packs": ["bath"], "description": "Wipe one flat palm across the other.", "verified": false },
+    { "id": "wet", "label": "wet", "packs": ["bath"], "description": "Bring both hands down while gently closing the fingers on the thumbs.", "verified": false },
+    { "id": "dry", "label": "dry", "packs": ["bath"], "description": "Draw a bent index finger across your chin.", "verified": false },
+    { "id": "toothbrush", "label": "toothbrush", "packs": ["bath"], "description": "Brush side to side in front of your teeth with your index finger.", "verified": false },
+    { "id": "mom", "label": "mom", "packs": ["family"], "description": "Tap your chin with the thumb of an open hand.", "verified": false },
+    { "id": "dad", "label": "dad", "packs": ["family"], "description": "Tap your forehead with the thumb of an open hand.", "verified": false },
+    { "id": "grandma", "label": "grandma", "packs": ["family"], "description": "Start like mom at the chin, then bounce the hand forward twice.", "verified": false },
+    { "id": "grandpa", "label": "grandpa", "packs": ["family"], "description": "Start like dad at the forehead, then bounce the hand forward twice.", "verified": false },
+    { "id": "please", "label": "please", "packs": ["family"], "description": "Rub a flat hand in a circle on your chest.", "verified": false },
+    { "id": "thankyou", "label": "thank you", "packs": ["family"], "description": "Touch your fingertips to your chin and move the hand forward.", "verified": false }
+  ]
+}

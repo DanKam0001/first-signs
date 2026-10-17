@@ -1,0 +1,47 @@
+{
+  "name": "first-signs-tv",
+  "version": "0.1.0",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "sync": "node scripts/sync-model.js && node scripts/write-config.js",
+    "web": "npm run sync && expo start --web --port 8083",
+    "export:web": "npm run sync && expo export --platform web --output-dir dist-web",
+    "prebuild": "npm run sync && cross-env EXPO_TV=1 expo prebuild --platform android --clean",
+    "android:release": "node scripts/build-apk.js",
+    "stub": "node scripts/stub-server.js",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@expo/metro-runtime": "~6.1.2",
+    "@react-native-async-storage/async-storage": "2.2.0",
+    "expo": "~54.0.37",
+    "expo-audio": "~1.1.1",
+    "expo-build-properties": "~1.0.10",
+    "expo-constants": "~18.0.14",
+    "expo-status-bar": "~3.0.9",
+    "mitt": "^3.0.1",
+    "qrcode-generator": "^2.0.4",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "react-native": "npm:react-native-tvos@0.81.5-2",
+    "react-native-keyevent": "^0.3.2",
+    "react-native-svg": "15.12.1",
+    "react-native-web": "^0.21.0",
+    "react-tv-space-navigation": "6.0.0-beta1"
+  },
+  "devDependencies": {
+    "@react-native-tvos/config-tv": "^0.1.7",
+    "@types/react": "~19.1.0",
+    "cross-env": "^7.0.3",
+    "typescript": "~5.9.2",
+    "ws": "^8.18.0"
+  },
+  "expo": {
+    "install": {
+      "exclude": [
+        "react-native"
+      ]
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "name": "first-signs-server",
+  "version": "0.1.0",
+  "private": true,
+  "description": "First Signs relay: pairing rooms, phone<->TV relay, Polly voice and Bedrock coaching tips.",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch-path=src src/index.js",
+    "tunnel": "node scripts/tunnel.mjs",
+    "live": "node scripts/tunnel.mjs --server",
+    "test": "node --test \"test/*.test.js\" \"../phone/test/*.test.js\"",
+    "smoke:aws": "node scripts/aws_smoke.mjs",
+    "e2e": "node scripts/e2e.mjs"
+  },
+  "dependencies": {
+    "@aws-sdk/client-bedrock-runtime": "3.1152.0",
+    "@aws-sdk/client-polly": "3.1152.0",
+    "ws": "8.22.0"
+  },
+  "devDependencies": {
+    "puppeteer-core": "25.14.0"
+  }
+}

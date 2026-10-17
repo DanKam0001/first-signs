@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fake TV</title>
+<style>
+  :root { --bg:#0f1220; --card:#1a1f36; --fg:#eef0f6; --mute:#9aa0b8; --line:#2c3356; --ok:#4fd18b; --bad:#ff8a65; --accent:#ffb547; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg); font:15px/1.4 system-ui, sans-serif; padding:16px; }
+  h1 { font-size:18px; margin:0 0 12px; }
+  .grid { display:grid; grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr); gap:16px; }
+  @media (max-width: 800px) { .grid { grid-template-columns: 1fr; } }
+  .box { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:14px; }
+  canvas { width:100%; aspect-ratio:4/3; background:#000; border-radius:8px; display:block; }
+  .code { font-size:44px; font-weight:800; letter-spacing:6px; }
+  #qr svg, #qr img { width:180px; height:180px; background:#fff; padding:6px; border-radius:8px; }
+  .mono { font-family:ui-monospace, monospace; font-size:13px; white-space:pre-wrap; word-break:break-all; color:var(--mute); }
+  .row { display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin:8px 0; }
+  button, select, input { background:#252b4a; color:var(--fg); border:1px solid var(--line); border-radius:8px; padding:8px 10px; font:inherit; }
+  button:hover { border-color:var(--accent); cursor:pointer; }
+  .ok { color:var(--ok); } .bad { color:var(--bad); }
+  a { color:var(--accent); }
+  .big { font-size:22px; font-weight:700; }
+</style>
+</head>
+<body>
+<h1>Fake TV (dev tool: stands in for the Fire TV app)</h1>
+<div class="grid">
+  <div class="box">
+    <canvas id="c" width="640" height="480"></canvas>
+    <div class="row mono" id="live">no frames yet</div>
+  </div>
+  <div>
+    <div class="box">
+      <div class="mono" id="conn">connecting...</div>
+      <div class="code" id="code">----</div>
+      <div id="qr"></div>
+      <div class="mono"><a id="phoneUrl" target="_blank"></a></div>
+      <div class="row big" id="phoneState">phone: -</div>
+    </div>
+    <div class="box" style="margin-top:12px">
+      <div class="row"><select id="pack"></select><select id="target"></select></div>
+      <div class="row">countdown <input id="cdMs" type="number" value="3000" style="width:80px"> window <input id="winMs" type="number" value="2500" style="width:80px"></div>
+      <div class="row"><button id="attemptBtn">Send attempt</button><button id="cancelBtn">Cancel</button></div>
+      <div class="big" id="pred">-</div>
+      <div class="mono" id="predRaw"></div>
+      <div class="row"><input id="say" value="Your turn. Sign milk." style="flex:1"><button id="speakBtn">Speak (Polly)</button></div>
+      <div class="row"><button id="coachBtn">Coach me (Bedrock)</button></div>
+      <div class="mono" id="aws"></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
+<script type="module">
+import { drawFrame } from "/phone/lib/draw.js";
+import { parseSigns } from "/phone/lib/signs.js";
+
+const $ = (id) => document.getElementById(id);
+const params = new URLSearchParams(location.search);
+const wsUrl = params.get("ws") || `${location.protocol === "https:" ? "wss" : "ws"}://${location.host}/ws`;
+const ctx = $("c").getContext("2d");
+const S = window.__fakeTv = { code: null, phoneUrl: null, paired: false, frames: 0, lat: [], fps: 0, preds: [], audio: [], coach: [], phoneState: null, gaps: [] };
+
+let signs = { signs: [], packs: [] };
+try { signs = parseSigns(await (await fetch("/model/signs.json")).json()); } catch (e) { console.warn(e); }
+for (const p of signs.packs) $("pack").add(new Option(p, p));
+function fillTargets() {
+  $("target").innerHTML = "";
+  for (const s of signs.signs.filter((s) => (s.packs || []).includes($("pack").value))) $("target").add(new Option(s.label || s.id, s.id));
+}
+$("pack").onchange = fillTargets; fillTargets();
+
+let ws, lastFrame = null, arrivals = [], attempts = 0;
+function connect() {
+  ws = new WebSocket(wsUrl);
+  ws.onopen = () => {
+    $("conn").textContent = "connected to " + wsUrl;
+    ws.send(JSON.stringify({ type: "hello", role: "tv", code: sessionStorage.getItem("fakeTvCode") || undefined }));
+  };
+  ws.onclose = () => { $("conn").textContent = "disconnected, retrying..."; S.paired = false; setTimeout(connect, 1000); };
+  ws.onmessage = (e) => {
+    const m = JSON.parse(e.data);
+    if (m.type === "frame") return onFrame(m);
+    if (m.type === "room") {
+      S.code = m.code; S.phoneUrl = m.phoneUrl; S.paired = false;
+      sessionStorage.setItem("fakeTvCode", m.code);
+      $("code").textContent = m.code;
+      $("phoneUrl").textContent = m.phoneUrl; $("phoneUrl").href = m.phoneUrl;
+      const qr = qrcode(0, "M"); qr.addData(m.phoneUrl); qr.make();
+      $("qr").innerHTML = qr.createSvgTag({ cellSize: 4, margin: 2 });
+    } else if (m.type === "paired") { S.paired = true; $("conn").textContent = "paired"; }
+    else if (m.type === "peer_left") { S.paired = false; $("conn").textContent = `peer left: ${m.role}`; }
+    else if (m.type === "phone_state") { S.phoneState = m.state; $("phoneState").textContent = "phone: " + m.state; }
+    else if (m.type === "pred") {
+      S.preds.push({ ...m, at: Date.now() });
+      $("pred").innerHTML = `<span class="${m.ok ? "ok" : "bad"}">${m.ok ? "Got it" : "Not yet"}</span> (${m.target})`;
+      $("predRaw").textContent = JSON.stringify(m);
+    } else if (m.type === "audio") {
+      S.audio.push(m);
+      $("aws").textContent = "audio: " + JSON.stringify(m);
+      if (m.url) new Audio(m.url).play().catch(() => {});
+    } else if (m.type === "coach_text") {
+      S.coach.push(m);
+      $("aws").textContent = "coach: " + m.text;
+    } else console.log("msg", m);
+  };
+}
+connect();
+
+function onFrame(f) {
+  const now = Date.now();
+  S.frames++;
+  S.lat.push(now - f.t); if (S.lat.length > 300) S.lat.shift(); // exact when phone + TV share a clock (same machine)
+  arrivals.push(now); while (arrivals.length && now - arrivals[0] > 1000) arrivals.shift();
+  if (S._last) { S.gaps.push(now - S._last); if (S.gaps.length > 300) S.gaps.shift(); }
+  S._last = now;
+  S.fps = arrivals.length;
+  lastFrame = f;
+}
+const pct = (a, q) => { if (!a.length) return NaN; const s = [...a].sort((x, y) => x - y); return s[Math.min(s.length - 1, Math.floor(q * s.length))]; };
+function render() {
+  drawFrame(ctx, lastFrame, { mirror: true, lineWidth: 5 }); // the TV mirrors the drawing so it reads like a mirror
+  if (lastFrame) $("live").textContent = `frames ${S.frames} · ${S.fps} fps · latency p50 ${pct(S.lat, 0.5)} ms p95 ${pct(S.lat, 0.95)} ms (same-clock only) · hands L:${lastFrame.left ? "y" : "-"} R:${lastFrame.right ? "y" : "-"} pose:${lastFrame.pose ? "y" : "-"}`;
+  requestAnimationFrame(render);
+}
+render();
+
+const send = (o) => ws && ws.readyState === 1 && ws.send(JSON.stringify(o));
+window.sendAttempt = (target = $("target").value, pack = $("pack").value) => {
+  const id = crypto.randomUUID();
+  attempts++;
+  S.lastAttemptId = id;
+  send({ type: "attempt", id, target, pack, countdownMs: Number($("cdMs").value), windowMs: Number($("winMs").value) });
+  $("pred").textContent = "waiting for phone...";
+  return id;
+};
+$("attemptBtn").onclick = () => window.sendAttempt();
+$("cancelBtn").onclick = () => send({ type: "cancel", id: S.lastAttemptId });
+$("speakBtn").onclick = () => send({ type: "speak", id: crypto.randomUUID(), text: $("say").value });
+$("coachBtn").onclick = () => {
+  const p = S.preds.at(-1);
+  send({ type: "coach", id: crypto.randomUUID(), target: p ? p.target : $("target").value, top: p ? p.top : [], attempts: Math.max(1, attempts) });
+};
+</script>
+</body>
+</html>

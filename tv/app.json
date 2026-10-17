@@ -1,0 +1,59 @@
+{
+  "expo": {
+    "name": "First Signs",
+    "slug": "first-signs-tv",
+    "version": "0.1.0",
+    "orientation": "landscape",
+    "scheme": "firstsigns",
+    "icon": "./assets/icon.png",
+    "backgroundColor": "#1E1A2E",
+    "newArchEnabled": false,
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#1E1A2E"
+    },
+    "android": {
+      "package": "com.dankam.firstsigns",
+      "versionCode": 1,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#1E1A2E"
+      },
+      "permissions": ["INTERNET", "ACCESS_NETWORK_STATE"],
+      "blockedPermissions": ["android.permission.RECORD_AUDIO", "android.permission.CAMERA"]
+    },
+    "web": {
+      "bundler": "metro",
+      "name": "First Signs"
+    },
+    "plugins": [
+      "./plugins/withKotlinJvmTarget",
+      "./plugins/withKeyEvent",
+      "./plugins/withTvGradleProps",
+      [
+        "@react-native-tvos/config-tv",
+        {
+          "androidTVBanner": "./assets/tv_banner.png"
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "compileSdkVersion": 36,
+            "targetSdkVersion": 34,
+            "minSdkVersion": 24,
+            "usesCleartextTraffic": true
+          }
+        }
+      ],
+      [
+        "expo-audio",
+        {
+          "microphonePermission": false
+        }
+      ]
+    ]
+  }
+}
