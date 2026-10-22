@@ -26,6 +26,21 @@ PACKS = {
     "bedtime": ["sleep", "bed", "pajamas", "book", "night", "kiss", "moon", "shhh", "wake", "morning"],
     "bath": ["bath", "wet", "dry", "toothbrush", "potty", "shower", "clean", "dirty"],
     "family": ["mom", "dad", "grandma", "grandpa", "brother", "hello", "bye", "yes", "no", "happy", "sad", "cry"],
+    # Added 2026-10-22 from the 76-sign signer CV (runs/cand2); see README "Vocabulary" for what was dropped and why.
+    "play": ["dog", "cat", "bird", "fish", "cow", "horse", "car", "outside", "jump", "balloon", "airplane"],
+    "feelings": ["owie", "sick", "mad", "like", "wait", "up", "open", "hot", "look", "where"],
+}
+
+
+# Second selection round (2026-10-22): the 40 shipped signs plus candidates for two new packs, all GISLR signs
+# with PopSign clips from Deaf signer 8037. Same method: 5-fold signer CV on the train set only, keep signs
+# that are distinct within their pack. The 40 existing signs are fixed.
+CANDIDATE_PACKS_V2 = {
+    **{k: list(v) for k, v in PACKS.items() if k not in ("play", "feelings")},
+    "play": ["toy", "dog", "cat", "bird", "fish", "cow", "horse", "duck", "car", "outside", "jump", "dance",
+             "puzzle", "balloon", "airplane", "frog", "pig", "blow", "ride"],
+    "feelings": ["owie", "sick", "mad", "like", "wait", "look", "up", "down", "open", "hot", "give", "where",
+                 "stay", "fine", "bad", "listen", "smile"],
 }
 
 

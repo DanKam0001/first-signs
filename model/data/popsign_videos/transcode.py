@@ -18,7 +18,32 @@ def run(cmd):
     return p.stdout
 
 
-if __name__ == "__main__":
+def contact_sheet(out, labels, manifest):
+    """8-wide grid of poster frames with labels (also: python -I transcode.py --sheet <out_dir> <labels.json>)."""
+    tiles = []
+    for sign in labels:
+        p = os.path.join(out, f"{sign}.jpg")
+        im = cv2.imread(p) if os.path.exists(p) else np.zeros((720, 406, 3), np.uint8)
+        w = int(round(im.shape[1] * 360 / im.shape[0]))
+        im = cv2.resize(im, (w, 360))
+        if w > 270:  # 3:4 sources: centre-crop to the 9:16 tile instead of squashing
+            x0 = (w - 203) // 2; im = im[:, x0:x0 + 203]
+        else:
+            im = cv2.resize(im, (203, 360))
+        cv2.rectangle(im, (0, 330), (203, 360), (0, 0, 0), -1)
+        signer = manifest.get(sign, {}).get("source", {}).get("signer", "?").split(".")[-1]
+        cv2.putText(im, f"{sign} ({signer})", (5, 352), cv2.FONT_HERSHEY_SIMPLEX, 0.55, (255, 255, 255), 1)
+        tiles.append(im)
+    tiles += [np.zeros_like(tiles[0])] * (-len(tiles) % 8)  # pad the last row to 8 tiles
+    rows = [np.hstack(tiles[i:i + 8]) for i in range(0, len(tiles), 8)]
+    cv2.imwrite(os.path.join(out, "contact_sheet.jpg"), np.vstack(rows), [cv2.IMWRITE_JPEG_QUALITY, 82])
+
+
+if __name__ == "__main__" and sys.argv[1] == "--sheet":
+    out_dir = sys.argv[2]
+    contact_sheet(out_dir, json.load(open(sys.argv[3]))["labels"],
+                  json.load(open(os.path.join(out_dir, "videos.json"), encoding="utf-8"))["signs"])
+elif __name__ == "__main__":
     sel_p, scores_p, raw, out, labels_p = sys.argv[1:6]
     sel = json.load(open(sel_p)); S = json.load(open(scores_p))
     labels = json.load(open(labels_p))["labels"]
@@ -71,20 +96,4 @@ if __name__ == "__main__":
         print(sign, signer, manifest[sign]["bytes"], manifest[sign]["duration_s"], flush=True)
     json.dump({"_note": "Real-video sign references. Clips trimmed and re-encoded from PopSign ASL v1.0 (CC BY 4.0). "
                         "See CREDITS.md.", "signs": manifest}, open(os.path.join(out, "videos.json"), "w"), indent=1)
-    # contact sheet: 8 x 5 grid of posters with labels
-    tiles = []
-    for sign in labels:
-        p = os.path.join(out, f"{sign}.jpg")
-        im = cv2.imread(p) if os.path.exists(p) else np.zeros((720, 406, 3), np.uint8)
-        w = int(round(im.shape[1] * 360 / im.shape[0]))
-        im = cv2.resize(im, (w, 360))
-        if w > 270:  # 3:4 sources: centre-crop to the 9:16 tile instead of squashing
-            x0 = (w - 203) // 2; im = im[:, x0:x0 + 203]
-        else:
-            im = cv2.resize(im, (203, 360))
-        cv2.rectangle(im, (0, 330), (203, 360), (0, 0, 0), -1)
-        signer = manifest.get(sign, {}).get("source", {}).get("signer", "?").split(".")[-1]
-        cv2.putText(im, f"{sign} ({signer})", (5, 352), cv2.FONT_HERSHEY_SIMPLEX, 0.55, (255, 255, 255), 1)
-        tiles.append(im)
-    rows = [np.hstack(tiles[i:i + 8]) for i in range(0, len(tiles), 8)]
-    cv2.imwrite(os.path.join(out, "contact_sheet.jpg"), np.vstack(rows), [cv2.IMWRITE_JPEG_QUALITY, 82])
+    contact_sheet(out, labels, manifest)

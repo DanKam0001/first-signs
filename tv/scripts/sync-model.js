@@ -178,10 +178,16 @@ module.exports = { syntheticRef };
 
 // ---------- main ----------
 if (require.main === module) {
-  fs.rmSync(OUT_REFS, { recursive: true, force: true });
+  // Write only files whose bytes changed and delete only stale ones: wiping and recreating these folders leaves a
+  // running Metro dev server with a stale file map ("Unable to resolve ./videos/<id>.mp4") until it is restarted.
   fs.mkdirSync(OUT_REFS, { recursive: true });
-  fs.rmSync(OUT_VIDEOS, { recursive: true, force: true });
   fs.mkdirSync(OUT_VIDEOS, { recursive: true });
+  const keep = new Set();
+  const put = (dst, buf) => {
+    keep.add(path.resolve(dst));
+    if (fs.existsSync(dst) && fs.readFileSync(dst).equals(buf)) return;
+    fs.writeFileSync(dst, buf);
+  };
 
   let isFixture = false;
   let raw;
@@ -203,7 +209,7 @@ if (require.main === module) {
     else missing.push(s.id);
     if (ref) {
       const safe = s.id.replace(/[^a-zA-Z0-9_-]/g, '_');
-      fs.writeFileSync(path.join(OUT_REFS, `${safe}.json`), JSON.stringify(compactRef(ref)));
+      put(path.join(OUT_REFS, `${safe}.json`), Buffer.from(JSON.stringify(compactRef(ref))));
       refs[s.id] = safe;
     }
   }
@@ -223,12 +229,12 @@ if (require.main === module) {
       continue;
     }
     const safe = s.id.replace(/[^a-zA-Z0-9_]/g, '_').toLowerCase();
-    fs.copyFileSync(src, path.join(OUT_VIDEOS, `${safe}.mp4`));
+    put(path.join(OUT_VIDEOS, `${safe}.mp4`), fs.readFileSync(src));
     videoBytes += fs.statSync(src).size;
     const poster = v.poster ? path.join(EXPORT, v.poster) : null;
     const hasPoster = !!poster && fs.existsSync(poster);
     if (hasPoster) {
-      fs.copyFileSync(poster, path.join(OUT_VIDEOS, `${safe}.jpg`));
+      put(path.join(OUT_VIDEOS, `${safe}.jpg`), fs.readFileSync(poster));
       videoBytes += fs.statSync(poster).size;
     }
     const m = videoMeta[s.id] || {};
@@ -259,7 +265,9 @@ if (require.main === module) {
     '};',
     '',
   ];
-  fs.writeFileSync(path.join(OUT, 'model.ts'), lines.join('\n'));
+  put(path.join(OUT, 'model.ts'), Buffer.from(lines.join('\n')));
+  for (const dir of [OUT_REFS, OUT_VIDEOS])
+    for (const f of fs.readdirSync(dir)) if (!keep.has(path.resolve(dir, f))) fs.rmSync(path.join(dir, f), { force: true });
   console.log(
     `[sync-model] ${isFixture ? 'FIXTURE (model/export not found)' : 'model/export'}: ${signs.length} signs, ` +
       `${Object.keys(refs).length} refs, ${Object.keys(videos).length} videos (${(videoBytes / 1e6).toFixed(1)} MB)` +

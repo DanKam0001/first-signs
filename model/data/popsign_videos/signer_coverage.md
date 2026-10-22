@@ -82,3 +82,33 @@ for that sign. "Remote" = 8037 clips available in the test tar. "Local signers" 
 | happy | 1H | 8037 (1.998) | `gtsignstudy4a.8037-happy-2023_01_28_13_44_52.854-0.mp4` | 1.998 | 4/16 | 0.0 | - | 20 | YYYYYYYY |
 | sad | 2H | 8033 (2.002) * | `gtsignstudy4a.8037-sad-2023_01_28_13_07_33.784-1.mp4` | 1.929 | 4/16 | 0.0 | - | 17 | YYYYYYYY |
 | cry | 1H | 8039 (2.041) | `gtsignstudy4a.8037-cry-2023_01_28_15_16_50.609-0.mp4` | 1.719 | 6/16 | 0.0 | - | 20 | YYYYYYYY |
+
+## Added 2026-10-22: Play and Feelings & needs (21 signs, still signer 8037 only)
+
+Indexed with `index_tars.py` (`game/test`), then 5 of 8037's clips per sign fetched and scored with `fetch_score.py` and ranked with
+`rank_sheets.py` (`D:/datasets/popsign/scores_8037_v2.json`, `rank_8037_v2.json`, `sheets_8037_v2/`). Every candidate sign had 8037 clips.
+The top-ranked clip was used except for jump (#0 is dark and flagged "hands at start/end", so #1).
+
+| Sign | Chosen clip | q | 2-hand frac | Remote 8037 clips |
+|---|---|---|---|---|
+| dog | `gtsignstudy4a.8037-dog-2023_01_28_13_42_24.337-0.mp4` | 1.444 | 0.0 | 19 |
+| cat | `gtsignstudy4a.8037-cat-2023_01_28_19_27_57.964-0.mp4` | 1.876 | 0.036 | 20 |
+| bird | `gtsignstudy4a.8037-bird-2023_01_28_15_12_56.883-0.mp4` | 1.913 | 0.0 | 20 |
+| fish | `gtsignstudy4a.8037-fish-2023_01_25_17_18_33.013-0.mp4` | 1.808 | 0.0 | 15 |
+| cow | `gtsignstudy4a.8037-cow-2023_01_29_14_12_57.445-0.mp4` | 1.938 | 0.0 | 18 |
+| horse | `gtsignstudy4a.8037-horse-2023_01_25_17_28_04.592-0.mp4` | 2.117 | 0.0 | 20 |
+| car | `gtsignstudy4a.8037-car-2023_01_28_12_52_00.888-0.mp4` | 2.385 | 0.0 | 18 |
+| outside | `gtsignstudy4a.8037-outside-2023_01_28_15_18_06.773-0.mp4` | 2.003 | 0.0 | 20 |
+| jump | `gtsignstudy4a.8037-jump-2023_01_28_15_01_27.840-0.mp4` | 1.655 | 0.067 | 19 |
+| balloon | `gtsignstudy4a.8037-balloon-2023_01_29_13_59_03.432-0.mp4` | 2.034 | 0.0 | 19 |
+| airplane | `gtsignstudy4a.8037-airplane-2023_01_28_15_04_49.677-0.mp4` | 2.036 | 0.0 | 20 |
+| owie | `gtsignstudy4a.8037-owie-2023_01_28_15_12_15.919-0.mp4` | 2.094 | 0.0 | 19 |
+| sick | `gtsignstudy4a.8037-sick-2023_01_28_13_44_52.854-0.mp4` | 1.736 | 0.033 | 20 |
+| mad | `gtsignstudy4a.8037-mad-2023_01_28_19_19_04.027-0.mp4` | 1.779 | 0.0 | 20 |
+| like | `gtsignstudy4a.8037-like-2023_01_28_15_12_56.883-0.mp4` | 1.796 | 0.0 | 20 |
+| wait | `gtsignstudy4a.8037-wait-2023_01_25_17_31_25.739-0.mp4` | 1.819 | 0.0 | 19 |
+| up | `gtsignstudy4a.8037-up-2023_01_25_17_21_52.325-0.mp4` | 1.74 | 0.0 | 19 |
+| open | `gtsignstudy4a.8037-open-2023_01_28_13_19_34.314-0.mp4` | 1.865 | 0.032 | 20 |
+| hot | `gtsignstudy4a.8037-hot-2023_01_28_18_48_10.465-0.mp4` | 1.562 | 0.0 | 18 |
+| look | `gtsignstudy4a.8037-look-2023_01_28_13_44_21.778-0.mp4` | 1.878 | 0.0 | 19 |
+| where | `gtsignstudy4a.8037-where-2023_01_28_15_16_50.609-0.mp4` | 1.829 | 0.0 | 20 |

@@ -36,7 +36,7 @@ The result is real feedback on real, two-handed signing, done together.
 ## What it does
 
 - **Pair:** the TV shows a QR code and a 4-digit code. Scan it with a phone, put the phone on a stand, and it becomes the camera.
-- **Lessons:** 40 signs in 4 packs. For each sign you watch a short clip of a Deaf signer (with a slow-motion option),
+- **Lessons:** 61 signs in 6 packs (Mealtime, Bedtime, Bath time, Family, Play, Feelings & needs). For each sign you watch a short clip of a Deaf signer (with a slow-motion option),
   then press **Your turn**. The TV counts you in (3-2-1), records a 2.5-second window, and shows the result: a
   celebration if you got it, or "looked a bit like X" plus a coaching tip if you didn't. Each sign earns 0-3 stars.
 - **Family round:** pick the players (Mum, Dad, Grandma...), a pack and a number of turns. Players take turns on random
@@ -116,7 +116,7 @@ the signs in the current pack. The thresholds live in `model/export/signs.json` 
 ### Held-out Deaf signers (measured)
 
 The shipped model is trained on all 21 signers in GISLR's training set. It is tested on GISLR's **rerun set**,
-Kaggle's public release of the competition's hidden test data: **10 different Deaf signers, 6,461 clips of our 40
+Kaggle's public release of the competition's hidden test data: **10 different Deaf signers, 9,882 clips of our 61
 signs**, none of whom are in the training data. Numbers are from [`model/export/metrics.json`](model/export/metrics.json).
 
 "In-pack" is how the app uses the model: only the current pack's signs are candidates. "Phone-sim" makes the clips look
@@ -125,22 +125,26 @@ detections dropped.
 
 | Pack | Signs | Top-1 | Top-3 | Top-1 (phone-sim) | Top-3 (phone-sim) |
 |---|---|---|---|---|---|
-| Mealtime | 10 | 97.6% | 98.4% | 96.0% | 97.3% |
-| Bedtime | 10 | 94.5% | 97.6% | 91.8% | 95.8% |
-| Bath time | 8 | 93.4% | 97.0% | 90.6% | 95.4% |
-| Family | 12 | 92.3% | 97.6% | 89.8% | 95.9% |
-| **All packs** | 40 | **94.4%** | **97.7%** | **92.0%** | **96.1%** |
+| Mealtime | 10 | 97.2% | 98.5% | 95.4% | 97.6% |
+| Bedtime | 10 | 94.7% | 97.5% | 92.6% | 96.2% |
+| Bath time | 8 | 95.2% | 98.0% | 92.8% | 96.6% |
+| Family | 12 | 92.1% | 97.5% | 89.5% | 95.8% |
+| Play | 11 | 93.6% | 96.7% | 92.2% | 95.8% |
+| Feelings & needs | 10 | 95.0% | 98.0% | 92.6% | 96.2% |
+| **All packs** | 61 | **94.5%** | **97.7%** | **92.4%** | **96.3%** |
 
-- **All 40 signs at once** (no pack limit): top-1 90.9%, top-3 95.5% (phone-sim: 87.8% and 92.9%).
-- **Spread across the 10 unseen signers:** 40-way top-1 ranges from 78.6% to 96.9%.
-- **Cross-validation inside the training set** (5 folds, split by signer, 15,204 clips): in-pack top-1 89.5%, top-3 95.5%.
-- **The verdict at the default thresholds:** when the target sign is made, it is accepted 81.5% of the time. Many GISLR
-  clips are cropped so hands show in under 40% of frames; without that hand gate the accept rate is 94.6% (91.8%
-  phone-sim). When a different sign from the same pack is made, it is wrongly accepted 0.3-0.7% of the time.
-- **Main confusions:** shower is the weakest sign (77% top-1; it is mistaken for dry or clean). dad/grandpa and
-  mom/grandma differ only by a forward hop and are confused 12-13% of the time; top-3 still holds them at 97% or more.
+- **All 61 signs at once** (no pack limit): top-1 89.3%, top-3 94.6% (phone-sim: 86.6% and 92.3%).
+- **Spread across the 10 unseen signers:** 61-way top-1 ranges from 76.4% to 96.9%.
+- **Cross-validation inside the training set** (5 folds, split by signer, 23,247 clips): in-pack top-1 89.3%, top-3 95.2%.
+- **The verdict at the default thresholds:** when the target sign is made, it is accepted 81.9% of the time. Many GISLR
+  clips are cropped so hands show in under 40% of frames; without that hand gate the accept rate is 94.6% (92.2%
+  phone-sim). When a different sign from the same pack is made, it is wrongly accepted 0.1-0.5% of the time.
+- **Main confusions:** dad/grandpa and mom/grandma differ only by a forward hop and are confused 12-16% of the time;
+  top-3 still holds them at 98% or more. up is mistaken for look (8%) or where (5%).
+- **Adding Play and Feelings & needs (2026-10-22) did not meaningfully change the first 4 packs:** on the same clips
+  they score 94.6% / 97.8% in-pack top-1 / top-3, against 94.4% / 97.7% for the earlier 40-sign model.
 
-Full per-sign and per-signer tables, the confusion list and how the 40 signs were chosen are in
+Full per-sign and per-signer tables, the confusion list and how the 61 signs were chosen are in
 [`model/README.md`](model/README.md).
 
 ### Live, on the phone camera, with hearing learners

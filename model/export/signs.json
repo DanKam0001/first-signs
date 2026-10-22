@@ -68,6 +68,39 @@
     "sad",
     "cry"
    ]
+  },
+  {
+   "id": "play",
+   "label": "Play",
+   "signs": [
+    "dog",
+    "cat",
+    "bird",
+    "fish",
+    "cow",
+    "horse",
+    "car",
+    "outside",
+    "jump",
+    "balloon",
+    "airplane"
+   ]
+  },
+  {
+   "id": "feelings",
+   "label": "Feelings & needs",
+   "signs": [
+    "owie",
+    "sick",
+    "mad",
+    "like",
+    "wait",
+    "up",
+    "open",
+    "hot",
+    "look",
+    "where"
+   ]
   }
  ],
  "_labels_order": "signs[] order == model output order == labels.json",
@@ -880,6 +913,436 @@
    "video": {
     "src": "videos/cry.mp4",
     "poster": "videos/cry.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8037, CC BY 4.0"
+   }
+  },
+  {
+   "id": "dog",
+   "label": "dog",
+   "packs": [
+    "play"
+   ],
+   "description": "Hold your dominant hand up and snap your middle finger against your thumb twice.",
+   "verified": true,
+   "credit": "Reference: GISLR (D-PAN / Georgia Tech / Google), CC BY 4.0",
+   "sources": [
+    "https://www.lifeprint.com/asl101/pages-signs/d/dog.htm",
+    "https://www.handspeak.com/word/602/"
+   ],
+   "note": "Variants: pat your thigh then snap, or just pat your thigh twice (HandSpeak says the thigh pat is common with babies). The snap uses the middle finger, not the index finger.",
+   "video": {
+    "src": "videos/dog.mp4",
+    "poster": "videos/dog.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8037, CC BY 4.0"
+   }
+  },
+  {
+   "id": "cat",
+   "label": "cat",
+   "packs": [
+    "play"
+   ],
+   "description": "Pinch your dominant thumb and index finger together beside your nose and pull outward across your cheek twice, like stroking whiskers.",
+   "verified": true,
+   "credit": "Reference: GISLR (D-PAN / Georgia Tech / Google), CC BY 4.0",
+   "sources": [
+    "https://www.lifeprint.com/asl101/pages-signs/c/cat.htm",
+    "https://www.handspeak.com/word/334/"
+   ],
+   "note": "Handshape varies: F hand (most common), 8 hand, or G hand all mean CAT. Two-handed (both cheeks) is used for storytelling with young children.",
+   "video": {
+    "src": "videos/cat.mp4",
+    "poster": "videos/cat.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8037, CC BY 4.0"
+   }
+  },
+  {
+   "id": "bird",
+   "label": "bird",
+   "packs": [
+    "play"
+   ],
+   "description": "Hold your dominant index finger and thumb at the side of your mouth and open and close them twice, like a beak.",
+   "verified": true,
+   "credit": "Reference: GISLR (D-PAN / Georgia Tech / Google), CC BY 4.0",
+   "sources": [
+    "https://www.lifeprint.com/asl101/pages-signs/b/bird.htm",
+    "https://www.handspeak.com/word/198/"
+   ],
+   "note": "Look-alike: DUCK is the same idea but uses the index and middle fingers with the thumb (a bigger bill). BIRD can also mean 'chicken' in context.",
+   "video": {
+    "src": "videos/bird.mp4",
+    "poster": "videos/bird.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8037, CC BY 4.0"
+   }
+  },
+  {
+   "id": "fish",
+   "label": "fish",
+   "packs": [
+    "play"
+   ],
+   "description": "Hold your dominant hand flat with the palm facing sideways and wiggle it side to side as it moves forward, like a fish swimming.",
+   "verified": true,
+   "credit": "Reference: GISLR (D-PAN / Georgia Tech / Google), CC BY 4.0",
+   "sources": [
+    "https://www.lifeprint.com/asl101/pages-signs/f/fish.htm",
+    "https://www.handspeak.com/word/804/"
+   ],
+   "note": "Some signers add the other hand touching the wrist or elbow of the swimming hand; Lifeprint calls that version extra effort, but it is in use. Different from FISHING (casting a rod).",
+   "video": {
+    "src": "videos/fish.mp4",
+    "poster": "videos/fish.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8037, CC BY 4.0"
+   }
+  },
+  {
+   "id": "cow",
+   "label": "cow",
+   "packs": [
+    "play"
+   ],
+   "description": "Put the thumb of your dominant Y hand (thumb and pinkie out) on your temple and twist the hand up and down, like a horn.",
+   "verified": true,
+   "credit": "Reference: GISLR (D-PAN / Georgia Tech / Google), CC BY 4.0",
+   "sources": [
+    "https://www.lifeprint.com/asl101/pages-signs/c/cow.htm",
+    "https://www.handspeak.com/word/501/"
+   ],
+   "note": "Two-handed (both temples) is the version often used when signing to young children; one hand is used in everyday conversation.",
+   "video": {
+    "src": "videos/cow.mp4",
+    "poster": "videos/cow.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8037, CC BY 4.0"
+   }
+  },
+  {
+   "id": "horse",
+   "label": "horse",
+   "packs": [
+    "play"
+   ],
+   "description": "Put the thumb of your dominant hand on your temple with your index and middle fingers up together, then bend those fingers down twice, like a horse's ear.",
+   "verified": true,
+   "credit": "Reference: GISLR (D-PAN / Georgia Tech / Google), CC BY 4.0",
+   "sources": [
+    "https://www.lifeprint.com/asl101/pages-signs/h/horse.htm",
+    "https://www.handspeak.com/word/1057/"
+   ],
+   "note": "Two-handed (both sides of the head) is used when signing to children. Using all four fingers instead of two means DONKEY. Look-alike: COW is also at the temple but uses a Y hand that twists.",
+   "video": {
+    "src": "videos/horse.mp4",
+    "poster": "videos/horse.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8037, CC BY 4.0"
+   }
+  },
+  {
+   "id": "car",
+   "label": "car",
+   "packs": [
+    "play"
+   ],
+   "description": "Hold two fists in front of you and move them up and down alternately, like turning a steering wheel.",
+   "verified": true,
+   "credit": "Reference: GISLR (D-PAN / Georgia Tech / Google), CC BY 4.0",
+   "sources": [
+    "https://www.lifeprint.com/asl101/pages-signs/c/car.htm",
+    "https://www.handspeak.com/word/319/"
+   ],
+   "note": "Fingerspelling C-A-R is just as common (Lifeprint recommends it). Very similar to DRIVE; HandSpeak warns learners to keep the hands as fists (S hands), not thumbs-up fists. An older version taps two C hands together.",
+   "video": {
+    "src": "videos/car.mp4",
+    "poster": "videos/car.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8037, CC BY 4.0",
+    "note": "Signed one-handed here (the signer is holding a phone). In everyday ASL, use both hands."
+   }
+  },
+  {
+   "id": "outside",
+   "label": "outside",
+   "packs": [
+    "play"
+   ],
+   "description": "Put your dominant fingertips into your other hand's loose C shape, then pull them up and out while closing your fingers together.",
+   "verified": true,
+   "credit": "Reference: GISLR (D-PAN / Georgia Tech / Google), CC BY 4.0",
+   "sources": [
+    "https://www.lifeprint.com/asl101/pages-signs/o/outside.htm",
+    "https://www.handspeak.com/word/1574/"
+   ],
+   "note": "Common one-handed version: open hand closing as it moves up and out, done twice, which both sources give for 'outside / outdoors'. One single movement means GO-OUT.",
+   "video": {
+    "src": "videos/outside.mp4",
+    "poster": "videos/outside.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8037, CC BY 4.0",
+    "note": "Signed one-handed here (the signer is holding a phone). A one-handed OUTSIDE is also common in everyday ASL."
+   }
+  },
+  {
+   "id": "jump",
+   "label": "jump",
+   "packs": [
+    "play"
+   ],
+   "description": "Stand the tips of your dominant index and middle fingers on your other palm like legs, then lift them up and land them back down.",
+   "verified": true,
+   "credit": "Reference: GISLR (D-PAN / Georgia Tech / Google), CC BY 4.0",
+   "sources": [
+    "https://www.lifeprint.com/asl101/pages-signs/j/jump.htm",
+    "https://www.handspeak.com/word/1179/"
+   ],
+   "note": "Repeat the hop for 'jumping'. Look-alikes: DANCE (the same two-finger legs swinging side to side over the palm) and RIDE (bent fingers sitting on the other hand moving forward).",
+   "video": {
+    "src": "videos/jump.mp4",
+    "poster": "videos/jump.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8037, CC BY 4.0",
+    "note": "Signed one-handed here (the signer is holding a phone). In everyday ASL, use both hands."
+   }
+  },
+  {
+   "id": "balloon",
+   "label": "balloon",
+   "packs": [
+    "play"
+   ],
+   "description": "Start with both curved hands together in front of your mouth, then move them apart in a round shape, as if a balloon is inflating as you blow.",
+   "verified": true,
+   "credit": "Reference: GISLR (D-PAN / Georgia Tech / Google), CC BY 4.0",
+   "sources": [
+    "https://www.lifeprint.com/asl101/pages-signs/b/balloon.htm",
+    "https://www.handspeak.com/word/155/"
+   ],
+   "note": "Lifeprint describes it as miming blowing up a balloon; the noun is smaller and quicker, the verb 'blow up a balloon' larger and slower.",
+   "video": {
+    "src": "videos/balloon.mp4",
+    "poster": "videos/balloon.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8037, CC BY 4.0",
+    "note": "Signed one-handed here (the signer is holding a phone). In everyday ASL, use both hands."
+   }
+  },
+  {
+   "id": "airplane",
+   "label": "airplane",
+   "packs": [
+    "play"
+   ],
+   "description": "Make an 'I love you' hand (thumb, index and pinkie out), palm down, and move it forward a short way twice.",
+   "verified": true,
+   "credit": "Reference: GISLR (D-PAN / Georgia Tech / Google), CC BY 4.0",
+   "sources": [
+    "https://www.lifeprint.com/asl101/pages-signs/a/airplane.htm",
+    "https://www.handspeak.com/word/56/"
+   ],
+   "note": "Angle the palm down so it is not just the I-LOVE-YOU sign. A single long forward sweep means FLY. HandSpeak also shows a version with the index and middle fingers crossed.",
+   "video": {
+    "src": "videos/airplane.mp4",
+    "poster": "videos/airplane.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8037, CC BY 4.0"
+   }
+  },
+  {
+   "id": "owie",
+   "label": "owie",
+   "packs": [
+    "feelings"
+   ],
+   "description": "Point both index fingers toward each other and jab them together twice, near the spot that hurts.",
+   "verified": true,
+   "credit": "Reference: GISLR (D-PAN / Georgia Tech / Google), CC BY 4.0",
+   "sources": [
+    "https://www.lifeprint.com/asl101/pages-signs/h/hurt.htm",
+    "https://www.lifeprint.com/asl101/pages-signs/p/pain.htm",
+    "https://www.handspeak.com/word/1077/",
+    "https://www.handspeak.com/word/1589/"
+   ],
+   "note": "OWIE is signed with the general HURT/PAIN sign; Lifeprint's pain page uses the word 'owie' for it. A twisting version (fingers twist in opposite directions) is also common, and HURT can be fingerspelled quickly near the sore spot. Use a pained face.",
+   "video": {
+    "src": "videos/owie.mp4",
+    "poster": "videos/owie.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8037, CC BY 4.0",
+    "note": "Signed one-handed here (the signer is holding a phone). In everyday ASL, use both hands."
+   }
+  },
+  {
+   "id": "sick",
+   "label": "sick",
+   "packs": [
+    "feelings"
+   ],
+   "description": "Touch your dominant bent middle finger to your forehead and your other bent middle finger to your stomach at the same time.",
+   "verified": true,
+   "credit": "Reference: GISLR (D-PAN / Georgia Tech / Google), CC BY 4.0",
+   "sources": [
+    "https://www.lifeprint.com/asl101/pages-signs/s/sick.htm",
+    "https://www.handspeak.com/word/1959/"
+   ],
+   "note": "HandSpeak shows a common one-handed version, forehead only.",
+   "video": {
+    "src": "videos/sick.mp4",
+    "poster": "videos/sick.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8037, CC BY 4.0",
+    "note": "Signed one-handed here (the signer is holding a phone). In everyday ASL, use both hands."
+   }
+  },
+  {
+   "id": "mad",
+   "label": "mad",
+   "packs": [
+    "feelings"
+   ],
+   "description": "Hold your dominant open hand in front of your face and bend the fingers into a claw once, with a scrunched, angry face.",
+   "verified": true,
+   "credit": "Reference: GISLR (D-PAN / Georgia Tech / Google), CC BY 4.0",
+   "sources": [
+    "https://www.lifeprint.com/asl101/pages-signs/m/mad.htm",
+    "https://www.handspeak.com/word/1329/"
+   ],
+   "note": "Don't touch your face. A double movement with a milder face means 'grumpy'. ANGRY is a related sign: both claw hands pulled up from the stomach. The facial expression is part of the sign.",
+   "video": {
+    "src": "videos/mad.mp4",
+    "poster": "videos/mad.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8037, CC BY 4.0"
+   }
+  },
+  {
+   "id": "like",
+   "label": "like",
+   "packs": [
+    "feelings"
+   ],
+   "description": "Start with your dominant thumb and middle finger open near your chest, then pull the hand forward while pinching them together.",
+   "verified": true,
+   "credit": "Reference: GISLR (D-PAN / Georgia Tech / Google), CC BY 4.0",
+   "sources": [
+    "https://www.lifeprint.com/asl101/pages-signs/l/like.htm",
+    "https://www.handspeak.com/word/1276/"
+   ],
+   "note": "Uses the middle finger, not the index; HandSpeak warns not to confuse the handshape with the one in WHITE. LIKE never means 'similar' (that's SAME).",
+   "video": {
+    "src": "videos/like.mp4",
+    "poster": "videos/like.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8037, CC BY 4.0"
+   }
+  },
+  {
+   "id": "wait",
+   "label": "wait",
+   "packs": [
+    "feelings"
+   ],
+   "description": "Hold both open hands up to one side, palms toward you, and wiggle your fingers.",
+   "verified": true,
+   "credit": "Reference: GISLR (D-PAN / Georgia Tech / Google), CC BY 4.0",
+   "sources": [
+    "https://www.lifeprint.com/asl101/pages-signs/w/wait.htm",
+    "https://www.handspeak.com/word/2341/"
+   ],
+   "note": "Wiggling longer, with a bored face, means 'wait a long time'.",
+   "video": {
+    "src": "videos/wait.mp4",
+    "poster": "videos/wait.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8037, CC BY 4.0",
+    "note": "Signed one-handed here (the signer is holding a phone). In everyday ASL, use both hands."
+   }
+  },
+  {
+   "id": "up",
+   "label": "up",
+   "packs": [
+    "feelings"
+   ],
+   "description": "Point your dominant index finger upward and move it up a little.",
+   "verified": true,
+   "credit": "Reference: GISLR (D-PAN / Georgia Tech / Google), CC BY 4.0",
+   "sources": [
+    "https://www.lifeprint.com/asl101/pages-signs/u/up.htm",
+    "https://www.handspeak.com/word/2301/"
+   ],
+   "note": "A double movement can mean 'upstairs'. DOWN is the same idea pointing down.",
+   "video": {
+    "src": "videos/up.mp4",
+    "poster": "videos/up.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8037, CC BY 4.0"
+   }
+  },
+  {
+   "id": "open",
+   "label": "open",
+   "packs": [
+    "feelings"
+   ],
+   "description": "Hold both flat hands side by side, palms down, then swing them apart so the palms turn up, like opening double doors.",
+   "verified": true,
+   "credit": "Reference: GISLR (D-PAN / Georgia Tech / Google), CC BY 4.0",
+   "sources": [
+    "https://www.handspeak.com/word/1561/",
+    "https://www.lifeprint.com/asl101/pages-signs/o/open.htm"
+   ],
+   "note": "Verified from HandSpeak's text; Lifeprint's page is pictures only and says opening something specific (a door, window, jar) is often mimed instead. Look-alike: BOOK starts with palms pressed together and opens like a book.",
+   "video": {
+    "src": "videos/open.mp4",
+    "poster": "videos/open.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8037, CC BY 4.0",
+    "note": "Signed one-handed here (the signer is holding a phone). In everyday ASL, use both hands."
+   }
+  },
+  {
+   "id": "hot",
+   "label": "hot",
+   "packs": [
+    "feelings"
+   ],
+   "description": "Hold a bent, claw-like hand in front of your mouth, then quickly twist and throw it down and away, as if removing something hot.",
+   "verified": true,
+   "credit": "Reference: GISLR (D-PAN / Georgia Tech / Google), CC BY 4.0",
+   "sources": [
+    "https://www.lifeprint.com/asl101/pages-signs/h/hot.htm",
+    "https://www.handspeak.com/word/1060/"
+   ],
+   "note": "A faster, stronger movement means hotter.",
+   "video": {
+    "src": "videos/hot.mp4",
+    "poster": "videos/hot.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8037, CC BY 4.0"
+   }
+  },
+  {
+   "id": "look",
+   "label": "look",
+   "packs": [
+    "feelings"
+   ],
+   "description": "Point your dominant index and middle fingers out from under your eyes, then turn them forward toward what you are looking at.",
+   "verified": true,
+   "credit": "Reference: GISLR (D-PAN / Georgia Tech / Google), CC BY 4.0",
+   "sources": [
+    "https://www.handspeak.com/word/1302/",
+    "https://www.lifeprint.com/asl101/pages-signs/l/look.htm"
+   ],
+   "note": "Verified from HandSpeak's text; Lifeprint's LOOK page is pictures only. The sign points toward the thing being looked at, so its direction changes.",
+   "video": {
+    "src": "videos/look.mp4",
+    "poster": "videos/look.jpg",
+    "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8037, CC BY 4.0"
+   }
+  },
+  {
+   "id": "where",
+   "label": "where",
+   "packs": [
+    "feelings"
+   ],
+   "description": "Hold up your dominant index finger, palm out, and shake it side to side a few times from the wrist, with your eyebrows down.",
+   "verified": true,
+   "credit": "Reference: GISLR (D-PAN / Georgia Tech / Google), CC BY 4.0",
+   "sources": [
+    "https://www.lifeprint.com/asl101/pages-signs/w/where.htm",
+    "https://www.handspeak.com/word/2391/"
+   ],
+   "note": "Furrowed eyebrows are part of WH-questions. Use a plain index finger. An older version shaking two palm-up hands now mostly means WHAT.",
+   "video": {
+    "src": "videos/where.mp4",
+    "poster": "videos/where.jpg",
     "credit": "PopSign ASL v1.0 (Georgia Tech / DPAN), Deaf signer gtsignstudy4a.8037, CC BY 4.0"
    }
   }

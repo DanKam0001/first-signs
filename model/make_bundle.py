@@ -29,7 +29,8 @@ CREDIT = ("Reference: GISLR, Isolated Sign Language Recognition corpus (Deaf Pro
 DISPLAY = {"thankyou": "thank you", "icecream": "ice cream", "minemy": "mine / my", "weus": "we / us",
            "callonphone": "call on phone", "frenchfries": "french fries", "glasswindow": "glass / window",
            "haveto": "have to", "hesheit": "he / she / it"}
-PACK_LABELS = {"mealtime": "Mealtime", "bedtime": "Bedtime", "bath": "Bath time", "family": "Family"}
+PACK_LABELS = {"mealtime": "Mealtime", "bedtime": "Bedtime", "bath": "Bath time", "family": "Family", "play": "Play",
+               "feelings": "Feelings & needs"}
 THRESHOLDS = {"topK": 3, "minProb": 0.25, "minHandFrac": 0.4}
 
 

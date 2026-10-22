@@ -24,7 +24,7 @@ export function ProgressScreen() {
         const learned = list.filter((sg) => isLearned(prog.signs[sg.id]));
         return (
           <View key={p.id} style={styles.pack}>
-            <PackIcon pack={p.id} size={s(64)} color={colors.text} />
+            <PackIcon pack={p.id} size={s(52)} color={colors.text} />
             <View style={styles.packMain}>
               <View style={styles.packTop}>
                 <Text style={styles.packName}>{p.name}</Text>
@@ -69,14 +69,14 @@ const styles = StyleSheet.create({
     borderWidth: hair,
     borderColor: colors.line,
     borderRadius: s(22),
-    paddingVertical: s(14),
+    paddingVertical: s(8),
     paddingHorizontal: s(32),
-    marginBottom: s(12),
+    marginBottom: s(8), // 6 packs must fit with the controls on a 1080p canvas
   },
   packMain: { flex: 1, marginLeft: s(32) },
-  packTop: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: s(10) },
-  packName: { color: colors.text, fontSize: type.body, fontWeight: '800', letterSpacing: track.h2 },
-  count: { color: colors.text, fontSize: type.body, fontWeight: '700', fontVariant: ['tabular-nums'] },
-  signs: { color: colors.textDim, fontSize: type.tiny, marginTop: s(8) },
-  controls: { flexDirection: 'row', marginTop: s(12) },
+  packTop: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: s(6) },
+  packName: { color: colors.text, fontSize: type.small, fontWeight: '800', letterSpacing: track.h2 },
+  count: { color: colors.text, fontSize: type.small, fontWeight: '700', fontVariant: ['tabular-nums'] },
+  signs: { color: colors.textDim, fontSize: type.tiny, marginTop: s(4) },
+  controls: { flexDirection: 'row', marginTop: s(4) },
 });

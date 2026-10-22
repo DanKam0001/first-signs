@@ -15,6 +15,7 @@ import { PackScreen } from './screens/PackScreen';
 import { PairScreen } from './screens/PairScreen';
 import { ProgressScreen } from './screens/ProgressScreen';
 import { SettingsScreen } from './screens/SettingsScreen';
+import { TalkScreen } from './screens/TalkScreen';
 import { progress } from './store/progress';
 import { effectiveServerUrl, settings } from './store/settings';
 import { colors } from './theme';
@@ -37,6 +38,8 @@ function renderRoute(r: Route) {
       return <DuoSetupScreen />;
     case 'duo':
       return <DuoScreen leftName={r.leftName} rightName={r.rightName} packId={r.packId} rounds={r.rounds} />;
+    case 'talk':
+      return <TalkScreen />;
     case 'progress':
       return <ProgressScreen />;
     case 'about':

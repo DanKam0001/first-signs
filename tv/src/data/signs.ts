@@ -21,6 +21,8 @@ export const PACKS: Pack[] = [
   { id: 'bedtime', name: 'Bedtime', blurb: 'Wind down with sleepy signs' },
   { id: 'bath', name: 'Bath', blurb: 'Splashy signs for bath time' },
   { id: 'family', name: 'Family', blurb: 'The people who love them' },
+  { id: 'play', name: 'Play', blurb: 'Toys, animals and things to do' },
+  { id: 'feelings', name: 'Feelings & needs', blurb: 'How they feel and what they need' },
 ];
 
 export const DATA_IS_PLACEHOLDER: boolean = IS_FIXTURE;

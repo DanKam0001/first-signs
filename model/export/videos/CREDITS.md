@@ -1,6 +1,6 @@
 # Sign videos: credits and licence
 
-The 40 short clips in this folder (`<id>.mp4`, plus a poster still `<id>.jpg`) show one Deaf signer performing every First Signs sign: PopSign participant **8037** (published ID `gtsignstudy4a.8037`), the only signer in the `game/test` split who recorded all 40 signs.
+The 61 short clips in this folder (`<id>.mp4`, plus a poster still `<id>.jpg`) show one Deaf signer performing every First Signs sign: PopSign participant **8037** (published ID `gtsignstudy4a.8037`), the only signer in the `game/test` split who recorded all of the first 40 signs, and who also has clips for the 21 Play and Feelings & needs signs added on 2026-10-22.
 
 ## Source
 **PopSign ASL v1.0**, published by the Georgia Institute of Technology and the Deaf Professional Arts Network (DPAN), 2023.
@@ -18,7 +18,7 @@ Each clip is taken from the `game/test` split. We:
 - converted it to 30 fps H.264 (Main profile, limited range) with no audio, using `+faststart`
 - extracted one poster still per clip
 
-PopSign game clips were filmed by the signer holding the phone, so two-handed signs (finish, book, night, wake, morning, bath, wet, clean, brother, sad) are signed one-handed; each of those carries a caption note saying so.
+PopSign game clips were filmed by the signer holding the phone, so two-handed signs (finish, book, night, wake, morning, bath, wet, clean, brother, sad, and from the newer packs car, jump, balloon, owie, sick, wait, open) are signed one-handed; each of those carries a caption note saying so. OUTSIDE is also signed one-handed here, a form that is common in everyday ASL too, and its note says that.
 
 We did not change the signing itself.
 
@@ -74,3 +74,24 @@ No endorsement: Georgia Tech, DPAN and the signer do not endorse First Signs.
 | happy | 8037 | `gtsignstudy4a.8037-happy-2023_01_28_13_44_52.854-0.mp4` | 1.47 s | 84 KB |
 | sad | 8037 | `gtsignstudy4a.8037-sad-2023_01_28_13_07_33.784-1.mp4` | 1.53 s | 82 KB |
 | cry | 8037 | `gtsignstudy4a.8037-cry-2023_01_28_15_16_50.609-0.mp4` | 1.13 s | 63 KB |
+| dog | 8037 | `gtsignstudy4a.8037-dog-2023_01_28_13_42_24.337-0.mp4` | 1.07 s | 61 KB |
+| cat | 8037 | `gtsignstudy4a.8037-cat-2023_01_28_19_27_57.964-0.mp4` | 1.20 s | 67 KB |
+| bird | 8037 | `gtsignstudy4a.8037-bird-2023_01_28_15_12_56.883-0.mp4` | 1.53 s | 82 KB |
+| fish | 8037 | `gtsignstudy4a.8037-fish-2023_01_25_17_18_33.013-0.mp4` | 1.37 s | 130 KB |
+| cow | 8037 | `gtsignstudy4a.8037-cow-2023_01_29_14_12_57.445-0.mp4` | 1.20 s | 98 KB |
+| horse | 8037 | `gtsignstudy4a.8037-horse-2023_01_25_17_28_04.592-0.mp4` | 1.77 s | 166 KB |
+| car | 8037 | `gtsignstudy4a.8037-car-2023_01_28_12_52_00.888-0.mp4` | 2.00 s | 97 KB |
+| outside | 8037 | `gtsignstudy4a.8037-outside-2023_01_28_15_18_06.773-0.mp4` | 1.87 s | 116 KB |
+| jump | 8037 | `gtsignstudy4a.8037-jump-2023_01_28_15_01_27.840-0.mp4` | 1.53 s | 91 KB |
+| balloon | 8037 | `gtsignstudy4a.8037-balloon-2023_01_29_13_59_03.432-0.mp4` | 1.40 s | 108 KB |
+| airplane | 8037 | `gtsignstudy4a.8037-airplane-2023_01_28_15_04_49.677-0.mp4` | 1.33 s | 81 KB |
+| owie | 8037 | `gtsignstudy4a.8037-owie-2023_01_28_15_12_15.919-0.mp4` | 1.40 s | 82 KB |
+| sick | 8037 | `gtsignstudy4a.8037-sick-2023_01_28_13_44_52.854-0.mp4` | 1.27 s | 78 KB |
+| mad | 8037 | `gtsignstudy4a.8037-mad-2023_01_28_19_19_04.027-0.mp4` | 1.33 s | 87 KB |
+| like | 8037 | `gtsignstudy4a.8037-like-2023_01_28_15_12_56.883-0.mp4` | 1.33 s | 84 KB |
+| wait | 8037 | `gtsignstudy4a.8037-wait-2023_01_25_17_31_25.739-0.mp4` | 1.57 s | 143 KB |
+| up | 8037 | `gtsignstudy4a.8037-up-2023_01_25_17_21_52.325-0.mp4` | 1.30 s | 105 KB |
+| open | 8037 | `gtsignstudy4a.8037-open-2023_01_28_13_19_34.314-0.mp4` | 1.53 s | 77 KB |
+| hot | 8037 | `gtsignstudy4a.8037-hot-2023_01_28_18_48_10.465-0.mp4` | 1.03 s | 60 KB |
+| look | 8037 | `gtsignstudy4a.8037-look-2023_01_28_13_44_21.778-0.mp4` | 1.27 s | 73 KB |
+| where | 8037 | `gtsignstudy4a.8037-where-2023_01_28_15_16_50.609-0.mp4` | 1.20 s | 70 KB |

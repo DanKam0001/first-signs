@@ -1,390 +1,754 @@
 {
-  "_meta": {
-    "date": "2026-10-17",
-    "method": "Each sign page on Lifeprint/ASL University (lifeprint.com/asl101/pages-signs/...) and HandSpeak (handspeak.com/word/<id>/, found through HandSpeak's own word-search endpoint) was downloaded with curl on 2026-10-17. The page text was extracted and every description below was written in our own words from it. Lifeprint's SLEEPY page has photos only, so that sign was checked against its 4-frame photo sequence. 'verified' is true only when at least one fetched Lifeprint/HandSpeak page describes that sign (in text, or in photos for SLEEPY) and the description matches. Signing Savvy was checked but its written descriptions are for members only, so it was not used to verify. Pages that are video-only or under construction did not count. Dominant-hand wording: 'your dominant hand' / 'your other hand'. Citation forms are given; GISLR/PopSign clips may show regional or casual variants."
-  },
-  "milk": {
-    "description": "Hold your dominant hand in a loose C shape, then squeeze it closed into a fist twice, like milking a cow.",
-    "verified": true,
-    "sources": ["https://www.lifeprint.com/asl101/pages-signs/m/milk.htm", "https://www.handspeak.com/word/1382/"],
-    "note": "Fist-squeeze can look like YES (fist nodding at the wrist) at low frame rates; MILK opens and closes, YES bobs."
-  },
-  "drink": {
-    "description": "Curve your dominant hand into a C as if holding a cup, and tip it toward your mouth.",
-    "verified": true,
-    "sources": ["https://www.lifeprint.com/asl101/pages-signs/d/drink.htm", "https://www.handspeak.com/word/627/"],
-    "note": "Noun 'a drink' is often done with a small double movement. Alcohol variants use other handshapes."
-  },
-  "water": {
-    "description": "Make a W with your dominant hand (three middle fingers up) and tap the index finger against your chin or lips twice.",
-    "verified": true,
-    "sources": ["https://www.lifeprint.com/asl101/pages-signs/w/water.htm", "https://www.handspeak.com/word/2360/"],
-    "note": "Lifeprint says lips, HandSpeak says chin; both are near the mouth."
-  },
-  "food": {
-    "description": "Bunch the fingertips of your dominant hand together with your thumb and tap them against your lips, usually twice.",
-    "verified": true,
-    "sources": ["https://www.handspeak.com/word/837/", "https://www.lifeprint.com/asl101/pages-signs/f/food.htm"],
-    "note": "Same sign as EAT (HandSpeak). Lifeprint notes fluent signers often use just one tap. Lifeprint's page shows video only, so the handshape detail comes from HandSpeak."
-  },
-  "hungry": {
-    "description": "Curve your dominant hand into a C, palm facing you, and slide it down the middle of your chest.",
-    "verified": true,
-    "sources": ["https://www.lifeprint.com/asl101/pages-signs/h/hungry.htm", "https://www.handspeak.com/word/1076/"],
-    "note": "Same or nearly the same sign as WISH (both sources)."
-  },
-  "thirsty": {
-    "description": "Run the tip of your dominant index finger down the front of your throat.",
-    "verified": true,
-    "sources": ["https://www.lifeprint.com/asl101/pages-signs/t/thirsty.htm", "https://www.handspeak.com/word/2205/"],
-    "note": "A stronger movement with an intense face means CRAVE."
-  },
-  "snack": {
-    "description": "There is no single standard sign. Sign EAT (bunched fingertips to your mouth) with a 'small' face and hunched shoulders, or fingerspell S-N-A-C-K.",
-    "verified": true,
-    "sources": ["https://www.lifeprint.com/asl101/pages-signs/s/snack.htm", "https://www.handspeak.com/word/4125/"],
-    "note": "Both sources say ASL has no dedicated sign: Lifeprint suggests EAT (+ SMALL) or fingerspelling, and HandSpeak lists it as fingerspelled or described with a phrase. Lifeprint also mentions a PICNIC-like variant. GISLR clips for this label may vary a lot and may look like EAT/FOOD."
-  },
-  "finish": {
-    "description": "Hold both open hands up, fingers spread and palms facing you, then quickly twist them outward so the palms turn forward.",
-    "verified": true,
-    "sources": ["https://www.lifeprint.com/asl101/pages-signs/f/finish.htm", "https://www.handspeak.com/word/795/"],
-    "note": "Used for 'all done'. One twist feels more final; a sharp one-handed version means 'stop it!'."
-  },
-  "please": {
-    "description": "Place your flat dominant hand on the center of your chest and rub it in a circle a few times.",
-    "verified": true,
-    "sources": ["https://www.lifeprint.com/asl101/pages-signs/p/please.htm", "https://www.handspeak.com/word/1658/"],
-    "note": "Two hands means ENJOY. Very close to HAPPY (flat hand brushing up the chest). Doing it with a fist instead is SORRY."
-  },
-  "thankyou": {
-    "description": "Start with the fingertips of your flat dominant hand near your lips, then move the hand forward and down toward the person you're thanking.",
-    "verified": true,
-    "sources": ["https://www.lifeprint.com/asl101/pages-signs/t/thank-you.htm"],
-    "note": "Lifeprint notes it looks very similar to GOOD. HandSpeak's entry (https://www.handspeak.com/word/2186/) has no written description we could extract."
-  },
-  "yucky": {
-    "description": "Unconfirmed: one baby-sign dictionary shows both open, fingers-spread hands sweeping outward in an arc from near the mouth and chest, with a disgusted face.",
-    "verified": false,
-    "sources": ["https://babysignlanguage.com/dictionary/yucky/"],
-    "note": "Not verified. Lifeprint has no page (404), HandSpeak's 'yuck, yucky' (https://www.handspeak.com/word/2705/) is video-only, and Signing Savvy only lists it as fingerspelled. The description above is from a baby-sign site that is not on our reliable list, and other forms exist (e.g. disgust or 'gross' signs at the nose or stomach). Check against the GISLR reference clips before using."
-  },
-  "apple": {
-    "description": "Bend your dominant index finger into a hook, press its knuckle against your cheek near the mouth, and twist it back and forth.",
-    "verified": true,
-    "sources": ["https://www.lifeprint.com/asl101/pages-signs/a/apple.htm", "https://www.handspeak.com/word/97/"],
-    "note": "Lifeprint says cheek, HandSpeak says chin area. Some people use a fist instead of the hooked finger (Lifeprint calls that Signed English)."
-  },
-  "cereal": {
-    "description": "Put your dominant index finger, palm down, at your mouth's dominant-side corner. Move it to the other corner, bending and straightening it repeatedly.",
-    "verified": true,
-    "sources": ["https://www.lifeprint.com/asl101/pages-signs/c/cereal.htm"],
-    "note": "Easily confused with DRY: DRY moves the opposite way and hooks only once (Lifeprint). Some regions use a 'C' eating-from-a-bowl version. HandSpeak's entry (https://www.handspeak.com/word/2688/) lists regional variants in video only."
-  },
-  "hot": {
-    "description": "Hold a bent, claw-like hand in front of your mouth, then quickly twist and throw it down and away, as if removing something hot.",
-    "verified": true,
-    "sources": ["https://www.lifeprint.com/asl101/pages-signs/h/hot.htm", "https://www.handspeak.com/word/1060/"],
-    "note": "A faster, stronger movement means hotter."
-  },
-  "all": {
-    "description": "Hold your other hand flat in front of you. Sweep your flat dominant hand in a circle around it and land it in the other palm.",
-    "verified": true,
-    "sources": ["https://www.handspeak.com/word/60/", "https://www.lifeprint.com/asl101/pages-signs/a/all.htm"],
-    "note": "Lifeprint confirms a two-handed flat-hand version, but its page shows video only, so the movement detail comes from HandSpeak. Fingerspelled A-L-L ('#ALL') is also very common, especially for 'all of you'."
-  },
-  "empty": {
-    "description": "Hold your other hand palm down. Slide the middle fingertip of your dominant hand along its back, from the wrist out past the knuckles.",
-    "verified": true,
-    "sources": ["https://www.lifeprint.com/asl101/pages-signs/e/empty.htm"],
-    "note": "Also means AVAILABLE/VACANT/NAKED. HandSpeak (https://www.handspeak.com/word/667/) has video only."
-  },
-  "napkin": {
-    "description": "Unconfirmed: hold the fingertips of your dominant hand together and dab or wipe them across your mouth, side to side, like using a napkin.",
-    "verified": false,
-    "sources": ["https://signingtime.com/blogs/dictionary/napkin"],
-    "note": "Not verified. Lifeprint's page only has a video labelled as a regional (Nova Scotia) form, and HandSpeak (https://www.handspeak.com/word/1476/) is video-only. The wiping-the-mouth idea comes from Signing Time and a baby-sign site, which are not on our reliable list and disagree on handshape."
-  },
-  "icecream": {
-    "description": "Hold a fist in front of your mouth as if holding a cone, and move it down twice as if licking.",
-    "verified": true,
-    "sources": ["https://www.lifeprint.com/asl101/pages-signs/i/ice-cream.htm", "https://www.handspeak.com/word/1087/"],
-    "note": "Some signers show a slight tongue flick; neither source requires it."
-  },
-  "sleep": {
-    "description": "Hold your open dominant hand in front of your face, palm toward you, and draw it down toward your chin while the fingers close onto your thumb.",
-    "verified": true,
-    "sources": ["https://www.lifeprint.com/asl101/pages-signs/s/sleep.htm", "https://www.handspeak.com/word/1985/"],
-    "note": "Hand ends in a bunched 'flattened O', not a fist. Similar to SLEEPY (fingers droop repeatedly) and to SAD (both open hands move down the face)."
-  },
-  "sleepy": {
-    "description": "Hold your open dominant hand in front of your face, palm toward you, and bend the fingers down at the knuckles a few times, like drooping eyelids.",
-    "verified": true,
-    "sources": ["https://www.lifeprint.com/asl101/pages-signs/s/sleepy.htm"],
-    "note": "Checked against Lifeprint's 4-frame photo sequence (the page has no text). HandSpeak's entry (https://www.handspeak.com/word/1987/) is video-only. Sleepy eyes are part of the sign. Very close to SLEEP: SLEEP pulls down and closes once, SLEEPY droops in place repeatedly."
-  },
-  "nap": {
-    "description": "Usually fingerspelled N-A-P, or signed as SHORT plus SLEEP (open hand drawn down the face, closing into a bunch).",
-    "verified": true,
-    "sources": ["https://www.handspeak.com/word/3615/"],
-    "note": "HandSpeak gives both forms. Lifeprint's nap page is empty. GISLR 'nap' clips probably overlap heavily with SLEEP, and possibly BED, so expect the model to confuse them."
-  },
-  "bed": {
-    "description": "Tilt your head and rest your cheek against your flat palm (or both palms pressed together), like laying your head on a pillow.",
-    "verified": true,
-    "sources": ["https://www.lifeprint.com/asl101/pages-signs/b/bed.htm", "https://www.handspeak.com/word/175/"],
-    "note": "Lifeprint shows both one-hand and two-hand versions on either side of the head. Overlaps with the common 'sleeping' gesture."
-  },
-  "pajamas": {
-    "description": "Unconfirmed: often a compound, SLEEP (open hand drawn down the face, closing) followed by CLOTHES (both open hands brushing down your chest).",
-    "verified": false,
-    "sources": ["https://www.signingsavvy.com/sign/pajamas/2021/1", "https://signingtime.com/blogs/dictionary/pajamas"],
-    "note": "Not verified. Signing Savvy confirms PAJAMAS is an ASL compound, but its description is members-only. The SLEEP+CLOTHES parts come from Signing Time, which is not on our list. Lifeprint's page is empty and HandSpeak (https://www.handspeak.com/word/3673/) is video-only. A fingerspelled P-J is also used."
-  },
-  "book": {
-    "description": "Press both flat hands together, palms touching, then open them like a book while the little-finger edges stay together.",
-    "verified": true,
-    "sources": ["https://www.lifeprint.com/asl101/pages-signs/b/book.htm", "https://www.handspeak.com/word/210/"],
-    "note": "A double movement is the noun BOOK; a single opening can mean OPEN-BOOK. Reversed (open to closed) means CLOSE-BOOK."
-  },
-  "story": {
-    "description": "With both loose hands loosely linked in front of you, pull them slightly apart while closing the fingers to the thumbs; repeat.",
-    "verified": true,
-    "sources": ["https://www.handspeak.com/word/2081/"],
-    "note": "Lifeprint's STORY page is 'under construction'. Could resemble the second half of SENTENCE/LINK-type signs."
-  },
-  "night": {
-    "description": "Hold your other arm flat in front of you, palm down. Rest your dominant wrist on its back with that hand bent down, like the sun setting.",
-    "verified": true,
-    "sources": ["https://www.lifeprint.com/asl101/pages-signs/n/night.htm", "https://www.handspeak.com/word/1492/"],
-    "note": "Sliding along the arm means EVERY-NIGHT. TONIGHT = NOW + NIGHT. Mirror image of MORNING (hand rising)."
-  },
-  "kiss": {
-    "description": "Touch the bunched fingertips of your dominant hand to your lower cheek, then to your upper cheek.",
-    "verified": true,
-    "sources": ["https://www.handspeak.com/word/1198/", "https://www.lifeprint.com/asl101/pages-signs/k/kiss.htm"],
-    "note": "Sources disagree. HandSpeak's citation form is the cheek version above. Lifeprint's main version brings the fingertips of both bunched hands together in front of you with puckered lips (looks like MORE), and a one-hand version looks like HOME. Lifeprint says there are many variants."
-  },
-  "moon": {
-    "description": "Curve your dominant index finger and thumb into a small C and tap it twice by the side of your forehead or eye.",
-    "verified": true,
-    "sources": ["https://www.handspeak.com/word/1435/", "https://www.lifeprint.com/asl101/pages-signs/m/moon.htm"],
-    "note": "Lifeprint: same small-C handshape (crescent), with a version tapping around the eye. HandSpeak also lists a variant arcing outward from the forehead."
-  },
-  "quiet": {
-    "description": "Cross both flat hands in front of your mouth, then move them down and apart, palms down, as things settle.",
-    "verified": true,
-    "sources": ["https://www.handspeak.com/word/1759/", "https://www.lifeprint.com/asl101/pages-signs/q/quiet.htm"],
-    "note": "Lifeprint describes QUIET (as in 'the room was quiet') as a compound of the shhh gesture and a calming down-and-apart movement. It says 'be quiet!' is just the shhh gesture, so QUIET and SHHH overlap heavily."
-  },
-  "shhh": {
-    "description": "Hold your dominant index finger up against your lips while saying 'shh'.",
-    "verified": true,
-    "sources": ["https://www.lifeprint.com/asl101/pages-signs/s/shh.htm", "https://www.handspeak.com/word/7606/"],
-    "note": "Same as the everyday hearing gesture. Lifeprint uses it for 'be quiet', so it can be the first part of QUIET."
-  },
-  "read": {
-    "description": "Hold your other hand flat like a page. Point a V (index and middle fingers) at it and move down the palm, like eyes scanning.",
-    "verified": true,
-    "sources": ["https://www.lifeprint.com/asl101/pages-signs/r/read.htm", "https://www.handspeak.com/word/1772/"],
-    "note": "One movement = READ; a repeated movement = READING (Lifeprint)."
-  },
-  "wake": {
-    "description": "Pinch each index finger and thumb together beside your eyes, then flick them open into L shapes, like eyes popping open.",
-    "verified": true,
-    "sources": ["https://www.handspeak.com/word/3843/", "https://www.lifeprint.com/asl101/pages-signs/w/wake-up.htm"],
-    "note": "Lifeprint's WAKE-UP page shows it as opening eyes and glosses it as both 'wake up' and 'to be awake'. Similar to SURPRISE, which adds a surprised face."
-  },
-  "awake": {
-    "description": "Same as WAKE UP: pinch index fingers and thumbs together beside your eyes, then flick them open into L shapes.",
-    "verified": true,
-    "sources": ["https://www.lifeprint.com/asl101/pages-signs/w/wake-up.htm", "https://www.handspeak.com/word/3843/"],
-    "note": "Lifeprint's WAKE-UP page covers 'wake up' and 'to be awake', and HandSpeak lists 'awake' as a synonym of WAKE. Its own AWAKE page (https://www.handspeak.com/word/3823/) is video-only. WAKE and AWAKE are effectively the same sign and will be hard for the model to tell apart."
-  },
-  "morning": {
-    "description": "Hold your other arm flat across your body and put that hand by your dominant inner elbow. Raise your dominant forearm, palm up, like the sun rising.",
-    "verified": true,
-    "sources": ["https://www.lifeprint.com/asl101/pages-signs/m/morning.htm", "https://www.handspeak.com/word/1436/"],
-    "note": "The movement is small. Mirror idea of NIGHT. A bigger movement means ALL-MORNING; a sideways sweep means EVERY-MORNING."
-  },
-  "lamp": {
-    "description": "Unconfirmed: Lifeprint's general 'light / light bulb' sign flicks your dominant middle finger up off the thumb against the underside of your chin, twice.",
-    "verified": false,
-    "sources": ["https://www.lifeprint.com/asl101/pages-signs/l/light.htm"],
-    "note": "Not verified as LAMP. Lifeprint's lamp page and HandSpeak's (https://www.handspeak.com/word/3496/) are video-only. Lifeprint's LIGHT text covers 'light device / light bulb', but it is not confirmed as the LAMP sign. Other references show a lamp as a bunched hand opening downward, with the elbow resting on the other hand like a lamp stand. Check against the GISLR clips."
-  },
-  "bath": {
-    "description": "Make two fists with thumbs up and rub them up and down on your chest, as if scrubbing yourself.",
-    "verified": true,
-    "sources": ["https://www.lifeprint.com/asl101/pages-signs/b/bath.htm", "https://www.handspeak.com/word/164/"],
-    "note": "Lifeprint warns it looks like ADDRESS/LIVE. BATH is a rubbing up-down-up movement, while ADDRESS is two quick upward thrusts."
-  },
-  "wet": {
-    "description": "Hold both hands in front of you, palms up and fingers loose, then lower them slightly while closing the fingers onto the thumbs, twice.",
-    "verified": true,
-    "sources": ["https://www.handspeak.com/word/3977/", "https://www.lifeprint.com/asl101/pages-signs/w/wet.htm"],
-    "note": "Lifeprint adds that many people start by touching a loose W to the chin (from WATER). Done gently it can mean SOFT, and a double movement can mean HUMID."
-  },
-  "dry": {
-    "description": "Pull your dominant index finger across your chin or lips toward your dominant side, bending it into a hook as it moves.",
-    "verified": true,
-    "sources": ["https://www.lifeprint.com/asl101/pages-signs/d/dry.htm", "https://www.handspeak.com/word/635/"],
-    "note": "Opposite direction to CEREAL, which also bends back and forth. UGLY is similar but done higher, under the nose, with a sour face."
-  },
-  "toothbrush": {
-    "description": "Unconfirmed as a separate sign: move your dominant index finger side to side in front of your teeth, as if brushing them.",
-    "verified": false,
-    "sources": ["https://www.lifeprint.com/asl101/pages-signs/b/brush-teeth.htm"],
-    "note": "Not verified as TOOTHBRUSH. The description matches Lifeprint's BRUSH-TEETH text, but Lifeprint's toothbrush page is empty and HandSpeak's (https://www.handspeak.com/word/4739/) is video-only. Commonly the same sign as BRUSH-TEETH. Differs from TOOTH (a hooked finger tapping the teeth) mainly in the side-to-side movement."
-  },
-  "tooth": {
-    "description": "Bend your dominant index finger into a hook and tap it near your front teeth twice.",
-    "verified": true,
-    "sources": ["https://www.lifeprint.com/asl101/pages-signs/t/tooth.htm", "https://www.handspeak.com/word/2501/"],
-    "note": "Contact is optional. Also used for GLASS/CERAMIC. HandSpeak lists a variant moving across the teeth, which is very close to TOOTHBRUSH/BRUSH-TEETH."
-  },
-  "potty": {
-    "description": "Make a T (thumb tucked between your index and middle fingers), palm facing out, and shake it side to side a couple of times.",
-    "verified": true,
-    "sources": ["https://www.handspeak.com/word/5332/", "https://www.handspeak.com/word/2230/", "https://www.lifeprint.com/asl101/pages-signs/t/toilet.htm"],
-    "note": "HandSpeak's POTTY entry says it is the TOILET sign, used for all ages. Lifeprint: the same sign means BATHROOM/TOILET, and some people twist instead of shaking."
-  },
-  "shower": {
-    "description": "Hold your dominant hand above your head with the fingertips bunched, then flick the fingers open downward, like water spraying. Usually repeated.",
-    "verified": true,
-    "sources": ["https://www.handspeak.com/word/3071/", "https://www.lifeprint.com/asl101/pages-signs/s/shower.htm"],
-    "note": "Lifeprint (animation only) says fluent signers use one or two movements. HandSpeak lists different signs for rain shower and baby/bridal shower."
-  },
-  "clean": {
-    "description": "Hold your other hand palm up. Slide your flat dominant hand, palm down, across it from the heel out past the fingertips.",
-    "verified": true,
-    "sources": ["https://www.lifeprint.com/asl101/pages-signs/c/clean.htm", "https://www.handspeak.com/word/4017/"],
-    "note": "Same sign as NICE. A repeated movement means CLEAN-UP / cleaning."
-  },
-  "dirty": {
-    "description": "Hold your dominant hand under your chin, palm down and fingers spread, and wiggle the fingers.",
-    "verified": true,
-    "sources": ["https://www.lifeprint.com/asl101/pages-signs/d/dirty.htm", "https://www.handspeak.com/word/582/"],
-    "note": "DIRT/soil is a different sign (thumbs rubbing fingertips)."
-  },
-  "hair": {
-    "description": "With your dominant index finger and thumb, pinch a bit of hair at the side of your head and give it a small shake, usually twice.",
-    "verified": true,
-    "sources": ["https://www.lifeprint.com/asl101/pages-signs/h/hair.htm", "https://www.handspeak.com/word/2487/"],
-    "note": "Often a single movement in fast signing. Lifeprint also shows a version using just the index finger and thumb."
-  },
-  "duck": {
-    "description": "At your mouth, open and close your dominant index finger, middle finger and thumb together twice, like a duck's bill.",
-    "verified": true,
-    "sources": ["https://www.lifeprint.com/asl101/pages-signs/d/duck.htm", "https://www.handspeak.com/word/636/"],
-    "note": "BIRD is nearly identical but uses only the index finger and thumb. Some people use the whole hand for DUCK."
-  },
-  "underwear": {
-    "description": "With both hands' index fingers and thumbs (palms toward you), trace the outline of underwear at your hips, closing finger to thumb at the end.",
-    "verified": true,
-    "sources": ["https://www.lifeprint.com/asl101/pages-signs/u/underwear.htm"],
-    "note": "Lifeprint also reports an older regional version: a loose C closing into a fist at the chin, a couple of times. HandSpeak (https://www.handspeak.com/word/3001/) is video-only."
-  },
-  "mom": {
-    "description": "Spread the fingers of your open dominant hand and tap your thumb on your chin, often twice.",
-    "verified": true,
-    "sources": ["https://www.lifeprint.com/asl101/pages-signs/m/mom.htm", "https://www.handspeak.com/word/1439/"],
-    "note": "Variants: a single touch, wiggling fingers, or starting from a fist. Differs from DAD only in location (chin vs forehead). GRANDMA adds forward arcs."
-  },
-  "dad": {
-    "description": "Spread the fingers of your open dominant hand and tap your thumb on your forehead, often twice.",
-    "verified": true,
-    "sources": ["https://www.lifeprint.com/asl101/pages-signs/d/dad.htm", "https://www.handspeak.com/word/758/"],
-    "note": "HandSpeak places it at the side of the forehead for citation. Wiggling the fingers is a common variant. Differs from MOM only by location; GRANDPA adds forward arcs."
-  },
-  "grandma": {
-    "description": "Start as MOM (open hand, thumb on your chin), then move the hand forward away from your face in two small hops.",
-    "verified": true,
-    "sources": ["https://www.lifeprint.com/asl101/pages-signs/g/grandma.htm", "https://www.handspeak.com/word/940/"],
-    "note": "Lifeprint says one big arc is also fine. A near-minimal pair with MOM and GRANDPA."
-  },
-  "grandpa": {
-    "description": "Start as DAD (open hand, thumb on your forehead), then move the hand forward away from your head in two small hops.",
-    "verified": true,
-    "sources": ["https://www.lifeprint.com/asl101/pages-signs/g/grandpa.htm", "https://www.handspeak.com/word/939/"],
-    "note": "One big arc or a straight move forward is also used. A near-minimal pair with DAD and GRANDMA."
-  },
-  "brother": {
-    "description": "Start with your dominant thumb (index finger out) at your forehead and bring it down onto your other index finger, both pointing forward side by side.",
-    "verified": true,
-    "sources": ["https://www.lifeprint.com/asl101/pages-signs/b/brother.htm", "https://www.handspeak.com/word/264/"],
-    "note": "Both sources list a couple of handshape variants for the starting hand. SISTER is the same movement starting at the cheek/jaw."
-  },
-  "aunt": {
-    "description": "Make an A (fist with the thumb alongside) near your cheek and give it a small twist or shake a couple of times.",
-    "verified": true,
-    "sources": ["https://www.lifeprint.com/asl101/pages-signs/a/aunt.htm", "https://www.handspeak.com/word/132/"],
-    "note": "HandSpeak describes the thumb side brushing down the cheek twice and warns it differs from GIRL mainly in palm direction, so these two are a confusable pair."
-  },
-  "uncle": {
-    "description": "Hold a U (index and middle fingers together) beside your forehead and give it a small twist or shake a couple of times.",
-    "verified": true,
-    "sources": ["https://www.lifeprint.com/asl101/pages-signs/u/uncle.htm", "https://www.handspeak.com/word/2291/"],
-    "note": "HandSpeak describes brushing down at the side of the head twice. Male-family signs sit near the forehead and female ones near the cheek/chin."
-  },
-  "boy": {
-    "description": "In front of your forehead, close your flat fingers onto your thumb twice, like grabbing the brim of a cap.",
-    "verified": true,
-    "sources": ["https://www.handspeak.com/word/223/", "https://www.lifeprint.com/asl101/pages-signs/b/boy.htm"],
-    "note": "Lifeprint confirms it means boy/male in general but shows it in video only. Little boy = BOY + a 'this tall' flat hand."
-  },
-  "girl": {
-    "description": "Make a fist with your thumb up and stroke the thumb tip down along your cheek toward your chin.",
-    "verified": true,
-    "sources": ["https://www.lifeprint.com/asl101/pages-signs/g/girl.htm", "https://www.handspeak.com/word/908/"],
-    "note": "HandSpeak strokes twice. Very similar to AUNT (different palm direction)."
-  },
-  "child": {
-    "description": "Hold your dominant hand flat, palm down, at about a small child's head height in front of you and pat down twice.",
-    "verified": true,
-    "sources": ["https://www.lifeprint.com/asl101/pages-signs/c/child.htm"],
-    "note": "One pat may be read as SHORT (height). CHILDREN pats two spots, or uses both hands. HandSpeak's 'child, children' entry (https://www.handspeak.com/word/383/) is video-only."
-  },
-  "hello": {
-    "description": "Touch your flat dominant hand to the side of your forehead, palm out, and move it away like a small salute, smiling.",
-    "verified": true,
-    "sources": ["https://www.handspeak.com/word/1015/", "https://www.lifeprint.com/asl101/pages-signs/h/hello.htm"],
-    "note": "Sources differ: HandSpeak gives the salute-from-forehead citation form; Lifeprint says a natural side-to-side wave is used. The salute can resemble DAD (thumb on forehead); a wave can resemble BYE."
-  },
-  "bye": {
-    "description": "Hold your open dominant hand up, palm out, and wave by bending the fingers down and up at the knuckles a few times.",
-    "verified": true,
-    "sources": ["https://www.lifeprint.com/asl101/pages-signs/g/goodbye.htm", "https://www.lifeprint.com/asl101/pages-signs/b/bye.htm"],
-    "note": "Lifeprint: the natural wave; goodbye bends at the large knuckles or wrist, while hello sweeps side to side. HandSpeak's 'goodbye' entries are video-only."
-  },
-  "yes": {
-    "description": "Make a fist and nod it up and down at the wrist, like a head nodding yes.",
-    "verified": true,
-    "sources": ["https://www.lifeprint.com/asl101/pages-signs/y/yes.htm", "https://www.handspeak.com/word/2443/"],
-    "note": "HandSpeak: usually two nods. Fingerspelled Y-E-S is used for emphasis."
-  },
-  "no": {
-    "description": "Hold your index and middle fingers together and snap them down onto your thumb, palm facing out, usually twice.",
-    "verified": true,
-    "sources": ["https://www.lifeprint.com/asl101/pages-signs/n/no.htm", "https://www.handspeak.com/word/1496/"],
-    "note": "One firm snap = a strong 'No!'. Gentle repeated snaps = a soft 'no, no' for a child. It comes from fingerspelled N-O."
-  },
-  "happy": {
-    "description": "With your flat hand (or both hands), palm toward you, brush upward on your chest in small forward circles, smiling.",
-    "verified": true,
-    "sources": ["https://www.lifeprint.com/asl101/pages-signs/h/happy.htm", "https://www.handspeak.com/word/982/"],
-    "note": "One- and two-handed versions are both common. Close to PLEASE (one flat hand circling on the chest), which is a key confusable pair."
-  },
-  "sad": {
-    "description": "Hold both open hands in front of your face, palms toward you, and draw them slowly down while making a sad face.",
-    "verified": true,
-    "sources": ["https://www.lifeprint.com/asl101/pages-signs/s/sad.htm", "https://www.handspeak.com/word/1866/"],
-    "note": "A one-handed informal version exists (HandSpeak), which looks a lot like SLEEP without the closing fingers."
-  },
-  "cry": {
-    "description": "Point your index fingers (one or both hands) just under your eyes and stroke them down your cheeks a few times, like tears.",
-    "verified": true,
-    "sources": ["https://www.lifeprint.com/asl101/pages-signs/c/cry.htm", "https://www.handspeak.com/word/3073/"],
-    "note": "Alternating hands, four fingers, or wiggling fingers mean crying hard or bawling."
-  }
+ "_meta": {
+  "date": "2026-10-17",
+  "method": "Each sign page on Lifeprint/ASL University (lifeprint.com/asl101/pages-signs/...) and HandSpeak (handspeak.com/word/<id>/, found through HandSpeak's own word-search endpoint) was downloaded with curl on 2026-10-17. The page text was extracted and every description below was written in our own words from it. Lifeprint's SLEEPY page has photos only, so that sign was checked against its 4-frame photo sequence. 'verified' is true only when at least one fetched Lifeprint/HandSpeak page describes that sign (in text, or in photos for SLEEPY) and the description matches. Signing Savvy was checked but its written descriptions are for members only, so it was not used to verify. Pages that are video-only or under construction did not count. Dominant-hand wording: 'your dominant hand' / 'your other hand'. Citation forms are given; GISLR/PopSign clips may show regional or casual variants.",
+  "update_2026_10_22": "21 signs added for the Play and Feelings & needs packs (hot was already here). Same method: Lifeprint and HandSpeak pages (HandSpeak page numbers found through its word-search endpoint) fetched with curl on 2026-10-22, descriptions written in our own words. 'verified' is true when at least one of the fetched pages describes the sign in text and the description matches."
+ },
+ "milk": {
+  "description": "Hold your dominant hand in a loose C shape, then squeeze it closed into a fist twice, like milking a cow.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/m/milk.htm",
+   "https://www.handspeak.com/word/1382/"
+  ],
+  "note": "Fist-squeeze can look like YES (fist nodding at the wrist) at low frame rates; MILK opens and closes, YES bobs."
+ },
+ "drink": {
+  "description": "Curve your dominant hand into a C as if holding a cup, and tip it toward your mouth.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/d/drink.htm",
+   "https://www.handspeak.com/word/627/"
+  ],
+  "note": "Noun 'a drink' is often done with a small double movement. Alcohol variants use other handshapes."
+ },
+ "water": {
+  "description": "Make a W with your dominant hand (three middle fingers up) and tap the index finger against your chin or lips twice.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/w/water.htm",
+   "https://www.handspeak.com/word/2360/"
+  ],
+  "note": "Lifeprint says lips, HandSpeak says chin; both are near the mouth."
+ },
+ "food": {
+  "description": "Bunch the fingertips of your dominant hand together with your thumb and tap them against your lips, usually twice.",
+  "verified": true,
+  "sources": [
+   "https://www.handspeak.com/word/837/",
+   "https://www.lifeprint.com/asl101/pages-signs/f/food.htm"
+  ],
+  "note": "Same sign as EAT (HandSpeak). Lifeprint notes fluent signers often use just one tap. Lifeprint's page shows video only, so the handshape detail comes from HandSpeak."
+ },
+ "hungry": {
+  "description": "Curve your dominant hand into a C, palm facing you, and slide it down the middle of your chest.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/h/hungry.htm",
+   "https://www.handspeak.com/word/1076/"
+  ],
+  "note": "Same or nearly the same sign as WISH (both sources)."
+ },
+ "thirsty": {
+  "description": "Run the tip of your dominant index finger down the front of your throat.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/t/thirsty.htm",
+   "https://www.handspeak.com/word/2205/"
+  ],
+  "note": "A stronger movement with an intense face means CRAVE."
+ },
+ "snack": {
+  "description": "There is no single standard sign. Sign EAT (bunched fingertips to your mouth) with a 'small' face and hunched shoulders, or fingerspell S-N-A-C-K.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/s/snack.htm",
+   "https://www.handspeak.com/word/4125/"
+  ],
+  "note": "Both sources say ASL has no dedicated sign: Lifeprint suggests EAT (+ SMALL) or fingerspelling, and HandSpeak lists it as fingerspelled or described with a phrase. Lifeprint also mentions a PICNIC-like variant. GISLR clips for this label may vary a lot and may look like EAT/FOOD."
+ },
+ "finish": {
+  "description": "Hold both open hands up, fingers spread and palms facing you, then quickly twist them outward so the palms turn forward.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/f/finish.htm",
+   "https://www.handspeak.com/word/795/"
+  ],
+  "note": "Used for 'all done'. One twist feels more final; a sharp one-handed version means 'stop it!'."
+ },
+ "please": {
+  "description": "Place your flat dominant hand on the center of your chest and rub it in a circle a few times.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/p/please.htm",
+   "https://www.handspeak.com/word/1658/"
+  ],
+  "note": "Two hands means ENJOY. Very close to HAPPY (flat hand brushing up the chest). Doing it with a fist instead is SORRY."
+ },
+ "thankyou": {
+  "description": "Start with the fingertips of your flat dominant hand near your lips, then move the hand forward and down toward the person you're thanking.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/t/thank-you.htm"
+  ],
+  "note": "Lifeprint notes it looks very similar to GOOD. HandSpeak's entry (https://www.handspeak.com/word/2186/) has no written description we could extract."
+ },
+ "yucky": {
+  "description": "Unconfirmed: one baby-sign dictionary shows both open, fingers-spread hands sweeping outward in an arc from near the mouth and chest, with a disgusted face.",
+  "verified": false,
+  "sources": [
+   "https://babysignlanguage.com/dictionary/yucky/"
+  ],
+  "note": "Not verified. Lifeprint has no page (404), HandSpeak's 'yuck, yucky' (https://www.handspeak.com/word/2705/) is video-only, and Signing Savvy only lists it as fingerspelled. The description above is from a baby-sign site that is not on our reliable list, and other forms exist (e.g. disgust or 'gross' signs at the nose or stomach). Check against the GISLR reference clips before using."
+ },
+ "apple": {
+  "description": "Bend your dominant index finger into a hook, press its knuckle against your cheek near the mouth, and twist it back and forth.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/a/apple.htm",
+   "https://www.handspeak.com/word/97/"
+  ],
+  "note": "Lifeprint says cheek, HandSpeak says chin area. Some people use a fist instead of the hooked finger (Lifeprint calls that Signed English)."
+ },
+ "cereal": {
+  "description": "Put your dominant index finger, palm down, at your mouth's dominant-side corner. Move it to the other corner, bending and straightening it repeatedly.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/c/cereal.htm"
+  ],
+  "note": "Easily confused with DRY: DRY moves the opposite way and hooks only once (Lifeprint). Some regions use a 'C' eating-from-a-bowl version. HandSpeak's entry (https://www.handspeak.com/word/2688/) lists regional variants in video only."
+ },
+ "hot": {
+  "description": "Hold a bent, claw-like hand in front of your mouth, then quickly twist and throw it down and away, as if removing something hot.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/h/hot.htm",
+   "https://www.handspeak.com/word/1060/"
+  ],
+  "note": "A faster, stronger movement means hotter."
+ },
+ "all": {
+  "description": "Hold your other hand flat in front of you. Sweep your flat dominant hand in a circle around it and land it in the other palm.",
+  "verified": true,
+  "sources": [
+   "https://www.handspeak.com/word/60/",
+   "https://www.lifeprint.com/asl101/pages-signs/a/all.htm"
+  ],
+  "note": "Lifeprint confirms a two-handed flat-hand version, but its page shows video only, so the movement detail comes from HandSpeak. Fingerspelled A-L-L ('#ALL') is also very common, especially for 'all of you'."
+ },
+ "empty": {
+  "description": "Hold your other hand palm down. Slide the middle fingertip of your dominant hand along its back, from the wrist out past the knuckles.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/e/empty.htm"
+  ],
+  "note": "Also means AVAILABLE/VACANT/NAKED. HandSpeak (https://www.handspeak.com/word/667/) has video only."
+ },
+ "napkin": {
+  "description": "Unconfirmed: hold the fingertips of your dominant hand together and dab or wipe them across your mouth, side to side, like using a napkin.",
+  "verified": false,
+  "sources": [
+   "https://signingtime.com/blogs/dictionary/napkin"
+  ],
+  "note": "Not verified. Lifeprint's page only has a video labelled as a regional (Nova Scotia) form, and HandSpeak (https://www.handspeak.com/word/1476/) is video-only. The wiping-the-mouth idea comes from Signing Time and a baby-sign site, which are not on our reliable list and disagree on handshape."
+ },
+ "icecream": {
+  "description": "Hold a fist in front of your mouth as if holding a cone, and move it down twice as if licking.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/i/ice-cream.htm",
+   "https://www.handspeak.com/word/1087/"
+  ],
+  "note": "Some signers show a slight tongue flick; neither source requires it."
+ },
+ "sleep": {
+  "description": "Hold your open dominant hand in front of your face, palm toward you, and draw it down toward your chin while the fingers close onto your thumb.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/s/sleep.htm",
+   "https://www.handspeak.com/word/1985/"
+  ],
+  "note": "Hand ends in a bunched 'flattened O', not a fist. Similar to SLEEPY (fingers droop repeatedly) and to SAD (both open hands move down the face)."
+ },
+ "sleepy": {
+  "description": "Hold your open dominant hand in front of your face, palm toward you, and bend the fingers down at the knuckles a few times, like drooping eyelids.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/s/sleepy.htm"
+  ],
+  "note": "Checked against Lifeprint's 4-frame photo sequence (the page has no text). HandSpeak's entry (https://www.handspeak.com/word/1987/) is video-only. Sleepy eyes are part of the sign. Very close to SLEEP: SLEEP pulls down and closes once, SLEEPY droops in place repeatedly."
+ },
+ "nap": {
+  "description": "Usually fingerspelled N-A-P, or signed as SHORT plus SLEEP (open hand drawn down the face, closing into a bunch).",
+  "verified": true,
+  "sources": [
+   "https://www.handspeak.com/word/3615/"
+  ],
+  "note": "HandSpeak gives both forms. Lifeprint's nap page is empty. GISLR 'nap' clips probably overlap heavily with SLEEP, and possibly BED, so expect the model to confuse them."
+ },
+ "bed": {
+  "description": "Tilt your head and rest your cheek against your flat palm (or both palms pressed together), like laying your head on a pillow.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/b/bed.htm",
+   "https://www.handspeak.com/word/175/"
+  ],
+  "note": "Lifeprint shows both one-hand and two-hand versions on either side of the head. Overlaps with the common 'sleeping' gesture."
+ },
+ "pajamas": {
+  "description": "Unconfirmed: often a compound, SLEEP (open hand drawn down the face, closing) followed by CLOTHES (both open hands brushing down your chest).",
+  "verified": false,
+  "sources": [
+   "https://www.signingsavvy.com/sign/pajamas/2021/1",
+   "https://signingtime.com/blogs/dictionary/pajamas"
+  ],
+  "note": "Not verified. Signing Savvy confirms PAJAMAS is an ASL compound, but its description is members-only. The SLEEP+CLOTHES parts come from Signing Time, which is not on our list. Lifeprint's page is empty and HandSpeak (https://www.handspeak.com/word/3673/) is video-only. A fingerspelled P-J is also used."
+ },
+ "book": {
+  "description": "Press both flat hands together, palms touching, then open them like a book while the little-finger edges stay together.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/b/book.htm",
+   "https://www.handspeak.com/word/210/"
+  ],
+  "note": "A double movement is the noun BOOK; a single opening can mean OPEN-BOOK. Reversed (open to closed) means CLOSE-BOOK."
+ },
+ "story": {
+  "description": "With both loose hands loosely linked in front of you, pull them slightly apart while closing the fingers to the thumbs; repeat.",
+  "verified": true,
+  "sources": [
+   "https://www.handspeak.com/word/2081/"
+  ],
+  "note": "Lifeprint's STORY page is 'under construction'. Could resemble the second half of SENTENCE/LINK-type signs."
+ },
+ "night": {
+  "description": "Hold your other arm flat in front of you, palm down. Rest your dominant wrist on its back with that hand bent down, like the sun setting.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/n/night.htm",
+   "https://www.handspeak.com/word/1492/"
+  ],
+  "note": "Sliding along the arm means EVERY-NIGHT. TONIGHT = NOW + NIGHT. Mirror image of MORNING (hand rising)."
+ },
+ "kiss": {
+  "description": "Touch the bunched fingertips of your dominant hand to your lower cheek, then to your upper cheek.",
+  "verified": true,
+  "sources": [
+   "https://www.handspeak.com/word/1198/",
+   "https://www.lifeprint.com/asl101/pages-signs/k/kiss.htm"
+  ],
+  "note": "Sources disagree. HandSpeak's citation form is the cheek version above. Lifeprint's main version brings the fingertips of both bunched hands together in front of you with puckered lips (looks like MORE), and a one-hand version looks like HOME. Lifeprint says there are many variants."
+ },
+ "moon": {
+  "description": "Curve your dominant index finger and thumb into a small C and tap it twice by the side of your forehead or eye.",
+  "verified": true,
+  "sources": [
+   "https://www.handspeak.com/word/1435/",
+   "https://www.lifeprint.com/asl101/pages-signs/m/moon.htm"
+  ],
+  "note": "Lifeprint: same small-C handshape (crescent), with a version tapping around the eye. HandSpeak also lists a variant arcing outward from the forehead."
+ },
+ "quiet": {
+  "description": "Cross both flat hands in front of your mouth, then move them down and apart, palms down, as things settle.",
+  "verified": true,
+  "sources": [
+   "https://www.handspeak.com/word/1759/",
+   "https://www.lifeprint.com/asl101/pages-signs/q/quiet.htm"
+  ],
+  "note": "Lifeprint describes QUIET (as in 'the room was quiet') as a compound of the shhh gesture and a calming down-and-apart movement. It says 'be quiet!' is just the shhh gesture, so QUIET and SHHH overlap heavily."
+ },
+ "shhh": {
+  "description": "Hold your dominant index finger up against your lips while saying 'shh'.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/s/shh.htm",
+   "https://www.handspeak.com/word/7606/"
+  ],
+  "note": "Same as the everyday hearing gesture. Lifeprint uses it for 'be quiet', so it can be the first part of QUIET."
+ },
+ "read": {
+  "description": "Hold your other hand flat like a page. Point a V (index and middle fingers) at it and move down the palm, like eyes scanning.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/r/read.htm",
+   "https://www.handspeak.com/word/1772/"
+  ],
+  "note": "One movement = READ; a repeated movement = READING (Lifeprint)."
+ },
+ "wake": {
+  "description": "Pinch each index finger and thumb together beside your eyes, then flick them open into L shapes, like eyes popping open.",
+  "verified": true,
+  "sources": [
+   "https://www.handspeak.com/word/3843/",
+   "https://www.lifeprint.com/asl101/pages-signs/w/wake-up.htm"
+  ],
+  "note": "Lifeprint's WAKE-UP page shows it as opening eyes and glosses it as both 'wake up' and 'to be awake'. Similar to SURPRISE, which adds a surprised face."
+ },
+ "awake": {
+  "description": "Same as WAKE UP: pinch index fingers and thumbs together beside your eyes, then flick them open into L shapes.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/w/wake-up.htm",
+   "https://www.handspeak.com/word/3843/"
+  ],
+  "note": "Lifeprint's WAKE-UP page covers 'wake up' and 'to be awake', and HandSpeak lists 'awake' as a synonym of WAKE. Its own AWAKE page (https://www.handspeak.com/word/3823/) is video-only. WAKE and AWAKE are effectively the same sign and will be hard for the model to tell apart."
+ },
+ "morning": {
+  "description": "Hold your other arm flat across your body and put that hand by your dominant inner elbow. Raise your dominant forearm, palm up, like the sun rising.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/m/morning.htm",
+   "https://www.handspeak.com/word/1436/"
+  ],
+  "note": "The movement is small. Mirror idea of NIGHT. A bigger movement means ALL-MORNING; a sideways sweep means EVERY-MORNING."
+ },
+ "lamp": {
+  "description": "Unconfirmed: Lifeprint's general 'light / light bulb' sign flicks your dominant middle finger up off the thumb against the underside of your chin, twice.",
+  "verified": false,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/l/light.htm"
+  ],
+  "note": "Not verified as LAMP. Lifeprint's lamp page and HandSpeak's (https://www.handspeak.com/word/3496/) are video-only. Lifeprint's LIGHT text covers 'light device / light bulb', but it is not confirmed as the LAMP sign. Other references show a lamp as a bunched hand opening downward, with the elbow resting on the other hand like a lamp stand. Check against the GISLR clips."
+ },
+ "bath": {
+  "description": "Make two fists with thumbs up and rub them up and down on your chest, as if scrubbing yourself.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/b/bath.htm",
+   "https://www.handspeak.com/word/164/"
+  ],
+  "note": "Lifeprint warns it looks like ADDRESS/LIVE. BATH is a rubbing up-down-up movement, while ADDRESS is two quick upward thrusts."
+ },
+ "wet": {
+  "description": "Hold both hands in front of you, palms up and fingers loose, then lower them slightly while closing the fingers onto the thumbs, twice.",
+  "verified": true,
+  "sources": [
+   "https://www.handspeak.com/word/3977/",
+   "https://www.lifeprint.com/asl101/pages-signs/w/wet.htm"
+  ],
+  "note": "Lifeprint adds that many people start by touching a loose W to the chin (from WATER). Done gently it can mean SOFT, and a double movement can mean HUMID."
+ },
+ "dry": {
+  "description": "Pull your dominant index finger across your chin or lips toward your dominant side, bending it into a hook as it moves.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/d/dry.htm",
+   "https://www.handspeak.com/word/635/"
+  ],
+  "note": "Opposite direction to CEREAL, which also bends back and forth. UGLY is similar but done higher, under the nose, with a sour face."
+ },
+ "toothbrush": {
+  "description": "Unconfirmed as a separate sign: move your dominant index finger side to side in front of your teeth, as if brushing them.",
+  "verified": false,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/b/brush-teeth.htm"
+  ],
+  "note": "Not verified as TOOTHBRUSH. The description matches Lifeprint's BRUSH-TEETH text, but Lifeprint's toothbrush page is empty and HandSpeak's (https://www.handspeak.com/word/4739/) is video-only. Commonly the same sign as BRUSH-TEETH. Differs from TOOTH (a hooked finger tapping the teeth) mainly in the side-to-side movement."
+ },
+ "tooth": {
+  "description": "Bend your dominant index finger into a hook and tap it near your front teeth twice.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/t/tooth.htm",
+   "https://www.handspeak.com/word/2501/"
+  ],
+  "note": "Contact is optional. Also used for GLASS/CERAMIC. HandSpeak lists a variant moving across the teeth, which is very close to TOOTHBRUSH/BRUSH-TEETH."
+ },
+ "potty": {
+  "description": "Make a T (thumb tucked between your index and middle fingers), palm facing out, and shake it side to side a couple of times.",
+  "verified": true,
+  "sources": [
+   "https://www.handspeak.com/word/5332/",
+   "https://www.handspeak.com/word/2230/",
+   "https://www.lifeprint.com/asl101/pages-signs/t/toilet.htm"
+  ],
+  "note": "HandSpeak's POTTY entry says it is the TOILET sign, used for all ages. Lifeprint: the same sign means BATHROOM/TOILET, and some people twist instead of shaking."
+ },
+ "shower": {
+  "description": "Hold your dominant hand above your head with the fingertips bunched, then flick the fingers open downward, like water spraying. Usually repeated.",
+  "verified": true,
+  "sources": [
+   "https://www.handspeak.com/word/3071/",
+   "https://www.lifeprint.com/asl101/pages-signs/s/shower.htm"
+  ],
+  "note": "Lifeprint (animation only) says fluent signers use one or two movements. HandSpeak lists different signs for rain shower and baby/bridal shower."
+ },
+ "clean": {
+  "description": "Hold your other hand palm up. Slide your flat dominant hand, palm down, across it from the heel out past the fingertips.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/c/clean.htm",
+   "https://www.handspeak.com/word/4017/"
+  ],
+  "note": "Same sign as NICE. A repeated movement means CLEAN-UP / cleaning."
+ },
+ "dirty": {
+  "description": "Hold your dominant hand under your chin, palm down and fingers spread, and wiggle the fingers.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/d/dirty.htm",
+   "https://www.handspeak.com/word/582/"
+  ],
+  "note": "DIRT/soil is a different sign (thumbs rubbing fingertips)."
+ },
+ "hair": {
+  "description": "With your dominant index finger and thumb, pinch a bit of hair at the side of your head and give it a small shake, usually twice.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/h/hair.htm",
+   "https://www.handspeak.com/word/2487/"
+  ],
+  "note": "Often a single movement in fast signing. Lifeprint also shows a version using just the index finger and thumb."
+ },
+ "duck": {
+  "description": "At your mouth, open and close your dominant index finger, middle finger and thumb together twice, like a duck's bill.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/d/duck.htm",
+   "https://www.handspeak.com/word/636/"
+  ],
+  "note": "BIRD is nearly identical but uses only the index finger and thumb. Some people use the whole hand for DUCK."
+ },
+ "underwear": {
+  "description": "With both hands' index fingers and thumbs (palms toward you), trace the outline of underwear at your hips, closing finger to thumb at the end.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/u/underwear.htm"
+  ],
+  "note": "Lifeprint also reports an older regional version: a loose C closing into a fist at the chin, a couple of times. HandSpeak (https://www.handspeak.com/word/3001/) is video-only."
+ },
+ "mom": {
+  "description": "Spread the fingers of your open dominant hand and tap your thumb on your chin, often twice.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/m/mom.htm",
+   "https://www.handspeak.com/word/1439/"
+  ],
+  "note": "Variants: a single touch, wiggling fingers, or starting from a fist. Differs from DAD only in location (chin vs forehead). GRANDMA adds forward arcs."
+ },
+ "dad": {
+  "description": "Spread the fingers of your open dominant hand and tap your thumb on your forehead, often twice.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/d/dad.htm",
+   "https://www.handspeak.com/word/758/"
+  ],
+  "note": "HandSpeak places it at the side of the forehead for citation. Wiggling the fingers is a common variant. Differs from MOM only by location; GRANDPA adds forward arcs."
+ },
+ "grandma": {
+  "description": "Start as MOM (open hand, thumb on your chin), then move the hand forward away from your face in two small hops.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/g/grandma.htm",
+   "https://www.handspeak.com/word/940/"
+  ],
+  "note": "Lifeprint says one big arc is also fine. A near-minimal pair with MOM and GRANDPA."
+ },
+ "grandpa": {
+  "description": "Start as DAD (open hand, thumb on your forehead), then move the hand forward away from your head in two small hops.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/g/grandpa.htm",
+   "https://www.handspeak.com/word/939/"
+  ],
+  "note": "One big arc or a straight move forward is also used. A near-minimal pair with DAD and GRANDMA."
+ },
+ "brother": {
+  "description": "Start with your dominant thumb (index finger out) at your forehead and bring it down onto your other index finger, both pointing forward side by side.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/b/brother.htm",
+   "https://www.handspeak.com/word/264/"
+  ],
+  "note": "Both sources list a couple of handshape variants for the starting hand. SISTER is the same movement starting at the cheek/jaw."
+ },
+ "aunt": {
+  "description": "Make an A (fist with the thumb alongside) near your cheek and give it a small twist or shake a couple of times.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/a/aunt.htm",
+   "https://www.handspeak.com/word/132/"
+  ],
+  "note": "HandSpeak describes the thumb side brushing down the cheek twice and warns it differs from GIRL mainly in palm direction, so these two are a confusable pair."
+ },
+ "uncle": {
+  "description": "Hold a U (index and middle fingers together) beside your forehead and give it a small twist or shake a couple of times.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/u/uncle.htm",
+   "https://www.handspeak.com/word/2291/"
+  ],
+  "note": "HandSpeak describes brushing down at the side of the head twice. Male-family signs sit near the forehead and female ones near the cheek/chin."
+ },
+ "boy": {
+  "description": "In front of your forehead, close your flat fingers onto your thumb twice, like grabbing the brim of a cap.",
+  "verified": true,
+  "sources": [
+   "https://www.handspeak.com/word/223/",
+   "https://www.lifeprint.com/asl101/pages-signs/b/boy.htm"
+  ],
+  "note": "Lifeprint confirms it means boy/male in general but shows it in video only. Little boy = BOY + a 'this tall' flat hand."
+ },
+ "girl": {
+  "description": "Make a fist with your thumb up and stroke the thumb tip down along your cheek toward your chin.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/g/girl.htm",
+   "https://www.handspeak.com/word/908/"
+  ],
+  "note": "HandSpeak strokes twice. Very similar to AUNT (different palm direction)."
+ },
+ "child": {
+  "description": "Hold your dominant hand flat, palm down, at about a small child's head height in front of you and pat down twice.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/c/child.htm"
+  ],
+  "note": "One pat may be read as SHORT (height). CHILDREN pats two spots, or uses both hands. HandSpeak's 'child, children' entry (https://www.handspeak.com/word/383/) is video-only."
+ },
+ "hello": {
+  "description": "Touch your flat dominant hand to the side of your forehead, palm out, and move it away like a small salute, smiling.",
+  "verified": true,
+  "sources": [
+   "https://www.handspeak.com/word/1015/",
+   "https://www.lifeprint.com/asl101/pages-signs/h/hello.htm"
+  ],
+  "note": "Sources differ: HandSpeak gives the salute-from-forehead citation form; Lifeprint says a natural side-to-side wave is used. The salute can resemble DAD (thumb on forehead); a wave can resemble BYE."
+ },
+ "bye": {
+  "description": "Hold your open dominant hand up, palm out, and wave by bending the fingers down and up at the knuckles a few times.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/g/goodbye.htm",
+   "https://www.lifeprint.com/asl101/pages-signs/b/bye.htm"
+  ],
+  "note": "Lifeprint: the natural wave; goodbye bends at the large knuckles or wrist, while hello sweeps side to side. HandSpeak's 'goodbye' entries are video-only."
+ },
+ "yes": {
+  "description": "Make a fist and nod it up and down at the wrist, like a head nodding yes.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/y/yes.htm",
+   "https://www.handspeak.com/word/2443/"
+  ],
+  "note": "HandSpeak: usually two nods. Fingerspelled Y-E-S is used for emphasis."
+ },
+ "no": {
+  "description": "Hold your index and middle fingers together and snap them down onto your thumb, palm facing out, usually twice.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/n/no.htm",
+   "https://www.handspeak.com/word/1496/"
+  ],
+  "note": "One firm snap = a strong 'No!'. Gentle repeated snaps = a soft 'no, no' for a child. It comes from fingerspelled N-O."
+ },
+ "happy": {
+  "description": "With your flat hand (or both hands), palm toward you, brush upward on your chest in small forward circles, smiling.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/h/happy.htm",
+   "https://www.handspeak.com/word/982/"
+  ],
+  "note": "One- and two-handed versions are both common. Close to PLEASE (one flat hand circling on the chest), which is a key confusable pair."
+ },
+ "sad": {
+  "description": "Hold both open hands in front of your face, palms toward you, and draw them slowly down while making a sad face.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/s/sad.htm",
+   "https://www.handspeak.com/word/1866/"
+  ],
+  "note": "A one-handed informal version exists (HandSpeak), which looks a lot like SLEEP without the closing fingers."
+ },
+ "cry": {
+  "description": "Point your index fingers (one or both hands) just under your eyes and stroke them down your cheeks a few times, like tears.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/c/cry.htm",
+   "https://www.handspeak.com/word/3073/"
+  ],
+  "note": "Alternating hands, four fingers, or wiggling fingers mean crying hard or bawling."
+ },
+ "dog": {
+  "description": "Hold your dominant hand up and snap your middle finger against your thumb twice.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/d/dog.htm",
+   "https://www.handspeak.com/word/602/"
+  ],
+  "note": "Variants: pat your thigh then snap, or just pat your thigh twice (HandSpeak says the thigh pat is common with babies). The snap uses the middle finger, not the index finger."
+ },
+ "cat": {
+  "description": "Pinch your dominant thumb and index finger together beside your nose and pull outward across your cheek twice, like stroking whiskers.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/c/cat.htm",
+   "https://www.handspeak.com/word/334/"
+  ],
+  "note": "Handshape varies: F hand (most common), 8 hand, or G hand all mean CAT. Two-handed (both cheeks) is used for storytelling with young children."
+ },
+ "bird": {
+  "description": "Hold your dominant index finger and thumb at the side of your mouth and open and close them twice, like a beak.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/b/bird.htm",
+   "https://www.handspeak.com/word/198/"
+  ],
+  "note": "Look-alike: DUCK is the same idea but uses the index and middle fingers with the thumb (a bigger bill). BIRD can also mean 'chicken' in context."
+ },
+ "fish": {
+  "description": "Hold your dominant hand flat with the palm facing sideways and wiggle it side to side as it moves forward, like a fish swimming.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/f/fish.htm",
+   "https://www.handspeak.com/word/804/"
+  ],
+  "note": "Some signers add the other hand touching the wrist or elbow of the swimming hand; Lifeprint calls that version extra effort, but it is in use. Different from FISHING (casting a rod)."
+ },
+ "cow": {
+  "description": "Put the thumb of your dominant Y hand (thumb and pinkie out) on your temple and twist the hand up and down, like a horn.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/c/cow.htm",
+   "https://www.handspeak.com/word/501/"
+  ],
+  "note": "Two-handed (both temples) is the version often used when signing to young children; one hand is used in everyday conversation."
+ },
+ "horse": {
+  "description": "Put the thumb of your dominant hand on your temple with your index and middle fingers up together, then bend those fingers down twice, like a horse's ear.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/h/horse.htm",
+   "https://www.handspeak.com/word/1057/"
+  ],
+  "note": "Two-handed (both sides of the head) is used when signing to children. Using all four fingers instead of two means DONKEY. Look-alike: COW is also at the temple but uses a Y hand that twists."
+ },
+ "car": {
+  "description": "Hold two fists in front of you and move them up and down alternately, like turning a steering wheel.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/c/car.htm",
+   "https://www.handspeak.com/word/319/"
+  ],
+  "note": "Fingerspelling C-A-R is just as common (Lifeprint recommends it). Very similar to DRIVE; HandSpeak warns learners to keep the hands as fists (S hands), not thumbs-up fists. An older version taps two C hands together."
+ },
+ "outside": {
+  "description": "Put your dominant fingertips into your other hand's loose C shape, then pull them up and out while closing your fingers together.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/o/outside.htm",
+   "https://www.handspeak.com/word/1574/"
+  ],
+  "note": "Common one-handed version: open hand closing as it moves up and out, done twice, which both sources give for 'outside / outdoors'. One single movement means GO-OUT."
+ },
+ "jump": {
+  "description": "Stand the tips of your dominant index and middle fingers on your other palm like legs, then lift them up and land them back down.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/j/jump.htm",
+   "https://www.handspeak.com/word/1179/"
+  ],
+  "note": "Repeat the hop for 'jumping'. Look-alikes: DANCE (the same two-finger legs swinging side to side over the palm) and RIDE (bent fingers sitting on the other hand moving forward)."
+ },
+ "balloon": {
+  "description": "Start with both curved hands together in front of your mouth, then move them apart in a round shape, as if a balloon is inflating as you blow.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/b/balloon.htm",
+   "https://www.handspeak.com/word/155/"
+  ],
+  "note": "Lifeprint describes it as miming blowing up a balloon; the noun is smaller and quicker, the verb 'blow up a balloon' larger and slower."
+ },
+ "airplane": {
+  "description": "Make an 'I love you' hand (thumb, index and pinkie out), palm down, and move it forward a short way twice.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/a/airplane.htm",
+   "https://www.handspeak.com/word/56/"
+  ],
+  "note": "Angle the palm down so it is not just the I-LOVE-YOU sign. A single long forward sweep means FLY. HandSpeak also shows a version with the index and middle fingers crossed."
+ },
+ "owie": {
+  "description": "Point both index fingers toward each other and jab them together twice, near the spot that hurts.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/h/hurt.htm",
+   "https://www.lifeprint.com/asl101/pages-signs/p/pain.htm",
+   "https://www.handspeak.com/word/1077/",
+   "https://www.handspeak.com/word/1589/"
+  ],
+  "note": "OWIE is signed with the general HURT/PAIN sign; Lifeprint's pain page uses the word 'owie' for it. A twisting version (fingers twist in opposite directions) is also common, and HURT can be fingerspelled quickly near the sore spot. Use a pained face."
+ },
+ "sick": {
+  "description": "Touch your dominant bent middle finger to your forehead and your other bent middle finger to your stomach at the same time.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/s/sick.htm",
+   "https://www.handspeak.com/word/1959/"
+  ],
+  "note": "HandSpeak shows a common one-handed version, forehead only."
+ },
+ "mad": {
+  "description": "Hold your dominant open hand in front of your face and bend the fingers into a claw once, with a scrunched, angry face.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/m/mad.htm",
+   "https://www.handspeak.com/word/1329/"
+  ],
+  "note": "Don't touch your face. A double movement with a milder face means 'grumpy'. ANGRY is a related sign: both claw hands pulled up from the stomach. The facial expression is part of the sign."
+ },
+ "like": {
+  "description": "Start with your dominant thumb and middle finger open near your chest, then pull the hand forward while pinching them together.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/l/like.htm",
+   "https://www.handspeak.com/word/1276/"
+  ],
+  "note": "Uses the middle finger, not the index; HandSpeak warns not to confuse the handshape with the one in WHITE. LIKE never means 'similar' (that's SAME)."
+ },
+ "wait": {
+  "description": "Hold both open hands up to one side, palms toward you, and wiggle your fingers.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/w/wait.htm",
+   "https://www.handspeak.com/word/2341/"
+  ],
+  "note": "Wiggling longer, with a bored face, means 'wait a long time'."
+ },
+ "up": {
+  "description": "Point your dominant index finger upward and move it up a little.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/u/up.htm",
+   "https://www.handspeak.com/word/2301/"
+  ],
+  "note": "A double movement can mean 'upstairs'. DOWN is the same idea pointing down."
+ },
+ "open": {
+  "description": "Hold both flat hands side by side, palms down, then swing them apart so the palms turn up, like opening double doors.",
+  "verified": true,
+  "sources": [
+   "https://www.handspeak.com/word/1561/",
+   "https://www.lifeprint.com/asl101/pages-signs/o/open.htm"
+  ],
+  "note": "Verified from HandSpeak's text; Lifeprint's page is pictures only and says opening something specific (a door, window, jar) is often mimed instead. Look-alike: BOOK starts with palms pressed together and opens like a book."
+ },
+ "look": {
+  "description": "Point your dominant index and middle fingers out from under your eyes, then turn them forward toward what you are looking at.",
+  "verified": true,
+  "sources": [
+   "https://www.handspeak.com/word/1302/",
+   "https://www.lifeprint.com/asl101/pages-signs/l/look.htm"
+  ],
+  "note": "Verified from HandSpeak's text; Lifeprint's LOOK page is pictures only. The sign points toward the thing being looked at, so its direction changes."
+ },
+ "where": {
+  "description": "Hold up your dominant index finger, palm out, and shake it side to side a few times from the wrist, with your eyebrows down.",
+  "verified": true,
+  "sources": [
+   "https://www.lifeprint.com/asl101/pages-signs/w/where.htm",
+   "https://www.handspeak.com/word/2391/"
+  ],
+  "note": "Furrowed eyebrows are part of WH-questions. Use a plain index finger. An older version shaking two palm-up hands now mostly means WHAT."
+ }
 }

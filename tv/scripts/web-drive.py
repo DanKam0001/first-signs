@@ -38,6 +38,28 @@ def text(page):
     return page.inner_text("body")
 
 
+def focused_label(page):
+    return page.evaluate(
+        "() => { const els=[...document.querySelectorAll('div')].filter(d => getComputedStyle(d).backgroundColor === 'rgb(255, 255, 255)' && d.innerText && d.innerText.length < 40); return els.map(e => e.innerText.trim()).pop() || ''; }"
+    )
+
+
+MENU = ("Family round", "Sign Together", "Talk with Baby", "Progress", "Phone", "Connect phone", "About", "Settings")
+
+
+def to_menu(page, label):
+    """From Home: Down until a menu-row button has focus (the pack grid may be 1 or 2 rows), then Right to `label`."""
+    for _ in range(4):
+        if any(m in focused_label(page) for m in MENU):
+            break
+        key(page, "Down")
+    for _ in range(len(MENU)):
+        if label in focused_label(page):
+            return
+        key(page, "Right")
+    errors.append(f"could not focus menu item {label!r} (focus: {focused_label(page)!r})")
+
+
 def expect(page, needle, timeout=8.0):
     t0 = time.time()
     while time.time() - t0 < timeout:
@@ -106,8 +128,8 @@ with sync_playwright() as p:
     key(page, "Escape", wait=0.8)
     expect(page, "routine at a time")
 
-    # 5. Family round: Down to the menu row, first button is Family round.
-    key(page, "Down")
+    # 5. Family round: the first button of the menu row.
+    to_menu(page, "Family round")
     shot(page, "10-home-menu-focus")
     key(page, "Enter", wait=0.8)
     expect(page, "Who's playing?")
@@ -146,20 +168,17 @@ with sync_playwright() as p:
 
     # 6. Progress, About, Settings via the menu row.
     expect(page, "routine at a time")
-    key(page, "Down")
-    key(page, "Right", n=2)
+    to_menu(page, "Progress")
     key(page, "Enter", wait=0.8)
     expect(page, "Your progress")
     shot(page, "16-progress")
     key(page, "Escape", wait=0.8)
-    key(page, "Down")
-    key(page, "Right", n=4)
+    to_menu(page, "About")
     key(page, "Enter", wait=0.8)
     expect(page, "Deaf-led ASL class")
     shot(page, "17-about")
     key(page, "Escape", wait=0.8)
-    key(page, "Down")
-    key(page, "Right", n=5)
+    to_menu(page, "Settings")
     key(page, "Enter", wait=0.8)
     expect(page, "Server address")
     shot(page, "18-settings")

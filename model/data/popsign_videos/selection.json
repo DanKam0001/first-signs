@@ -131,5 +131,78 @@
  },
  "cry": {
   "file": "gtsignstudy4a.8037-cry-2023_01_28_15_16_50.609-0.mp4"
+ },
+ "dog": {
+  "file": "gtsignstudy4a.8037-dog-2023_01_28_13_42_24.337-0.mp4",
+  "poster_frame": 19
+ },
+ "cat": {
+  "file": "gtsignstudy4a.8037-cat-2023_01_28_19_27_57.964-0.mp4"
+ },
+ "bird": {
+  "file": "gtsignstudy4a.8037-bird-2023_01_28_15_12_56.883-0.mp4",
+  "poster_t": 0.4
+ },
+ "fish": {
+  "file": "gtsignstudy4a.8037-fish-2023_01_25_17_18_33.013-0.mp4"
+ },
+ "cow": {
+  "file": "gtsignstudy4a.8037-cow-2023_01_29_14_12_57.445-0.mp4"
+ },
+ "horse": {
+  "file": "gtsignstudy4a.8037-horse-2023_01_25_17_28_04.592-0.mp4"
+ },
+ "car": {
+  "file": "gtsignstudy4a.8037-car-2023_01_28_12_52_00.888-0.mp4",
+  "note": "Signed one-handed here (the signer is holding a phone). In everyday ASL, use both hands."
+ },
+ "outside": {
+  "file": "gtsignstudy4a.8037-outside-2023_01_28_15_18_06.773-0.mp4",
+  "note": "Signed one-handed here (the signer is holding a phone). A one-handed OUTSIDE is also common in everyday ASL."
+ },
+ "jump": {
+  "file": "gtsignstudy4a.8037-jump-2023_01_28_15_01_27.840-0.mp4",
+  "note": "Signed one-handed here (the signer is holding a phone). In everyday ASL, use both hands."
+ },
+ "balloon": {
+  "file": "gtsignstudy4a.8037-balloon-2023_01_29_13_59_03.432-0.mp4",
+  "note": "Signed one-handed here (the signer is holding a phone). In everyday ASL, use both hands."
+ },
+ "airplane": {
+  "file": "gtsignstudy4a.8037-airplane-2023_01_28_15_04_49.677-0.mp4"
+ },
+ "owie": {
+  "file": "gtsignstudy4a.8037-owie-2023_01_28_15_12_15.919-0.mp4",
+  "note": "Signed one-handed here (the signer is holding a phone). In everyday ASL, use both hands."
+ },
+ "sick": {
+  "file": "gtsignstudy4a.8037-sick-2023_01_28_13_44_52.854-0.mp4",
+  "note": "Signed one-handed here (the signer is holding a phone). In everyday ASL, use both hands."
+ },
+ "mad": {
+  "file": "gtsignstudy4a.8037-mad-2023_01_28_19_19_04.027-0.mp4"
+ },
+ "like": {
+  "file": "gtsignstudy4a.8037-like-2023_01_28_15_12_56.883-0.mp4"
+ },
+ "wait": {
+  "file": "gtsignstudy4a.8037-wait-2023_01_25_17_31_25.739-0.mp4",
+  "note": "Signed one-handed here (the signer is holding a phone). In everyday ASL, use both hands."
+ },
+ "up": {
+  "file": "gtsignstudy4a.8037-up-2023_01_25_17_21_52.325-0.mp4"
+ },
+ "open": {
+  "file": "gtsignstudy4a.8037-open-2023_01_28_13_19_34.314-0.mp4",
+  "note": "Signed one-handed here (the signer is holding a phone). In everyday ASL, use both hands."
+ },
+ "hot": {
+  "file": "gtsignstudy4a.8037-hot-2023_01_28_18_48_10.465-0.mp4"
+ },
+ "look": {
+  "file": "gtsignstudy4a.8037-look-2023_01_28_13_44_21.778-0.mp4"
+ },
+ "where": {
+  "file": "gtsignstudy4a.8037-where-2023_01_28_15_16_50.609-0.mp4"
  }
 }

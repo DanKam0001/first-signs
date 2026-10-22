@@ -50,6 +50,8 @@ export const packColors: Record<string, string> = {
   bedtime: colors.text,
   bath: colors.text,
   family: colors.text,
+  play: colors.text,
+  feelings: colors.text,
 };
 
 export const type = {

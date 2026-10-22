@@ -25,3 +25,17 @@
 - A: "Babies start understanding words at 6 months. Nine in ten Deaf babies are born to hearing parents."
 - B: "Language learning starts in infancy. For a Deaf baby, it has to be seen, not heard."
 - C: "Hearing babies understand words at 6 months. The typical cochlear implant comes at 16 months."
+
+## Recognition accuracy we may state (measured 2026-10-22, from `model/export/metrics.json`)
+Shipped model: 61 signs in 6 packs (Mealtime, Bedtime, Bath time, Family, Play, Feelings & needs). Test set: GISLR rerun
+set, 10 Deaf signers the model never saw, 9,882 clips. "In-pack" = only the current pack's signs are candidates, as in the app.
+
+| Claim (on-screen wording) | Number | Confidence |
+|---|---|---|
+| "Tested on 10 Deaf signers it never saw: right first time 94.5% of the time, in its top 3 97.7%, within a pack." | in-pack top-1 0.945, top-3 0.977 | High (measured) |
+| "On clips made to look like the phone's window: 92.4% first time, 96.3% in the top 3." | phone-sim in-pack top-1 0.924, top-3 0.963 | High (measured) |
+| "Every pack scores at least 96.7% top-3 on unseen signers." | lowest pack top-3: Play 0.967 | High (measured) |
+| "Adding the two new packs did not meaningfully change the first four: 94.6% / 97.8% now, 94.4% / 97.7% before." | first 40 signs, same clips, both models | High (measured) |
+
+Do NOT say: any accuracy for learners or for the live phone camera (not measured yet); "61 signs at 97.7%" without "within a pack"
+(all 61 at once is 89.3% top-1 / 94.6% top-3).

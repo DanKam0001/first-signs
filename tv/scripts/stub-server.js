@@ -5,6 +5,8 @@
 //   node scripts/stub-server.js --fake-phone     # also pretends a phone paired: streams frames, answers attempts
 //   options: --port N  --ok-rate 0.6  --pair-delay 2500
 // speak -> serves a short chime WAV (no Polly); coach -> a canned tip (no Bedrock).
+// Scripted preds (fake phone): GET /next-pred?top=water,bed&p=0.8,0.1[&hands=0] queues the next solo pred's
+// ranking (top-1 first); hands=0 also blanks the hands in the recording window. GET /next-pred?clear=1 empties it.
 const http = require('http');
 const crypto = require('crypto');
 const os = require('os');
@@ -56,11 +58,25 @@ function chime() {
 }
 const CHIME = chime();
 const spoken = [];
+const scripted = []; // queued { top: [[id, p], ...] | null, hands: boolean } for the fake phone's next preds
 
 const server = http.createServer((req, res) => {
   if (req.url.startsWith('/tts/')) {
     res.writeHead(200, { 'Content-Type': 'audio/wav', 'Content-Length': CHIME.length, 'Access-Control-Allow-Origin': '*' });
     res.end(CHIME);
+    return;
+  }
+  if (req.url.startsWith('/next-pred')) {
+    const q = new URL(req.url, 'http://x').searchParams;
+    if (q.get('clear')) scripted.length = 0;
+    else {
+      const ids = (q.get('top') || '').split(',').filter(Boolean);
+      const ps = (q.get('p') || '').split(',').map(Number);
+      const top = ids.length ? ids.map((id, i) => [id, Number.isFinite(ps[i]) ? ps[i] : i === 0 ? 0.8 : 0.05]) : null;
+      scripted.push({ top, hands: q.get('hands') !== '0' });
+    }
+    res.writeHead(200, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+    res.end(JSON.stringify({ queued: scripted }));
     return;
   }
   if (req.url === '/spoken') {
@@ -141,6 +157,10 @@ function startFake(room) {
     const k = fake.k++;
     const f = frames[k % frames.length];
     const jitter = a && a.stage === 'recording' ? 0.004 : 0.002;
+    if (a && a.stage === 'recording' && a.script && !a.script.hands) {
+      send(room.tv, { ...toFrame(f, Date.now(), jitter), left: null, right: null });
+      return;
+    }
     if (fake.duo) send(room.tv, duoFrame(f, frames[(k + 7) % frames.length], Date.now(), jitter));
     else send(room.tv, toFrame(f, Date.now(), jitter));
   }, 1000 / 15);
@@ -150,9 +170,9 @@ function startFake(room) {
 }
 function fakeAttempt(room, msg) {
   const fake = room.fake;
-  const a = { id: msg.id, target: msg.target, stage: 'countdown', timers: [] };
-  fake.attempt = a;
   const duo = msg.mode === 'duo';
+  const a = { id: msg.id, target: msg.target, stage: 'countdown', timers: [], script: !duo && scripted.length ? scripted.shift() : null };
+  fake.attempt = a;
   fake.duo = duo;
   if (duo && !fake.sawDuo) {
     // first duo attempt: pretend only one person was in view for a moment
@@ -163,7 +183,7 @@ function fakeAttempt(room, msg) {
   a.timers.push(
     setTimeout(() => {
       a.stage = 'recording';
-      send(room.tv, { type: 'phone_state', state: 'recording' });
+      send(room.tv, { type: 'phone_state', state: a.script && !a.script.hands ? 'no_hands' : 'recording' });
     }, msg.countdownMs || 3000)
   );
   a.timers.push(
@@ -174,6 +194,18 @@ function fakeAttempt(room, msg) {
   );
   a.timers.push(
     setTimeout(() => {
+      if (a.script) {
+        const others = ['more', 'drink', 'water', 'bed', 'mom'];
+        let top = a.script.top || [[others[0], 0.4], [others[1], 0.3], [others[2], 0.2]];
+        for (const o of others) if (top.length < 3 && !top.some(([x]) => x === o)) top = [...top, [o, 0.02]];
+        const i = top.findIndex(([x]) => x === msg.target);
+        const ok = a.script.hands && i >= 0 && i < 3 && top[i][1] >= 0.25;
+        send(room.tv, { type: 'pred', id: msg.id, target: msg.target, top: top.slice(0, 3), ok });
+        send(room.tv, { type: 'phone_state', state: 'ready' });
+        fake.attempt = null;
+        console.log(`[stub] room ${room.code}: scripted pred ${JSON.stringify(top.slice(0, 3))} ok=${ok}`);
+        return;
+      }
       const n = (fake.tries[msg.target] = (fake.tries[msg.target] || 0) + 1);
       const ok = n >= 2 || Math.random() < OK_RATE; // a miss is always followed by a success
       const others = ['more', 'drink', 'water', 'bed', 'mom'].filter((x) => x !== msg.target);

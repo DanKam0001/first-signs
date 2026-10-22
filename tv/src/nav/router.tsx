@@ -10,6 +10,7 @@ export type Route =
   | { name: 'game'; players: string[]; packId: string; turnsEach: number }
   | { name: 'duoSetup' }
   | { name: 'duo'; leftName: string; rightName: string; packId: string; rounds: number }
+  | { name: 'talk' }
   | { name: 'progress' }
   | { name: 'about' }
   | { name: 'settings' };

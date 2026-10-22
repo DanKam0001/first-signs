@@ -30,6 +30,27 @@ export function PackIcon({ pack, size, color }: { pack: string; size: number; co
         </>
       );
       break;
+    case 'play': // paw print: animals and play
+      body = (
+        <>
+          <Path d="M50 50 C64 50 78 66 78 78 C78 88 70 90 62 87 C56 85 44 85 38 87 C30 90 22 88 22 78 C22 66 36 50 50 50 Z" fill={color} />
+          <Circle cx={22} cy={44} r={9} fill={color} />
+          <Circle cx={38} cy={24} r={10} fill={color} />
+          <Circle cx={62} cy={24} r={10} fill={color} />
+          <Circle cx={78} cy={44} r={9} fill={color} />
+        </>
+      );
+      break;
+    case 'feelings': // smiling face, outlined
+      body = (
+        <>
+          <Circle cx={50} cy={50} r={36} stroke={color} strokeWidth={7} fill="none" />
+          <Circle cx={37} cy={41} r={6} fill={color} />
+          <Circle cx={63} cy={41} r={6} fill={color} />
+          <Path d="M32 60 C40 72 60 72 68 60" stroke={color} strokeWidth={7} strokeLinecap="round" fill="none" />
+        </>
+      );
+      break;
     default: // family: heart
       body = <Path d="M50 86 C20 64 8 48 8 32 A20 20 0 0 1 50 24 A20 20 0 0 1 92 32 C92 48 80 64 50 86 Z" fill={color} />;
   }

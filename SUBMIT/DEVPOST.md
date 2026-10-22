@@ -42,7 +42,7 @@ a sign language. Early access to language matters: signed or spoken, the earlier
 Those parents have books, videos and phone apps. None of them can tell you that *your* sign is wrong. Phone apps have
 a second problem: you hold the phone in one hand and try to sign with the other, on a tiny screen, one person at a time.
 We saw this in our own data. The Deaf signers who recorded our reference videos held their phones while filming, and
-about 10 of our 40 clips are one-handed as a result.
+about 18 of our 61 clips are one-handed as a result.
 
 The living-room TV fixes all of that. Put the phone on a stand as a camera, and both hands are free. The teacher is
 life-size at couch distance. The feedback is big enough for the whole family to see, and they can learn together.
@@ -52,8 +52,8 @@ life-size at couch distance. The feedback is big enough for the whole family to 
 First Signs is a Fire TV app that helps hearing families learn their first ASL words for a Deaf baby or toddler.
 
 - **Pair:** the TV shows a QR code. Scan it with a phone and put the phone on a stand. It is now the camera.
-- **Lessons:** 40 everyday signs in four routine packs: Mealtime (milk, drink, food, please...), Bedtime, Bath time and
-  Family. Watch a short clip of a Deaf signer making the sign, life-size, with a slow-motion option. Press **Your
+- **Lessons:** 61 everyday signs in six routine packs: Mealtime (milk, drink, food, please...), Bedtime, Bath time,
+  Family, Play (dog, cat, car, outside...) and Feelings & needs (owie, sick, up, wait...). Watch a short clip of a Deaf signer making the sign, life-size, with a slow-motion option. Press **Your
   turn**: the TV counts you in, watches a 2.5-second window, and tells you whether you got it. If you missed, it says
   what the sign looked like instead and gives a short, specific tip. Each sign earns up to 3 stars.
 - **Family round:** players take turns on random signs from a pack, with scores and streaks, ending on a scoreboard.
@@ -70,14 +70,14 @@ to Deaf-led ASL classes.
 - **Phone (web page):** MediaPipe tasks-vision Hand and Pose landmarkers run in the phone's browser and stream
   landmark frames at 15-20 fps. When the TV asks for an attempt, the phone records a window and runs our sign model
   on-device with onnxruntime-web. Video is never uploaded.
-- **Sign model:** a ~995k-parameter convolution and transformer classifier (4.0 MB ONNX), trained in PyTorch on a GTX
+- **Sign model:** a ~1.0M-parameter convolution and transformer classifier (4.0 MB ONNX), trained in PyTorch on a GTX
   1660 using landmarks from **21 Deaf signers** in Google's GISLR dataset (D-PAN and Georgia Tech, CC BY 4.0). We
-  tested it on **10 different Deaf signers it never saw** (6,461 clips): within a pack, it gets the sign right first
-  time 94.4% of the time, and in its top 3 97.7% of the time. On clips altered to look like the phone's window, those
-  numbers are 92.0% and 96.1%. The Python and JavaScript preprocessing are checked against each other on the same
+  tested it on **10 different Deaf signers it never saw** (9,882 clips): within a pack, it gets the sign right first
+  time 94.5% of the time, and in its top 3 97.7% of the time. On clips altered to look like the phone's window, those
+  numbers are 92.4% and 96.3%. The Python and JavaScript preprocessing are checked against each other on the same
   fixtures, and onnxruntime-web on the phone matches PyTorch to within 3e-6.
-- **Reference videos:** 40 short clips of Deaf signers from PopSign ASL v1.0 (Georgia Tech and DPAN, CC BY 4.0). We
-  fetched only the 607 clips we needed out of tar files of up to 3 GB each, using HTTP Range requests, and re-encoded
+- **Reference videos:** 61 short clips of a Deaf signer from PopSign ASL v1.0 (Georgia Tech and DPAN, CC BY 4.0). We
+  fetched only the 936 clips we needed to choose from out of tar files of up to 3 GB each, using HTTP Range requests, and re-encoded
   them for Android TV playback.
 - **Relay server (Node.js):** pairs the TV and phone with a 4-digit room code and relays messages over WebSockets. It
   calls **Amazon Polly** (neural voice) for spoken prompts, caching every phrase so it is synthesized once, and

@@ -15,7 +15,7 @@ so the same navigation code runs on Fire OS, the web and (later) Vega.
 | Screen | What it does |
 | --- | --- |
 | Pair | `hello` as `tv`, shows `phoneUrl` as a QR code plus the 4-digit code, waits for `paired`. "Just watch for now" skips. |
-| Home | The four packs (with learned counts), Family round, Progress, Connect phone, About, Settings. |
+| Home | The six packs in two rows of three (with learned counts), Family round, Progress, Connect phone, About, Settings. |
 | Pack | A grid of signs with 0-3 stars each. |
 | Lesson | **Watch:** the real sign video, recorded by a Deaf signer (PopSign ASL v1.0). It loops, is fitted without cropping on a dark letterbox, and shows its poster until the first frame. "Slow motion" plays it at 0.5x. The `video.note` caption and the credit line sit under it. **You:** a live mirror skeleton drawn from `frame`s, with a head (an ellipse from pose 0-10, plus mouth and chin markers), thick lines, and a large colour-coded close-up of the dominant hand. **Your turn** sends `attempt`, runs the 3-2-1 countdown and recording bar, and shows the `pred` result: confetti if ok; if missed, "looked a bit like X" plus a `coach` tip. Back cancels an attempt in flight (`cancel`). |
 | Family round | Pick players (Mum, Dad, Grandma...), a pack and the number of turns. Players take turns on random signs; a right answer scores 1, or 2 on a streak of 3 or more. "Show me first" plays the sign video; it also plays after each answer. Ends with a scoreboard. |

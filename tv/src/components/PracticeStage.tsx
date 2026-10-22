@@ -24,10 +24,16 @@ export function PracticeStage({
   windowMs,
   showLive,
   compact,
+  cover,
+  teacherLabel,
 }: {
   signId: string;
   /** Family round: hide the answer until "Show me first". */
   hideTeacher?: boolean;
+  /** Shown in the teacher pane instead of the "peek" hint while hideTeacher is on (Talk with Baby scene art). */
+  cover?: React.ReactNode;
+  /** Replaces the "Watch" label above the teacher pane. */
+  teacherLabel?: string;
   phase: AttemptPhase;
   count: number;
   windowMs: number;
@@ -41,7 +47,9 @@ export function PracticeStage({
   const refData = useMemo(() => (video ? null : refFor(signId)), [signId, video]);
   const rate = st.slowTeacher ? 0.5 : 1;
   let teacher: React.ReactNode;
-  if (hideTeacher) {
+  if (hideTeacher && cover) {
+    teacher = <View style={styles.idle}>{cover}</View>;
+  } else if (hideTeacher) {
     teacher = (
       <View style={styles.idle}>
         <Text style={styles.idleText}>Remember it? Peek with "Show me first"</Text>
@@ -57,7 +65,8 @@ export function PracticeStage({
     <View style={styles.row}>
       <View style={{ width: TEACHER_W + s(8) }}>
         <Text style={styles.panelLabel}>
-          Watch{st.slowTeacher ? '  (slow motion)' : ''}
+          {teacherLabel ?? 'Watch'}
+          {st.slowTeacher && !(hideTeacher && cover) ? '  (slow motion)' : ''}
         </Text>
         <View style={[styles.panel, { width: TEACHER_W + s(8), height: H + s(8) }]}>{teacher}</View>
         {video?.note && !hideTeacher ? (
@@ -65,9 +74,11 @@ export function PracticeStage({
             {video.note}
           </Text>
         ) : null}
-        <Text style={styles.credit} numberOfLines={2}>
-          {credit}
-        </Text>
+        {hideTeacher && cover ? null : (
+          <Text style={styles.credit} numberOfLines={2}>
+            {credit}
+          </Text>
+        )}
       </View>
       <View>
         <Text style={styles.panelLabel}>You (like a mirror)</Text>

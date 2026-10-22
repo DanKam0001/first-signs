@@ -196,7 +196,7 @@ def train_one(d, tr_items, tr_y, te_items, te_y, C, args, dev, tag):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--cache", default="D:/datasets/gislr/cache/train.npz")
-    ap.add_argument("--vocab", choices=["candidates", "final"], default="final")
+    ap.add_argument("--vocab", choices=["candidates", "candidates2", "final"], default="final")
     ap.add_argument("--cv", type=int, default=0, help="k-fold cross-validation by signer")
     ap.add_argument("--folds", default=None, help="comma list of fold indices to run (default all)")
     ap.add_argument("--all", action="store_true", help="train the shipped model on all signers")
@@ -212,7 +212,7 @@ def main():
     ap.add_argument("--seed", type=int, default=0)
     args = ap.parse_args()
 
-    packs = V.CANDIDATE_PACKS if args.vocab == "candidates" else V.PACKS
+    packs = {"candidates": V.CANDIDATE_PACKS, "candidates2": V.CANDIDATE_PACKS_V2}.get(args.vocab, V.PACKS)
     labels = V.labels_of(packs)
     lab_idx = {s: i for i, s in enumerate(labels)}
     d = ensure_npy(args.cache)
