@@ -1,9 +1,9 @@
-// A light confetti burst: 28 coloured dots on the native driver (transform + opacity only).
+// A light confetti burst: 28 white/grey dots and rings on the native driver (transform + opacity only).
 import React, { useEffect, useMemo, useRef } from 'react';
 import { Animated, Easing, StyleSheet, View } from 'react-native';
 import { s } from '../theme';
 
-const COLORS = ['#FFB547', '#FF8A5B', '#8EA8FF', '#4FD1C5', '#FF7EB6', '#7BE495', '#FFF7E8'];
+const COLORS = ['#FFFFFF', '#E4E4E7', '#A1A1AA', '#FFFFFF', '#71717A'];
 
 export function Celebration({ burstKey }: { burstKey: number }) {
   const t = useRef(new Animated.Value(0)).current;
@@ -17,6 +17,7 @@ export function Celebration({ burstKey }: { burstKey: number }) {
           dy: Math.sin(a) * dist - s(80),
           size: s(18 + Math.random() * 22),
           color: COLORS[i % COLORS.length],
+          ring: i % 3 === 0,
         };
       }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -37,7 +38,9 @@ export function Celebration({ burstKey }: { burstKey: number }) {
             width: d.size,
             height: d.size,
             borderRadius: d.size / 2,
-            backgroundColor: d.color,
+            backgroundColor: d.ring ? 'transparent' : d.color,
+            borderWidth: d.ring ? s(4) : 0,
+            borderColor: d.color,
             opacity: t.interpolate({ inputRange: [0, 0.7, 1], outputRange: [1, 1, 0] }),
             transform: [
               { translateX: t.interpolate({ inputRange: [0, 1], outputRange: [0, d.dx] }) },

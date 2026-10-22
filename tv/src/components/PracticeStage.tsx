@@ -1,12 +1,12 @@
 // The two side-by-side panels used by lessons and the family round:
-// left = the real Deaf-signer sign video (teacher, amber), right = the family member's live mirror skeleton (teal).
+// left = the real Deaf-signer sign video (teacher), right = the family member's live mirror skeleton.
 import React, { useEffect, useMemo, useRef } from 'react';
 import { Animated, Easing, StyleSheet, Text, View } from 'react-native';
 import { CREDIT_PLACEHOLDER, CREDIT_REAL, CREDIT_VIDEO, DATA_IS_PLACEHOLDER, refFor, videoFor } from '../data/signs';
 import { AttemptPhase } from '../net/useAttempt';
 import { useConn } from '../net/connection';
 import { settings } from '../store/settings';
-import { colors, s, type } from '../theme';
+import { colors, hair, s, track, type, zinc } from '../theme';
 import { LiveSkeleton, RefSkeleton } from './Skeleton';
 import { SignVideo } from './SignVideo';
 
@@ -56,10 +56,10 @@ export function PracticeStage({
   return (
     <View style={styles.row}>
       <View style={{ width: TEACHER_W + s(8) }}>
-        <Text style={[styles.panelLabel, { color: colors.teacher }]}>
+        <Text style={styles.panelLabel}>
           Watch{st.slowTeacher ? '  (slow motion)' : ''}
         </Text>
-        <View style={[styles.panel, { width: TEACHER_W + s(8), borderColor: colors.teacher, height: H + s(8) }]}>{teacher}</View>
+        <View style={[styles.panel, { width: TEACHER_W + s(8), height: H + s(8) }]}>{teacher}</View>
         {video?.note && !hideTeacher ? (
           <Text style={styles.note} numberOfLines={2}>
             {video.note}
@@ -70,8 +70,15 @@ export function PracticeStage({
         </Text>
       </View>
       <View>
-        <Text style={[styles.panelLabel, { color: colors.you }]}>You (like a mirror)</Text>
-        <View style={[styles.panel, { width: LIVE_W + s(8), borderColor: showLive ? colors.you : colors.line, height: H + s(8) }]}>
+        <Text style={styles.panelLabel}>You (like a mirror)</Text>
+        <View
+          style={[
+            styles.panel,
+            { width: LIVE_W + s(8), height: H + s(8) },
+            showLive && styles.panelLive,
+            phase === 'recording' && styles.panelRec,
+          ]}
+        >
           {showLive ? (
             <LiveSkeleton width={LIVE_W} height={H} />
           ) : (
@@ -96,7 +103,7 @@ function PhaseOverlay({ phase, count, windowMs, noHands }: { phase: AttemptPhase
   }, [phase, windowMs, bar]);
   if (phase !== 'countdown' && phase !== 'recording' && phase !== 'thinking') return null;
   return (
-    <View pointerEvents="none" style={[StyleSheet.absoluteFill, styles.overlay]}>
+    <View pointerEvents="none" style={[StyleSheet.absoluteFill, styles.overlay, phase === 'countdown' && styles.dim]}>
       {phase === 'countdown' ? <Text style={styles.count}>{count}</Text> : null}
       {phase === 'recording' ? (
         <View style={styles.recBox}>
@@ -116,40 +123,66 @@ function PhaseOverlay({ phase, count, windowMs, noHands }: { phase: AttemptPhase
 
 const styles = StyleSheet.create({
   row: { flexDirection: 'row', justifyContent: 'space-between' },
-  panelLabel: { fontSize: type.small, fontWeight: '800', marginBottom: s(8) },
+  panelLabel: {
+    color: colors.textDim,
+    fontSize: s(26),
+    fontWeight: '700',
+    letterSpacing: track.label,
+    marginBottom: s(12),
+  },
   panel: {
-    borderWidth: s(4),
-    borderRadius: s(28),
+    borderWidth: hair,
+    borderColor: colors.line,
+    borderRadius: s(24),
     backgroundColor: colors.bgDeep,
     overflow: 'hidden',
   },
-  credit: { color: colors.textDim, fontSize: s(20), marginTop: s(6) },
-  note: { color: colors.almost, fontSize: s(24), marginTop: s(8), fontStyle: 'italic' },
+  panelLive: { borderColor: zinc[600] },
+  panelRec: { borderColor: colors.text, borderWidth: s(4) },
+  credit: { color: colors.textMute, fontSize: s(20), marginTop: s(8) },
+  note: { color: colors.textDim, fontSize: s(24), marginTop: s(8), fontStyle: 'italic' },
   idle: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: s(40) },
-  idleText: { color: colors.textDim, fontSize: type.body, textAlign: 'center' },
+  idleText: { color: colors.textDim, fontSize: type.small, textAlign: 'center' },
   overlay: { alignItems: 'center', justifyContent: 'center' },
+  dim: { backgroundColor: 'rgba(0,0,0,0.7)' },
   count: {
     color: colors.text,
     fontSize: s(300),
-    fontWeight: '900',
+    fontWeight: '800',
+    letterSpacing: track.hero,
     textShadowColor: '#000',
-    textShadowRadius: s(20),
+    textShadowRadius: s(30),
   },
-  recBox: { position: 'absolute', bottom: s(24), left: '37%', right: s(30), alignItems: 'center' },
-  signNow: { color: colors.you, fontSize: type.h2, fontWeight: '900', marginBottom: s(12) },
-  recTrack: { width: '100%', height: s(18), borderRadius: s(9), backgroundColor: colors.card, overflow: 'hidden' },
-  recFill: { width: '100%', height: s(18), backgroundColor: colors.you, transformOrigin: 'left' } as any,
-  thinking: { color: colors.text, fontSize: type.h2, fontWeight: '800', backgroundColor: '#0008', padding: s(20), borderRadius: s(20) },
+  recBox: { position: 'absolute', bottom: s(28), left: '37%', right: s(32), alignItems: 'center' },
+  signNow: { color: colors.text, fontSize: type.h2, fontWeight: '900', letterSpacing: track.h2, marginBottom: s(14) },
+  recTrack: { width: '100%', height: s(8), borderRadius: s(4), backgroundColor: zinc[800], overflow: 'hidden' },
+  recFill: { width: '100%', height: s(8), backgroundColor: colors.text, transformOrigin: 'left' } as any,
+  thinking: {
+    color: colors.text,
+    fontSize: type.body,
+    fontWeight: '700',
+    backgroundColor: '#000000',
+    borderWidth: hair,
+    borderColor: zinc[600],
+    paddingVertical: s(18),
+    paddingHorizontal: s(34),
+    borderRadius: s(18),
+    overflow: 'hidden',
+  },
   noHands: {
     position: 'absolute',
     top: s(24),
     left: s(30),
     right: s(30),
-    color: colors.almost,
+    color: colors.text,
     fontSize: type.small,
+    fontWeight: '600',
     textAlign: 'center',
-    backgroundColor: '#000A',
+    backgroundColor: '#000000',
+    borderWidth: hair,
+    borderColor: colors.text,
     padding: s(14),
     borderRadius: s(16),
+    overflow: 'hidden',
   },
 });

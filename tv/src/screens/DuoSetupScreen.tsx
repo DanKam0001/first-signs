@@ -4,11 +4,13 @@ import { DefaultFocus, SpatialNavigationRoot, SpatialNavigationView } from 'reac
 import { FocusButton, Header, Hint, Screen } from '../components/ui';
 import { PACKS, signsInPack } from '../data/signs';
 import { useRouter } from '../nav/router';
-import { colors, packColors, s, type } from '../theme';
+import { colors, hair, s, track, zinc } from '../theme';
 
 const NAMES = ['Mum', 'Dad', 'Grandma', 'Grandpa', 'Sister', 'Brother', 'Friend'];
-export const DUO_LEFT_COLOR = '#FF7EB6';
-export const DUO_RIGHT_COLOR = '#4FD1C5';
+// The two players' skeletons: white for the left player, mid grey for the right (no hue needed; each also has
+// their own named pane).
+export const DUO_LEFT_COLOR = zinc[50];
+export const DUO_RIGHT_COLOR = zinc[400];
 
 /** Sign Together setup: who stands on the left / right (facing the TV), which pack, how many signs. */
 export function DuoSetupScreen() {
@@ -18,7 +20,7 @@ export function DuoSetupScreen() {
   const [packId, setPackId] = useState('all');
   const [rounds, setRounds] = useState(5);
 
-  const nameRow = (value: string, set: (n: string) => void, other: string, accent: string, first: boolean) =>
+  const nameRow = (value: string, set: (n: string) => void, other: string, first: boolean) =>
     [NAMES].map((group, g) => (
       <SpatialNavigationView key={g} direction="horizontal" style={{ ...styles.row, marginBottom: s(10) }}>
         {group.map((name, i) => {
@@ -27,9 +29,8 @@ export function DuoSetupScreen() {
             <FocusButton
               key={name}
               small
-              accent={accent}
               label={on ? `✓ ${name}` : name}
-              style={on ? { ...styles.on, borderColor: accent } : name === other ? styles.taken : undefined}
+              style={on ? styles.on : name === other ? styles.taken : undefined}
               onSelect={() => name !== other && set(name)}
             />
           );
@@ -43,10 +44,10 @@ export function DuoSetupScreen() {
       <Header title="Sign Together" subtitle="Two people, one camera. Stand side by side and sign at the same time." />
       <SpatialNavigationRoot>
         <SpatialNavigationView direction="vertical">
-          <Text style={[styles.label, { color: DUO_LEFT_COLOR }]}>Standing on the LEFT (facing the TV)</Text>
-          {nameRow(left, setLeft, right, DUO_LEFT_COLOR, true)}
-          <Text style={[styles.label, { color: DUO_RIGHT_COLOR }]}>Standing on the RIGHT</Text>
-          {nameRow(right, setRight, left, DUO_RIGHT_COLOR, false)}
+          <Text style={styles.label}>Standing on the LEFT (facing the TV)</Text>
+          {nameRow(left, setLeft, right, true)}
+          <Text style={styles.label}>Standing on the RIGHT</Text>
+          {nameRow(right, setRight, left, false)}
           <Text style={styles.label}>Which signs?</Text>
           <SpatialNavigationView direction="horizontal" style={styles.row}>
             <FocusButton small label={packId === 'all' ? '✓ All packs' : 'All packs'} style={packId === 'all' ? styles.on : undefined} onSelect={() => setPackId('all')} />
@@ -54,9 +55,8 @@ export function DuoSetupScreen() {
               <FocusButton
                 key={p.id}
                 small
-                accent={packColors[p.id]}
                 label={packId === p.id ? `✓ ${p.name}` : p.name}
-                style={packId === p.id ? { ...styles.on, borderColor: packColors[p.id] } : undefined}
+                style={packId === p.id ? styles.on : undefined}
                 onSelect={() => setPackId(p.id)}
               />
             ))}
@@ -85,8 +85,16 @@ export function DuoSetupScreen() {
 }
 
 const styles = StyleSheet.create({
-  label: { color: colors.text, fontSize: type.small, fontWeight: '800', marginTop: s(14), marginBottom: s(10) },
+  label: {
+    color: colors.textDim,
+    fontSize: s(26),
+    fontWeight: '700',
+    letterSpacing: track.label,
+    marginTop: s(20),
+    marginBottom: s(12),
+  },
   row: { flexDirection: 'row' },
-  on: { borderColor: colors.focus, backgroundColor: colors.cardHi },
-  taken: { opacity: 0.4 },
+  // selected (not focused): white outline on a raised surface, plus the ✓ in the label
+  on: { borderColor: colors.text, borderWidth: Math.max(hair, s(3)), backgroundColor: zinc[800] },
+  taken: { opacity: 0.3 },
 });

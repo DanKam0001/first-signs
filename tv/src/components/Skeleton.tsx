@@ -84,12 +84,14 @@ export function compactLive(f: Frame): CFrame {
 /** Close-up framing for the dominant hand: centre + size in pixel-consistent units (y / aspect). */
 export type HandInset = { side: 'l' | 'r'; cx: number; cy: number; size: number };
 
-const FINGERS: { color: string; idx: number[] }[] = [
-  { color: '#FF8A5B', idx: [1, 2, 3, 4] },
-  { color: '#FFB547', idx: [5, 6, 7, 8] },
-  { color: '#7BE495', idx: [9, 10, 11, 12] },
-  { color: '#8EA8FF', idx: [13, 14, 15, 16] },
-  { color: '#FF7EB6', idx: [17, 18, 19, 20] },
+// Monochrome finger coding: a white-to-grey ramp from thumb to little finger (thumb brightest and thickest),
+// so the handshape still reads from the couch without colour.
+const FINGERS: { color: string; idx: number[]; w: number }[] = [
+  { color: '#FFFFFF', idx: [1, 2, 3, 4], w: 2.0 },
+  { color: '#E4E4E7', idx: [5, 6, 7, 8], w: 1.7 },
+  { color: '#A1A1AA', idx: [9, 10, 11, 12], w: 1.6 },
+  { color: '#71717A', idx: [13, 14, 15, 16], w: 1.6 },
+  { color: '#52525B', idx: [17, 18, 19, 20], w: 1.6 },
 ];
 
 type ViewProps = {
@@ -186,7 +188,7 @@ export const SkeletonView = memo(function SkeletonView({ frame, xf, width, heigh
     headEl = <Circle cx={head[0]} cy={head[1]} r={scale * 0.32} stroke={color} strokeOpacity={0.3} strokeWidth={unit * 0.5} fill="none" />;
   }
 
-  // Dominant-hand close-up (about 35% of the pane, bottom-left), fingers colour-coded so the handshape reads from the couch.
+  // Dominant-hand close-up (about 35% of the pane, bottom-left), fingers shade-coded so the handshape reads from the couch.
   let insetEl: React.ReactNode = null;
   const hand = inset && frame ? frame[inset.side] : null;
   if (inset && hand) {
@@ -213,14 +215,14 @@ export const SkeletonView = memo(function SkeletonView({ frame, xf, width, heigh
     const iu = box / 40;
     insetEl = (
       <G>
-        <Rect x={bx} y={by} width={box} height={box} rx={unit * 1.5} fill="#000" fillOpacity={0.55} stroke={color} strokeOpacity={0.6} strokeWidth={unit * 0.3} />
+        <Rect x={bx} y={by} width={box} height={box} rx={unit * 1.5} fill="#000" fillOpacity={0.7} stroke={color} strokeOpacity={0.35} strokeWidth={unit * 0.2} />
         <Path d={palm} stroke={colors.text} strokeOpacity={0.6} strokeWidth={iu * 1.2} strokeLinecap="round" fill="none" />
         {FINGERS.map((fg) => (
           <Path
             key={fg.color}
             d={seg(fg.idx[0], fg.idx[1]) + seg(fg.idx[1], fg.idx[2]) + seg(fg.idx[2], fg.idx[3])}
             stroke={fg.color}
-            strokeWidth={iu * 1.6}
+            strokeWidth={iu * fg.w}
             strokeLinecap="round"
             fill="none"
           />

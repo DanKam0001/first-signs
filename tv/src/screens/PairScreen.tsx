@@ -6,7 +6,7 @@ import { FocusButton, Header, Screen } from '../components/ui';
 import { conn, useConn } from '../net/connection';
 import { speak } from '../net/voice';
 import { useRouter } from '../nav/router';
-import { colors, s, type } from '../theme';
+import { colors, hair, s, track, type, zinc } from '../theme';
 
 const WEB = Platform.OS === 'web';
 
@@ -35,7 +35,9 @@ export function PairScreen() {
         <View style={styles.qrBox}>
           {reachable && c.phoneUrl ? (
             <>
-              <QRCode value={c.phoneUrl} size={s(420)} />
+              <View style={styles.qrWell}>
+                <QRCode value={c.phoneUrl} size={s(400)} />
+              </View>
               <Text style={styles.codeLabel}>or enter code</Text>
               <Text style={styles.code} testID="pair-code">
                 {(c.code || '----').split('').join(' ')}
@@ -96,28 +98,39 @@ const styles = StyleSheet.create({
     width: s(560),
     alignItems: 'center',
     backgroundColor: colors.card,
-    borderRadius: s(36),
-    paddingVertical: s(40),
-    marginRight: s(70),
+    borderWidth: hair,
+    borderColor: colors.line,
+    borderRadius: s(32),
+    paddingVertical: s(44),
+    marginRight: s(90),
   },
-  codeLabel: { color: colors.textDim, fontSize: type.small, marginTop: s(24) },
-  code: { color: colors.focus, fontSize: s(110), fontWeight: '900', letterSpacing: s(8) },
+  // the QR keeps a white quiet zone: dark modules on white scan reliably
+  qrWell: { backgroundColor: '#FFFFFF', borderRadius: s(20), padding: s(10) },
+  codeLabel: {
+    color: colors.textDim,
+    fontSize: s(26),
+    fontWeight: '700',
+    letterSpacing: track.label,
+    marginTop: s(34),
+  },
+  code: { color: colors.text, fontSize: s(110), fontWeight: '800', letterSpacing: s(8), fontVariant: ['tabular-nums'] },
   waiting: { height: s(560), justifyContent: 'center', paddingHorizontal: s(36) },
-  waitTitle: { color: colors.almost, fontSize: type.h2, fontWeight: '800', textAlign: 'center', marginBottom: s(20) },
+  waitTitle: { color: colors.text, fontSize: type.h2, fontWeight: '800', letterSpacing: track.h2, textAlign: 'center', marginBottom: s(20) },
   waitBody: { color: colors.textDim, fontSize: type.small, textAlign: 'center', marginTop: s(10) },
   steps: { flex: 1 },
-  step: { flexDirection: 'row', alignItems: 'flex-start', marginBottom: s(34) },
+  step: { flexDirection: 'row', alignItems: 'flex-start', marginBottom: s(40) },
   stepNum: {
-    width: s(70),
-    height: s(70),
-    borderRadius: s(35),
-    backgroundColor: colors.focus,
+    width: s(68),
+    height: s(68),
+    borderRadius: s(34),
+    borderWidth: hair,
+    borderColor: zinc[500],
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: s(28),
+    marginRight: s(32),
   },
-  stepNumText: { color: colors.onFocus, fontSize: type.body, fontWeight: '900' },
-  stepText: { flex: 1, color: colors.text, fontSize: type.body, lineHeight: s(54) },
-  url: { color: colors.textDim, fontSize: type.tiny, marginBottom: s(30) },
+  stepNumText: { color: colors.text, fontSize: type.small, fontWeight: '700' },
+  stepText: { flex: 1, color: colors.text, fontSize: type.body, lineHeight: s(54), paddingTop: s(6) },
+  url: { color: colors.textMute, fontSize: type.tiny, marginBottom: s(34) },
   buttons: { flexDirection: 'row', marginTop: s(20) },
 });

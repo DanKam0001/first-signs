@@ -4,7 +4,7 @@ import { DefaultFocus, SpatialNavigationRoot, SpatialNavigationView } from 'reac
 import { FocusButton, Header, Hint, Screen } from '../components/ui';
 import { PACKS, signsInPack } from '../data/signs';
 import { useRouter } from '../nav/router';
-import { colors, packColors, s, type } from '../theme';
+import { colors, hair, s, track, zinc } from '../theme';
 
 const PEOPLE = ['Mum', 'Dad', 'Grandma', 'Grandpa', 'Sister', 'Brother', 'Auntie', 'Uncle', 'Friend'];
 
@@ -48,9 +48,8 @@ export function GameSetupScreen() {
               <FocusButton
                 key={p.id}
                 small
-                accent={packColors[p.id]}
                 label={packId === p.id ? `✓ ${p.name}` : p.name}
-                style={packId === p.id ? { ...styles.on, borderColor: packColors[p.id] } : undefined}
+                style={packId === p.id ? styles.on : undefined}
                 onSelect={() => setPackId(p.id)}
               />
             ))}
@@ -79,7 +78,15 @@ export function GameSetupScreen() {
 }
 
 const styles = StyleSheet.create({
-  label: { color: colors.text, fontSize: type.body, fontWeight: '800', marginTop: s(22), marginBottom: s(14) },
+  label: {
+    color: colors.textDim,
+    fontSize: s(26),
+    fontWeight: '700',
+    letterSpacing: track.label,
+    marginTop: s(26),
+    marginBottom: s(14),
+  },
   row: { flexDirection: 'row', flexWrap: 'nowrap' },
-  on: { borderColor: colors.focus, backgroundColor: colors.cardHi },
+  // selected (not focused): white outline on a raised surface, plus the ✓ in the label
+  on: { borderColor: colors.text, borderWidth: Math.max(hair, s(3)), backgroundColor: zinc[800] },
 });

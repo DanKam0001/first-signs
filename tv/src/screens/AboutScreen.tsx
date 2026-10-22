@@ -4,7 +4,7 @@ import { DefaultFocus, SpatialNavigationRoot, SpatialNavigationView } from 'reac
 import { FocusButton, Header, Screen } from '../components/ui';
 import { DATA_IS_PLACEHOLDER } from '../data/signs';
 import { useRouter } from '../nav/router';
-import { colors, s, type } from '../theme';
+import { colors, s, track, zinc } from '../theme';
 
 export function AboutScreen() {
   const router = useRouter();
@@ -16,7 +16,7 @@ export function AboutScreen() {
           <Text style={styles.h}>A practice buddy for hearing families</Text>
           <Text style={styles.p}>
             Most Deaf children are born to hearing parents. First Signs helps the whole family practise everyday ASL words
-            together - milk, more, bath, sleep, mom - so signing becomes part of daily routines.
+            together - milk, bath, sleep, mom, hello - so signing becomes part of daily routines.
           </Text>
           <Text style={styles.p}>
             It is not a teacher and it is not a replacement for real people. ASL is a full language, and the best way to learn it
@@ -32,7 +32,7 @@ export function AboutScreen() {
           <Text style={styles.h}>Thank you to the Deaf signers</Text>
           <Text style={styles.p}>
             <Text style={styles.b}>Sign videos:</Text> PopSign ASL v1.0 by Georgia Tech and the Deaf Professional Arts Network
-            (DPAN), performed by Deaf signers, CC BY 4.0 (creativecommons.org/licenses/by/4.0). Clips trimmed and re-encoded.
+            (DPAN), performed by a Deaf signer (participant 8037), CC BY 4.0 (creativecommons.org/licenses/by/4.0). Clips trimmed and re-encoded.
             signdata.cc.gatech.edu
           </Text>
           <Text style={styles.p}>
@@ -44,7 +44,7 @@ export function AboutScreen() {
             Signs as memory aids.
           </Text>
           {DATA_IS_PLACEHOLDER ? (
-            <Text style={[styles.p, { color: colors.almost }]}>
+            <Text style={[styles.p, { color: colors.textDim, fontStyle: 'italic' }]}>
               This preview build still uses placeholder motion; the real recordings appear once the model export is bundled.
             </Text>
           ) : null}
@@ -68,9 +68,16 @@ export function AboutScreen() {
 
 const styles = StyleSheet.create({
   cols: { flex: 1, flexDirection: 'row' },
-  col: { flex: 1, marginRight: s(60) },
-  h: { color: colors.focus, fontSize: type.body, fontWeight: '800', marginBottom: s(12), marginTop: s(8) },
-  p: { color: colors.text, fontSize: s(28), lineHeight: s(40), marginBottom: s(16) },
-  b: { color: colors.focus, fontWeight: '800' },
-  small: { color: colors.textDim, fontSize: s(22), lineHeight: s(30), marginBottom: s(16) },
+  col: { flex: 1, marginRight: s(70), paddingTop: s(4) },
+  h: {
+    color: colors.text,
+    fontSize: s(34),
+    fontWeight: '800',
+    letterSpacing: track.h2,
+    marginBottom: s(14),
+    marginTop: s(10),
+  },
+  p: { color: zinc[300], fontSize: s(28), lineHeight: s(42), marginBottom: s(18) },
+  b: { color: colors.text, fontWeight: '800' },
+  small: { color: colors.textMute, fontSize: s(22), lineHeight: s(32), marginBottom: s(18) },
 });

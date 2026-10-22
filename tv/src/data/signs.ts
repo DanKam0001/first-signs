@@ -33,7 +33,7 @@ export const SIGNS: Sign[] = SIGNS_RAW.filter((s) => s && s.id).map((s) => ({
 export const thresholds = { top: 3, minProb: 0.25, minHandFrac: 0.4, ...(THRESHOLDS || {}) };
 
 export const CREDIT_REAL = 'Recorded by Deaf signers - GISLR (D-PAN / Google), CC BY 4.0';
-export const CREDIT_VIDEO = 'Sign videos: PopSign ASL v1.0 (Georgia Tech & DPAN), performed by Deaf signers, CC BY 4.0';
+export const CREDIT_VIDEO = 'Sign videos: PopSign ASL v1.0 (Georgia Tech & DPAN), performed by a Deaf signer (participant 8037), CC BY 4.0';
 export const CREDIT_PLACEHOLDER = 'Placeholder motion, not a real sign (real recordings not bundled yet)';
 
 export function signsInPack(packId: string): Sign[] {

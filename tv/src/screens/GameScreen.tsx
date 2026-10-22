@@ -3,14 +3,14 @@ import { StyleSheet, Text, View } from 'react-native';
 import { DefaultFocus, SpatialNavigationRoot, SpatialNavigationView } from 'react-tv-space-navigation';
 import { Celebration } from '../components/Celebration';
 import { PracticeStage } from '../components/PracticeStage';
-import { FocusButton, Screen, StatusPill } from '../components/ui';
+import { FocusButton, Screen, StatusPill, Verdict } from '../components/ui';
 import { Sign, SIGNS, signsInPack } from '../data/signs';
 import { useConn } from '../net/connection';
 import { useAttempt } from '../net/useAttempt';
 import { speak } from '../net/voice';
 import { useBackOverride, useRouter } from '../nav/router';
 import { recordAttempt } from '../store/progress';
-import { colors, packColors, s, type } from '../theme';
+import { colors, hair, s, track, type, zinc } from '../theme';
 
 type Score = { name: string; points: number; streak: number; best: number };
 
@@ -90,8 +90,6 @@ export function GameScreen({ players, packId, turnsEach }: { players: string[]; 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [finished]);
 
-  const accent = packColors[signPack] || colors.focus;
-
   if (finished) {
     const sorted = [...scores].sort((a, b) => b.points - a.points);
     return (
@@ -99,13 +97,13 @@ export function GameScreen({ players, packId, turnsEach }: { players: string[]; 
         <Text style={styles.big}>Round over!</Text>
         <View style={styles.board}>
           {sorted.map((sc, i) => (
-            <View key={sc.name} style={[styles.boardRow, i === 0 && { borderColor: colors.focus }]}>
-              <Text style={styles.boardName}>
+            <View key={sc.name} style={[styles.boardRow, i === 0 && sc.points > 0 && styles.boardTop]}>
+              <Text style={[styles.boardName, i === 0 && sc.points > 0 && styles.onTop]}>
                 {i === 0 && sc.points > 0 ? '★ ' : ''}
                 {sc.name}
               </Text>
-              <Text style={styles.boardPts}>{sc.points} pts</Text>
-              <Text style={styles.boardMeta}>best streak {sc.best}</Text>
+              <Text style={[styles.boardPts, i === 0 && sc.points > 0 && styles.onTop]}>{sc.points} pts</Text>
+              <Text style={[styles.boardMeta, i === 0 && sc.points > 0 && { color: zinc[600] }]}>best streak {sc.best}</Text>
             </View>
           ))}
         </View>
@@ -158,16 +156,16 @@ export function GameScreen({ players, packId, turnsEach }: { players: string[]; 
       <View style={styles.top}>
         <View style={{ flex: 1 }}>
           <Text style={styles.turn}>
-            Turn {turn + 1} of {totalTurns} - <Text style={{ color: colors.focus }}>{player}</Text>
+            Turn {turn + 1} of {totalTurns} - <Text style={{ color: colors.text, fontWeight: '800' }}>{player}</Text>
           </Text>
-          <Text style={[styles.word, { color: accent }]}>Sign: {sign.label}</Text>
+          <Text style={styles.word}>Sign: {sign.label}</Text>
         </View>
         <StatusPill />
       </View>
       <View style={styles.scores}>
         {scores.map((sc, i) => (
-          <View key={sc.name} style={[styles.chip, i === turn % players.length && { borderColor: colors.focus }]}>
-            <Text style={styles.chipName}>{sc.name}</Text>
+          <View key={sc.name} style={[styles.chip, i === turn % players.length && styles.chipNow]}>
+            <Text style={[styles.chipName, i === turn % players.length && { color: colors.text }]}>{sc.name}</Text>
             <Text style={styles.chipPts}>
               {sc.points}
               {sc.streak >= 2 ? `  ${sc.streak} in a row` : ''}
@@ -186,11 +184,12 @@ export function GameScreen({ players, packId, turnsEach }: { players: string[]; 
       />
       <View style={styles.bannerBox}>
         {result ? (
-          <Text style={[styles.banner, { color: result.ok ? colors.good : colors.almost }]}>
-            {result.ok ? `Yes! +${lastGain} ${lastGain > 1 ? '(streak bonus!)' : ''}` : `Good try! Watch how "${sign.label}" goes.`}
-          </Text>
+          <Verdict
+            tone={result.ok ? 'yes' : 'almost'}
+            title={result.ok ? `Yes! +${lastGain} ${lastGain > 1 ? '(streak bonus!)' : ''}` : `Good try! Watch how "${sign.label}" goes.`}
+          />
         ) : att.phase === 'timeout' || att.phase === 'offline' ? (
-          <Text style={[styles.banner, { color: colors.almost }]}>The phone didn't answer. Check it, then press Go again.</Text>
+          <Verdict tone="info" title="The phone didn't answer. Check it, then press Go again." />
         ) : (
           <Text style={styles.hint}>{peek ? sign.description : 'Remember it? Press Go - or peek with "Show me first".'}</Text>
         )}
@@ -207,41 +206,44 @@ export function GameScreen({ players, packId, turnsEach }: { players: string[]; 
 
 const styles = StyleSheet.create({
   top: { flexDirection: 'row', alignItems: 'center' },
-  turn: { color: colors.text, fontSize: type.small, fontWeight: '700' },
-  word: { fontSize: type.title, fontWeight: '900' },
-  scores: { flexDirection: 'row', marginVertical: s(14) },
+  turn: { color: colors.textDim, fontSize: type.small, fontWeight: '600' },
+  word: { color: colors.text, fontSize: type.title, fontWeight: '900', letterSpacing: track.title },
+  scores: { flexDirection: 'row', marginTop: s(16), marginBottom: s(20) },
   chip: {
-    backgroundColor: colors.card,
-    borderRadius: s(20),
-    borderWidth: s(4),
-    borderColor: 'transparent',
-    paddingHorizontal: s(24),
+    borderRadius: s(40),
+    borderWidth: hair,
+    borderColor: colors.line,
+    paddingHorizontal: s(26),
     paddingVertical: s(8),
-    marginRight: s(16),
+    marginRight: s(14),
     flexDirection: 'row',
     alignItems: 'center',
   },
-  chipName: { color: colors.text, fontSize: type.small, fontWeight: '700', marginRight: s(14) },
-  chipPts: { color: colors.focus, fontSize: type.small, fontWeight: '900' },
-  bannerBox: { minHeight: s(90), justifyContent: 'center' },
-  banner: { fontSize: type.h2, fontWeight: '800' },
+  // whose turn it is: a white outline (white fill is reserved for focus)
+  chipNow: { borderColor: colors.text, borderWidth: Math.max(hair, s(3)), backgroundColor: zinc[900] },
+  chipName: { color: colors.textDim, fontSize: type.small, fontWeight: '600', marginRight: s(14) },
+  chipPts: { color: colors.text, fontSize: type.small, fontWeight: '800', fontVariant: ['tabular-nums'] },
+  bannerBox: { minHeight: s(96), justifyContent: 'center', marginTop: s(8), marginBottom: s(14) },
   hint: { color: colors.text, fontSize: type.body },
   controls: { flexDirection: 'row' },
-  big: { color: colors.focus, fontSize: type.hero, fontWeight: '900', marginBottom: s(30) },
-  board: { marginBottom: s(40) },
+  big: { color: colors.text, fontSize: type.hero, fontWeight: '900', letterSpacing: track.hero, marginBottom: s(40) },
+  board: { marginBottom: s(44) },
   boardRow: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: colors.card,
-    borderRadius: s(24),
-    borderWidth: s(4),
-    borderColor: 'transparent',
+    borderRadius: s(22),
+    borderWidth: hair,
+    borderColor: colors.line,
     paddingHorizontal: s(36),
-    paddingVertical: s(18),
-    marginBottom: s(16),
-    width: s(1100),
+    paddingVertical: s(20),
+    marginBottom: s(14),
+    width: '100%',
   },
-  boardName: { color: colors.text, fontSize: type.h2, fontWeight: '800', flex: 1 },
-  boardPts: { color: colors.focus, fontSize: type.h2, fontWeight: '900', width: s(260) },
+  // the winner's row is the one inverted panel on the score board
+  boardTop: { backgroundColor: colors.text, borderColor: colors.text },
+  onTop: { color: colors.onFocus },
+  boardName: { color: colors.text, fontSize: type.h2, fontWeight: '800', letterSpacing: track.h2, flex: 1 },
+  boardPts: { color: colors.text, fontSize: type.h2, fontWeight: '900', width: s(260), fontVariant: ['tabular-nums'] },
   boardMeta: { color: colors.textDim, fontSize: type.small, width: s(260) },
 });

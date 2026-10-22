@@ -20,7 +20,7 @@ export function QRCode({ value, size }: { value: string; size: number }) {
   return (
     <Svg width={size} height={size} viewBox={`0 0 ${n} ${n}`}>
       <Rect x={0} y={0} width={n} height={n} fill="#FFFFFF" rx={1.5} />
-      <Path d={d} fill="#1E1A2E" />
+      <Path d={d} fill="#000000" />
     </Svg>
   );
 }

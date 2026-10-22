@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { DefaultFocus, SpatialNavigationRoot, SpatialNavigationView } from 'react-tv-space-navigation';
 import { Celebration } from '../components/Celebration';
 import { PracticeStage } from '../components/PracticeStage';
-import { FocusButton, Header, Screen } from '../components/ui';
+import { FocusButton, Header, Screen, Verdict } from '../components/ui';
 import { signById, signsInPack, PACKS } from '../data/signs';
 import { useConn } from '../net/connection';
 import { useAttempt } from '../net/useAttempt';
@@ -11,7 +11,7 @@ import { coachTip, speak } from '../net/voice';
 import { useBackOverride, useRouter } from '../nav/router';
 import { recordAttempt } from '../store/progress';
 import { settings } from '../store/settings';
-import { colors, packColors, s, type } from '../theme';
+import { colors, s, type } from '../theme';
 
 export function LessonScreen({ packId, signId }: { packId: string; signId: string }) {
   const router = useRouter();
@@ -24,7 +24,6 @@ export function LessonScreen({ packId, signId }: { packId: string; signId: strin
   const [tipLoading, setTipLoading] = useState(false);
   const [burst, setBurst] = useState(0);
   const recorded = useRef<string | null>(null);
-  const accent = packColors[packId] || colors.focus;
   const label = sign?.label || signId;
   const pack = PACKS.find((p) => p.id === packId);
 
@@ -117,20 +116,19 @@ export function LessonScreen({ packId, signId }: { packId: string; signId: strin
 
   let banner: React.ReactNode = null;
   if (result?.ok) {
-    banner = <Text style={[styles.banner, { color: colors.good }]}>You signed "{label}"! ★</Text>;
+    banner = <Verdict tone="yes" title={`You signed "${label}"! ★`} />;
   } else if (result) {
     banner = (
-      <View>
-        <Text style={[styles.banner, { color: colors.almost }]}>
-          Almost! {guessLabel ? `That looked a bit like "${guessLabel}".` : 'Let’s try once more.'}
-        </Text>
-        <Text style={styles.tip}>{tipLoading ? 'Getting a tip...' : tip ? `Tip: ${tip}` : `Try this: ${sign?.description || ''}`}</Text>
-      </View>
+      <Verdict
+        tone="almost"
+        title={`Almost! ${guessLabel ? `That looked a bit like "${guessLabel}".` : 'Let’s try once more.'}`}
+        detail={tipLoading ? 'Getting a tip...' : tip ? `Tip: ${tip}` : `Try this: ${sign?.description || ''}`}
+      />
     );
   } else if (att.phase === 'timeout') {
-    banner = <Text style={[styles.banner, { color: colors.almost }]}>We didn't hear back from the phone. Check it's still open, then try again.</Text>;
+    banner = <Verdict tone="info" title="We didn't hear back from the phone. Check it's still open, then try again." />;
   } else if (att.phase === 'offline') {
-    banner = <Text style={[styles.banner, { color: colors.almost }]}>The phone isn't connected right now.</Text>;
+    banner = <Verdict tone="info" title="The phone isn't connected right now." />;
   } else {
     banner = (
       <Text style={styles.desc}>
@@ -142,7 +140,7 @@ export function LessonScreen({ packId, signId }: { packId: string; signId: strin
 
   return (
     <Screen>
-      <Header title={`${label}`} subtitle={undefined} accent={accent} />
+      <Header title={`${label}`} subtitle={undefined} />
       <PracticeStage signId={signId} phase={att.phase} count={att.count} windowMs={att.windowMs} showLive={c.paired} />
       <View style={styles.bannerBox}>{banner}</View>
       <SpatialNavigationRoot key={controlsKey}>
@@ -156,10 +154,8 @@ export function LessonScreen({ packId, signId }: { packId: string; signId: strin
 }
 
 const styles = StyleSheet.create({
-  bannerBox: { minHeight: s(100), justifyContent: 'center' },
-  banner: { fontSize: type.h2, fontWeight: '800' },
+  bannerBox: { minHeight: s(110), justifyContent: 'center', marginTop: s(10), marginBottom: s(18) },
   desc: { color: colors.text, fontSize: type.body },
   unverified: { color: colors.textDim, fontSize: type.tiny },
-  tip: { color: colors.text, fontSize: type.small, marginTop: s(6) },
   controls: { flexDirection: 'row' },
 });

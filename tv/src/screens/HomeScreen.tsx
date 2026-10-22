@@ -7,7 +7,7 @@ import { DATA_IS_PLACEHOLDER, PACKS, signsInPack } from '../data/signs';
 import { useConn } from '../net/connection';
 import { useRouter } from '../nav/router';
 import { isLearned, progress } from '../store/progress';
-import { colors, packColors, s, type } from '../theme';
+import { colors, s, track, type, zinc } from '../theme';
 
 export function HomeScreen() {
   const router = useRouter();
@@ -26,18 +26,22 @@ export function HomeScreen() {
             {PACKS.map((p, i) => {
               const list = signsInPack(p.id);
               const learned = list.filter((sg) => isLearned(prog.signs[sg.id])).length;
-              const accent = packColors[p.id] || colors.focus;
               const card = (
-                <FocusCard key={p.id} accent={accent} style={styles.packCard} onSelect={() => router.push({ name: 'pack', packId: p.id })}>
+                <FocusCard key={p.id} style={styles.packCard} onSelect={() => router.push({ name: 'pack', packId: p.id })}>
                   {(focused) => (
                     <View style={styles.packBody}>
-                      <PackIcon pack={p.id} size={s(120)} color={accent} />
-                      <Text style={[styles.packName, focused && { color: accent }]}>{p.name}</Text>
-                      <Text style={styles.packBlurb}>{p.blurb}</Text>
-                      <Text style={styles.packCount}>
+                      <PackIcon pack={p.id} size={s(104)} color={focused ? colors.onFocus : colors.text} />
+                      <View style={{ flex: 1 }} />
+                      <Text style={[styles.packName, focused && { color: colors.onFocus }]}>{p.name}</Text>
+                      <Text style={[styles.packBlurb, focused && { color: zinc[600] }]}>{p.blurb}</Text>
+                      <Text style={[styles.packCount, focused && { color: colors.onFocus }]}>
                         {learned} of {list.length} learned
                       </Text>
-                      <ProgressBar value={list.length ? learned / list.length : 0} color={accent} />
+                      <ProgressBar
+                        value={list.length ? learned / list.length : 0}
+                        color={focused ? colors.onFocus : colors.text}
+                        trackColor={focused ? zinc[300] : zinc[800]}
+                      />
                     </View>
                   )}
                 </FocusCard>
@@ -60,12 +64,12 @@ export function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-  placeholder: { color: colors.almost, fontSize: type.tiny, marginTop: s(-16), marginBottom: s(8) },
+  placeholder: { color: colors.textDim, fontSize: type.tiny, marginTop: s(-16), marginBottom: s(8) },
   packs: { flexDirection: 'row', marginLeft: s(-14) },
-  packCard: { width: s(400), height: s(470) },
-  packBody: { padding: s(30), flex: 1 },
-  packName: { color: colors.text, fontSize: type.h2, fontWeight: '800', marginTop: s(14) },
-  packBlurb: { color: colors.textDim, fontSize: type.tiny, marginTop: s(6), height: s(66) },
-  packCount: { color: colors.text, fontSize: type.small, marginTop: s(10), marginBottom: s(12) },
-  menu: { flexDirection: 'row', marginTop: s(46) },
+  packCard: { width: s(400), height: s(480) },
+  packBody: { padding: s(34), flex: 1 },
+  packName: { color: colors.text, fontSize: type.h2, fontWeight: '800', letterSpacing: track.h2 },
+  packBlurb: { color: colors.textDim, fontSize: type.tiny, lineHeight: s(32), marginTop: s(8), height: s(66) },
+  packCount: { color: colors.text, fontSize: type.tiny, fontWeight: '600', marginTop: s(18), marginBottom: s(14) },
+  menu: { flexDirection: 'row', marginTop: s(50) },
 });

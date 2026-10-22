@@ -7,7 +7,7 @@ import { DefaultFocus, SpatialNavigationRoot, SpatialNavigationView } from 'reac
 import { Celebration } from '../components/Celebration';
 import { LiveSkeleton } from '../components/Skeleton';
 import { SignVideo } from '../components/SignVideo';
-import { FocusButton, Screen, StatusPill } from '../components/ui';
+import { FocusButton, Screen, StatusPill, Verdict } from '../components/ui';
 import { CREDIT_VIDEO, Sign, SIGNS, signsInPack, videoFor } from '../data/signs';
 import { DuoResult, useConn } from '../net/connection';
 import { useAttempt } from '../net/useAttempt';
@@ -15,7 +15,7 @@ import { coachTip, speak } from '../net/voice';
 import { useBackOverride, useRouter } from '../nav/router';
 import { recordAttempt } from '../store/progress';
 import { settings } from '../store/settings';
-import { colors, s, type } from '../theme';
+import { colors, hair, s, track, type, zinc } from '../theme';
 import { DUO_LEFT_COLOR, DUO_RIGHT_COLOR } from './DuoSetupScreen';
 
 const TEACHER_W = s(360);
@@ -149,12 +149,13 @@ export function DuoScreen({ leftName, rightName, packId, rounds }: { leftName: s
       <Screen>
         <Text style={styles.big}>{tie ? "It's a tie - great teamwork!" : `${rows[0].name} wins this round!`}</Text>
         {rows.map((r) => (
-          <View key={r.name} style={[styles.boardRow, { borderColor: r.color }]}>
-            <Text style={[styles.boardName, { color: r.color }]}>{r.name}</Text>
-            <Text style={styles.boardPts}>{r.sc.points} pts</Text>
-            <Text style={styles.boardMeta}>best streak {r.sc.best}</Text>
+          <View key={r.name} style={[styles.boardRow, !tie && r === rows[0] && styles.boardTop]}>
+            <Text style={[styles.boardName, !tie && r === rows[0] && styles.onTop]}>{r.name}</Text>
+            <Text style={[styles.boardPts, !tie && r === rows[0] && styles.onTop]}>{r.sc.points} pts</Text>
+            <Text style={[styles.boardMeta, !tie && r === rows[0] && { color: zinc[600] }]}>best streak {r.sc.best}</Text>
           </View>
         ))}
+        <View style={{ height: s(30) }} />
         <SpatialNavigationRoot>
           <SpatialNavigationView direction="horizontal" style={styles.controls}>
             <DefaultFocus>
@@ -174,7 +175,7 @@ export function DuoScreen({ leftName, rightName, packId, rounds }: { leftName: s
 
   let banner: React.ReactNode;
   if (needTwo && (busy || att.phase === 'idle')) {
-    banner = <Text style={[styles.banner, { color: colors.almost }]}>Sign Together needs two people: stand side by side, both fully in view.</Text>;
+    banner = <Verdict tone="info" title="Sign Together needs two people: stand side by side, both fully in view." />;
   } else if (result) {
     const both = result.left.ok && result.right.ok;
     const one = result.left.ok !== result.right.ok;
@@ -187,11 +188,11 @@ export function DuoScreen({ leftName, rightName, packId, rounds }: { leftName: s
       msg = `${result.left.ok ? leftName : rightName} got it! ${missedName}, ${missed.present ? 'almost - see the tip.' : 'step into view so the phone can see you.'}`;
     else if (away.length) msg = `${away.join(' and ')}: step into view, side by side, then try again.`;
     else msg = 'So close, both of you - watch the video again.';
-    banner = <Text style={[styles.banner, { color: both ? colors.good : one ? colors.focus : colors.almost }]}>{msg}</Text>;
+    banner = <Verdict tone={both ? 'yes' : !one && away.length ? 'info' : 'almost'} title={msg} />;
   } else if (att.phase === 'timeout' || att.phase === 'offline') {
-    banner = <Text style={[styles.banner, { color: colors.almost }]}>The phone didn't answer. Check it, then press Go again.</Text>;
+    banner = <Verdict tone="info" title="The phone didn't answer. Check it, then press Go again." />;
   } else if (busy) {
-    banner = <Text style={[styles.banner, { color: colors.you }]}>{att.phase === 'countdown' ? 'Get ready, both of you!' : att.phase === 'recording' ? 'Sign now - together!' : 'Checking...'}</Text>;
+    banner = <Text style={styles.banner}>{att.phase === 'countdown' ? 'Get ready, both of you!' : att.phase === 'recording' ? 'Sign now - together!' : 'Checking...'}</Text>;
   } else {
     banner = <Text style={styles.hint}>Watch the video, then press Go. Get ready, both of you!</Text>;
   }
@@ -235,10 +236,10 @@ export function DuoScreen({ leftName, rightName, packId, rounds }: { leftName: s
     const tip = tips[who];
     return (
       <View>
-        <Text style={[styles.paneLabel, { color }]}>
+        <Text style={[styles.paneLabel, { color: colors.text }]}>
           {name}  <Text style={styles.paneScore}>{sc.points} pts{sc.streak >= 2 ? ` · ${sc.streak} in a row` : ''}</Text>
         </Text>
-        <View style={[styles.pane, { borderColor: color }]}>
+        <View style={[styles.pane, att.phase === 'recording' && styles.paneRec]}>
           {c.paired ? (
             <LiveSkeleton width={PANE_W} height={PANE_H} side={who === 'left' ? 'R' : 'L'} color={color} waitingText={`Waiting for ${name}...`} />
           ) : (
@@ -247,20 +248,26 @@ export function DuoScreen({ leftName, rightName, packId, rounds }: { leftName: s
             </View>
           )}
           {att.phase === 'countdown' ? (
-            <View pointerEvents="none" style={[StyleSheet.absoluteFill, styles.center]}>
+            <View pointerEvents="none" style={[StyleSheet.absoluteFill, styles.center, styles.dim]}>
               <Text style={styles.count}>{att.count}</Text>
             </View>
           ) : null}
           {vd ? (
             <View pointerEvents="none" style={styles.verdictBox}>
-              <Text style={[styles.verdict, { color: !vd.present ? colors.almost : vd.ok ? colors.good : colors.almost }]}>
-                {!vd.present ? `${name}: step into view` : vd.ok ? `✓ ${name} got it!` : `${name}: almost`}
-              </Text>
-              {vd.present && !vd.ok ? (
-                <Text style={styles.tip} numberOfLines={3}>
-                  {tip === undefined ? 'Getting a tip...' : tip ? `Tip: ${tip}` : `Try this: ${sign.description}`}
-                </Text>
-              ) : null}
+              <Verdict
+                compact
+                tone={!vd.present ? 'away' : vd.ok ? 'yes' : 'almost'}
+                title={!vd.present ? `${name}: step into view` : vd.ok ? `${name} got it!` : `${name}: almost`}
+                detail={
+                  vd.present && !vd.ok
+                    ? tip === undefined
+                      ? 'Getting a tip...'
+                      : tip
+                      ? `Tip: ${tip}`
+                      : `Try this: ${sign.description}`
+                    : null
+                }
+              />
             </View>
           ) : null}
         </View>
@@ -281,8 +288,8 @@ export function DuoScreen({ leftName, rightName, packId, rounds }: { leftName: s
       </View>
       <View style={styles.stage}>
         <View>
-          <Text style={[styles.paneLabel, { color: colors.teacher }]}>Watch</Text>
-          <View style={[styles.pane, { width: TEACHER_W + s(8), borderColor: colors.teacher }]}>
+          <Text style={[styles.paneLabel, styles.eyebrow]}>Watch</Text>
+          <View style={[styles.pane, { width: TEACHER_W + s(8) }]}>
             {video ? (
               <SignVideo key={sign.id} video={video.video} poster={video.poster} aspect={video.aspect} width={TEACHER_W} height={PANE_H} rate={st.slowTeacher ? 0.5 : 1} />
             ) : (
@@ -311,52 +318,49 @@ export function DuoScreen({ leftName, rightName, packId, rounds }: { leftName: s
 }
 
 const styles = StyleSheet.create({
-  top: { flexDirection: 'row', alignItems: 'center', marginBottom: s(10) },
-  turn: { color: colors.text, fontSize: type.small, fontWeight: '700' },
-  word: { color: colors.focus, fontSize: type.title, fontWeight: '900' },
+  top: { flexDirection: 'row', alignItems: 'center', marginBottom: s(18) },
+  turn: { color: colors.textDim, fontSize: type.small, fontWeight: '600' },
+  word: { color: colors.text, fontSize: type.title, fontWeight: '900', letterSpacing: track.title },
   stage: { flexDirection: 'row', justifyContent: 'space-between' },
-  paneLabel: { fontSize: type.small, fontWeight: '800', marginBottom: s(6) },
-  paneScore: { color: colors.text, fontSize: type.tiny, fontWeight: '700' },
+  paneLabel: { fontSize: type.small, fontWeight: '800', marginBottom: s(10) },
+  eyebrow: { color: colors.textDim, fontSize: s(26), fontWeight: '700', letterSpacing: track.label, lineHeight: s(40) },
+  paneScore: { color: colors.textDim, fontSize: type.tiny, fontWeight: '600' },
   pane: {
     width: PANE_W + s(8),
     height: PANE_H + s(8),
-    borderWidth: s(4),
+    borderWidth: hair,
+    borderColor: zinc[700],
     borderRadius: s(24),
     backgroundColor: colors.bgDeep,
     overflow: 'hidden',
   },
+  paneRec: { borderColor: colors.text, borderWidth: s(4) },
   center: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: s(24) },
+  dim: { backgroundColor: 'rgba(0,0,0,0.7)' },
   idleText: { color: colors.textDim, fontSize: type.small, textAlign: 'center' },
-  count: { color: colors.text, fontSize: s(220), fontWeight: '900', textShadowColor: '#000', textShadowRadius: s(20) },
-  verdictBox: {
-    position: 'absolute',
-    top: s(14),
-    left: s(14),
-    right: s(14),
-    backgroundColor: '#000B',
-    borderRadius: s(18),
-    padding: s(14),
-  },
-  verdict: { fontSize: type.body, fontWeight: '900' },
-  tip: { color: colors.text, fontSize: s(24), marginTop: s(6) },
-  credit: { color: colors.textDim, fontSize: s(20), marginTop: s(8) },
-  bannerBox: { minHeight: s(84), justifyContent: 'center' },
-  banner: { fontSize: type.h2, fontWeight: '800' },
+  count: { color: colors.text, fontSize: s(220), fontWeight: '800', letterSpacing: track.hero, textShadowColor: '#000', textShadowRadius: s(30) },
+  verdictBox: { position: 'absolute', top: s(14), left: s(14), right: s(14) },
+  credit: { color: colors.textMute, fontSize: s(20), marginTop: s(10) },
+  bannerBox: { minHeight: s(96), justifyContent: 'center', marginTop: s(6), marginBottom: s(14) },
+  banner: { color: colors.text, fontSize: type.h2, fontWeight: '800', letterSpacing: track.h2 },
   hint: { color: colors.text, fontSize: type.body },
   controls: { flexDirection: 'row' },
-  big: { color: colors.focus, fontSize: type.hero, fontWeight: '900', marginBottom: s(30) },
+  big: { color: colors.text, fontSize: type.hero, fontWeight: '900', letterSpacing: track.hero, marginBottom: s(40) },
   boardRow: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: colors.card,
-    borderRadius: s(24),
-    borderWidth: s(4),
+    borderRadius: s(22),
+    borderWidth: hair,
+    borderColor: colors.line,
     paddingHorizontal: s(36),
-    paddingVertical: s(18),
-    marginBottom: s(16),
-    width: s(1100),
+    paddingVertical: s(20),
+    marginBottom: s(14),
+    width: '100%',
   },
-  boardName: { fontSize: type.h2, fontWeight: '800', flex: 1 },
-  boardPts: { color: colors.focus, fontSize: type.h2, fontWeight: '900', width: s(260) },
+  boardTop: { backgroundColor: colors.text, borderColor: colors.text },
+  onTop: { color: colors.onFocus },
+  boardName: { color: colors.text, fontSize: type.h2, fontWeight: '800', letterSpacing: track.h2, flex: 1 },
+  boardPts: { color: colors.text, fontSize: type.h2, fontWeight: '900', width: s(260), fontVariant: ['tabular-nums'] },
   boardMeta: { color: colors.textDim, fontSize: type.small, width: s(260) },
 });

@@ -10,7 +10,7 @@ import { FocusCard, Header, Screen } from '../components/ui';
 import { PACKS, signsInPack } from '../data/signs';
 import { useRouter } from '../nav/router';
 import { progress } from '../store/progress';
-import { colors, packColors, s, type } from '../theme';
+import { colors, s, track, type, zinc } from '../theme';
 
 const PER_ROW = 4;
 
@@ -19,13 +19,12 @@ export function PackScreen({ packId }: { packId: string }) {
   const prog = progress.use();
   const pack = PACKS.find((p) => p.id === packId);
   const list = signsInPack(packId);
-  const accent = packColors[packId] || colors.focus;
   const rows: (typeof list)[] = [];
   for (let i = 0; i < list.length; i += PER_ROW) rows.push(list.slice(i, i + PER_ROW));
 
   return (
     <Screen>
-      <Header title={pack?.name || packId} subtitle="Pick a sign to learn. Back returns home." accent={accent} />
+      <Header title={pack?.name || packId} subtitle="Pick a sign to learn. Back returns home." />
       {list.length === 0 ? <Text style={styles.empty}>No signs in this pack yet.</Text> : null}
       <SpatialNavigationRoot>
         <SpatialNavigationScrollView offsetFromStart={s(40)} style={{ flex: 1 }}>
@@ -38,20 +37,21 @@ export function PackScreen({ packId }: { packId: string }) {
                   const card = (
                     <FocusCard
                       key={sg.id}
-                      accent={accent}
                       style={styles.card}
                       onSelect={() => router.push({ name: 'lesson', packId, signId: sg.id })}
                     >
                       {(focused) => (
                         <View style={styles.cardBody}>
-                          <Text style={[styles.label, focused && { color: accent }]} numberOfLines={1}>
+                          <Text style={[styles.label, focused && { color: colors.onFocus }]} numberOfLines={1}>
                             {sg.label}
                           </Text>
-                          <Text style={styles.stars}>
-                            <Text style={{ color: colors.focus }}>{'★'.repeat(stars)}</Text>
-                            <Text style={{ color: colors.line }}>{'★'.repeat(3 - stars)}</Text>
-                          </Text>
-                          <Text style={styles.meta}>{p?.ok ? 'Learned' : p?.tries ? 'Keep practising' : 'New'}</Text>
+                          <View style={styles.foot}>
+                            <Text style={[styles.meta, focused && { color: zinc[600] }]}>{p?.ok ? 'Learned' : p?.tries ? 'Keep practising' : 'New'}</Text>
+                            <Text style={styles.stars}>
+                              <Text style={{ color: focused ? colors.onFocus : colors.text }}>{'★'.repeat(stars)}</Text>
+                              <Text style={{ color: focused ? zinc[300] : zinc[700] }}>{'★'.repeat(3 - stars)}</Text>
+                            </Text>
+                          </View>
                         </View>
                       )}
                     </FocusCard>
@@ -70,9 +70,10 @@ export function PackScreen({ packId }: { packId: string }) {
 const styles = StyleSheet.create({
   empty: { color: colors.textDim, fontSize: type.body },
   row: { flexDirection: 'row', paddingLeft: s(6) },
-  card: { width: s(392), height: s(250) },
-  cardBody: { padding: s(28), flex: 1, justifyContent: 'center' },
-  label: { color: colors.text, fontSize: s(60), fontWeight: '800' },
-  stars: { fontSize: type.body, marginTop: s(8) },
-  meta: { color: colors.textDim, fontSize: type.tiny, marginTop: s(6) },
+  card: { width: s(392), height: s(240) },
+  cardBody: { paddingHorizontal: s(32), paddingVertical: s(28), flex: 1, justifyContent: 'space-between' },
+  label: { color: colors.text, fontSize: s(58), fontWeight: '800', letterSpacing: track.title },
+  foot: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  stars: { fontSize: type.small, letterSpacing: s(4) },
+  meta: { color: colors.textDim, fontSize: type.tiny, fontWeight: '600' },
 });

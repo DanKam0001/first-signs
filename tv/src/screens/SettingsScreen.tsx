@@ -11,7 +11,7 @@ import { DATA_IS_PLACEHOLDER, SIGNS } from '../data/signs';
 import { conn, useConn } from '../net/connection';
 import { useRouter } from '../nav/router';
 import { defaultServerUrl, effectiveServerUrl, settings } from '../store/settings';
-import { colors, s, type } from '../theme';
+import { colors, hair, s, track, type, zinc } from '../theme';
 import { SOURCE } from '../generated/model';
 
 export function SettingsScreen() {
@@ -36,7 +36,7 @@ export function SettingsScreen() {
           <Text style={styles.label}>Server address (ws://computer-ip:8788/ws)</Text>
           <SpatialNavigationFocusableView onSelect={() => input.current?.focus()}>
             {({ isFocused }) => (
-              <View style={[styles.inputWrap, isFocused && { borderColor: colors.focus }]}>
+              <View style={[styles.inputWrap, isFocused && styles.inputFocused]}>
                 <TextInput
                   ref={input}
                   value={draft}
@@ -77,7 +77,7 @@ export function SettingsScreen() {
           {c.code ? ` - room ${c.code}` : ''}
           {c.paired ? ' - phone paired' : ''} - {c.url}
         </Text>
-        {c.lastError ? <Text style={[styles.small, { color: colors.warn }]}>{c.lastError}</Text> : null}
+        {c.lastError ? <Text style={[styles.small, { color: colors.text, fontWeight: '700' }]}>{c.lastError}</Text> : null}
         <Text style={styles.small}>
           Signs: {SIGNS.length} from {SOURCE}
           {DATA_IS_PLACEHOLDER ? ' (placeholder data)' : ''}
@@ -88,10 +88,19 @@ export function SettingsScreen() {
 }
 
 const styles = StyleSheet.create({
-  label: { color: colors.text, fontSize: type.body, fontWeight: '800', marginTop: s(20), marginBottom: s(12) },
-  inputWrap: { borderWidth: s(4), borderColor: colors.line, borderRadius: s(20), backgroundColor: colors.bgDeep, width: s(1300) },
+  label: {
+    color: colors.textDim,
+    fontSize: s(26),
+    fontWeight: '700',
+    letterSpacing: track.label,
+    marginTop: s(28),
+    marginBottom: s(14),
+  },
+  inputWrap: { borderWidth: hair, borderColor: zinc[700], borderRadius: s(18), backgroundColor: colors.card, width: s(1300) },
+  // text field focus: a thick white ring (it can't invert, the typed text has to stay readable)
+  inputFocused: { borderColor: colors.text, borderWidth: s(4), transform: [{ scale: 1.02 }] },
   input: { color: colors.text, fontSize: type.body, paddingHorizontal: s(26), paddingVertical: s(18) },
-  small: { color: colors.textDim, fontSize: type.tiny, marginTop: s(10) },
+  small: { color: colors.textMute, fontSize: type.tiny, marginTop: s(10) },
   row: { flexDirection: 'row', marginTop: s(16) },
   info: { position: 'absolute', left: s(96), bottom: s(40) },
 });

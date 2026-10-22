@@ -36,6 +36,22 @@ TV -> server (handled by the server, not relayed)
 - `{"type":"coach","id":"<req id>","target":"milk","top":[...],"attempts":2}` -> `{"type":"coach_text","id":"<req id>","text":"..."}`
   - Bedrock writes a short, warm tip of 2 sentences or fewer, built from the sign's description in `signs.json`. It never invents sign descriptions.
 
+## 1b. Sign Together (duo mode): 2 people in one camera frame
+- **TV -> phone:** `attempt` gains `"mode":"solo"|"duo"`, defaulting to solo. The TV sets the mode when the user starts a Sign Together round.
+- **Detection:** in duo mode the phone runs PoseLandmarker with `numPoses: 2` and HandLandmarker with `numHands: 4`.
+  - Each hand is assigned to the person whose pose wrist (15 or 16) is nearest. Within that person, the hand is labelled anatomically as in solo mode.
+  - People are identified by **side**: `"L"` is the person on the camera image's left, `"R"` the one on its right, decided by the pose shoulder midpoint x.
+  - The side is kept stable across frames by nearest-shoulder-midpoint tracking. Never swap mid-attempt.
+- **phone -> TV frame (duo):**
+  `{"type":"frame","t":..,"aspect":..,"pose":<person L or null>,"left":..,"right":..,"people":[{"side":"L","pose":..,"left":..,"right":..},{"side":"R",...}]}`
+  - The top-level fields carry the larger (nearer) person, so solo consumers keep working.
+- **pred (duo):**
+  `{"type":"pred","id":..,"target":..,"mode":"duo","people":[{"side":"L","top":[...],"ok":true},{"side":"R","top":[...],"ok":false,"present":true}]}`
+  - Each person's window is classified independently, with the same model, pack mask and §3 verdict.
+  - `present:false` means that person had too few frames with hands. The TV shows it as "step into view".
+- **TV display:** the TV mirrors the image, so person `"L"` (camera left) is drawn on the **right** of the TV. Each player sees themselves on their own side, like a mirror. Label the panes by player name.
+- **Phone guidance:** in duo mode the phone shows "Stand side by side, both fully in view". If only one person is detected for 2 s, it sends `phone_state` `"need_two"`.
+
 ## 2. Model bundle (produced by model/, consumed by phone/ and tv/)
 `model/export/` contains:
 - `model.onnx`: input `float32[1, T, F]`, output logits over `labels`. T and F are fixed by `preprocess.js`.
