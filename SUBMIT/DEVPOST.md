@@ -23,7 +23,7 @@ AWS Builder; Open Source
 TODO: public YouTube URL (under 3 minutes; filmed on the real Vega OS Fire TV Stick)
 
 ## Code repository
-TODO: public GitHub URL (MIT licence)
+https://github.com/DanKam0001/first-signs
 
 ---
 
@@ -378,8 +378,8 @@ in the main README.
 ## Open Source mini-challenge
 
 - **Contribution URL:** TODO (the PR to AmazonAppDev/react-native-multi-tv-app-sample)
-- **Project repository URL:** TODO
-- **GitHub username:** TODO
+- **Project repository URL:** https://github.com/DanKam0001/first-signs
+- **GitHub username:** DanKam0001
 
 **What we did:**
 
