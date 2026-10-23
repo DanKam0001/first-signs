@@ -1,0 +1,82 @@
+schema-version = 1
+
+[package]
+title = "First Signs"
+version = "0.1.0"
+id = "com.dankam.firstsigns"
+
+[os.version]
+min = "1.2"
+target = "1.2"
+
+[components]
+[[components.interactive]]
+id = "com.dankam.firstsigns.main"
+runtime-module = "/com.amazon.kepler.runtime.react_native_kepler_4@IReactNativeKepler_0"
+launch-type = "singleton"
+categories = ["com.amazon.category.main"]
+
+[processes]
+[[processes.group]]
+component-ids = ["com.dankam.firstsigns.main"]
+
+# ------------------------------------------------------------------------------
+# Wants: optional services (from AmazonAppDev/react-native-multi-tv-app-sample, MIT-0)
+# ------------------------------------------------------------------------------
+[wants]
+# On-screen keyboard for the Settings server-URL box
+[[wants.service]]
+id = "com.amazon.inputmethod.service"
+
+# Remote button events
+[[wants.service]]
+id = "com.amazon.inputd.service"
+
+# w3cmedia video (sign clips) and audio (Polly prompts)
+[[wants.service]]
+id = "com.amazon.media.server"
+
+[[wants.service]]
+id = "com.amazon.mediametrics.service"
+
+[[wants.service]]
+id = "com.amazon.media.playersession.service"
+
+[[wants.service]]
+id = "com.amazon.mediabuffer.service"
+
+[[wants.service]]
+id = "com.amazon.mediatransform.service"
+
+[[wants.service]]
+id = "com.amazon.gipc.uuid.*"
+
+[[wants.service]]
+id = "com.amazon.audio.stream"
+
+[[wants.service]]
+id = "com.amazon.audio.control"
+
+[[wants.service]]
+id = "com.amazon.audio.system"
+
+# Network information
+[[wants.service]]
+id = "com.amazon.network.service"
+
+[[wants.privilege]]
+id = "com.amazon.devconf.privilege.accessibility"
+
+# ------------------------------------------------------------------------------
+# Needs
+# ------------------------------------------------------------------------------
+[needs]
+[[needs.module]]
+id = "/com.amazon.vega.os@IVega_1_2"
+
+[[needs.privilege]]
+id = "com.amazon.network.privilege.net-info"
+
+[offers]
+[[offers.service]]
+id = "com.amazon.gipc.uuid.*"

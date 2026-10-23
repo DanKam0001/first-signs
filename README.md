@@ -4,8 +4,12 @@
 
 First Signs is a Fire TV app that helps hearing families learn their first American Sign Language (ASL) words for a Deaf
 baby or toddler. A phone on a stand is the camera. The TV shows a real Deaf signer making the sign, counts the family
-in, watches them sign it, and says whether they got it, with a short coaching tip when they didn't. The words come in
-routine packs (Mealtime, Bedtime, Bath time, Family), so the signs get used in daily life.
+in, watches them sign it, and says whether they got it, with a short coaching tip when they didn't. The 61 words come in
+six routine packs (Mealtime, Bedtime, Bath time, Family, Play, Feelings & needs), so the signs get used in daily life.
+
+**It runs natively on Vega OS on a real Fire TV Stick HD (2nd Gen, "OS 2.0")**, installed over Wi-Fi, and our demo video
+is filmed on that stick. The same app also builds for Fire OS (React Native for TV); that build has been tested on an
+Android TV emulator and in the web build, not on a Fire OS device.
 
 First Signs is a learning tool for hearing families. It does not translate or interpret ASL, and it is not a substitute
 for a Deaf teacher.
@@ -27,7 +31,7 @@ and phone apps, but none of them can tell you that *your* sign is wrong. Only a 
 
 | On a phone app | First Signs on the TV |
 |---|---|
-| You hold the phone, so you sign one-handed, even though many signs need both hands. The Deaf signer in our own reference videos held their phone while recording, and about 10 of the 40 clips are one-handed as a result. | The phone sits on a stand as a camera only, so **both hands are free**. |
+| You hold the phone, so you sign one-handed, even though many signs need both hands. The Deaf signer in our own reference videos held the phone while recording, so 17 two-handed signs in our 61 clips appear one-handed. | The phone sits on a stand as a camera only, so **both hands are free**. |
 | The reference sign is tiny. | The reference is **life-size** at couch distance, like a real class. |
 | One person at a time; a family crowding round can't see. | The **feedback is big enough for the whole family**, and people take turns in the Family round, or sign side by side in Sign Together. |
 
@@ -39,11 +43,19 @@ The result is real feedback on real, two-handed signing, done together.
 - **Lessons:** 61 signs in 6 packs (Mealtime, Bedtime, Bath time, Family, Play, Feelings & needs). For each sign you watch a short clip of a Deaf signer (with a slow-motion option),
   then press **Your turn**. The TV counts you in (3-2-1), records a 2.5-second window, and shows the result: a
   celebration if you got it, or "looked a bit like X" plus a coaching tip if you didn't. Each sign earns 0-3 stars.
+- **Talk with Baby:** practise signs in context. The TV shows a small everyday scene ("Baby is holding up an empty
+  cup."), you answer with one sign, and the TV replies to the sign it saw ("Milk? Let's fill it up."). 52 scenes across
+  the six packs (`tv/src/data/talk.ts`, `tv/src/screens/TalkScreen.tsx`). It reacts to what the recogniser reported and
+  never claims to know what anyone meant.
 - **Family round:** pick the players (Mum, Dad, Grandma...), a pack and a number of turns. Players take turns on random
   signs; a right answer scores 1, or 2 on a streak of 3 or more. Ends with a scoreboard.
 - **Sign Together:** two people stand side by side in one camera frame. Each gets their own mirror pane and verdict.
 - **Progress, About, Settings:** progress is stored on the TV. About credits the Deaf signers and points to Deaf-led classes.
-- **Remote only:** everything is driven with the D-pad, OK and Back. Spoken prompts (Amazon Polly) are also shown as text.
+- **Phone feedback:** the phone on the stand briefly shows the verdict too.
+- **Black and white:** a monochrome interface, with an inverted focus state (white fill, black text) so the D-pad focus
+  is obvious from the couch.
+- **Remote only:** everything is driven with the D-pad, OK and Back. Every prompt is shown as on-screen text; spoken
+  prompts through Amazon Polly are built in but waiting on AWS permissions (see [AWS status](#aws-status)).
 
 | Pair | Home | Result |
 |---|---|---|
@@ -70,13 +82,13 @@ flowchart LR
         NOVA["Amazon Bedrock<br/>Nova Micro / Nova Lite"]
     end
 
-    subgraph TV["Fire TV (React Native for TV, Fire OS)"]
-        UI["Lessons, Family round,<br/>Sign Together (D-pad)"]
+    subgraph TV["Fire TV (React Native for Vega on Vega OS; React Native for TV on Fire OS)"]
+        UI["Lessons, Talk with Baby, Family round,<br/>Sign Together (D-pad)"]
         SKEL["Live mirror skeleton"]
         VID["Deaf signer reference video"]
     end
 
-    MP -- "landmark frames only, 15-20 fps<br/>(no video)" --> RELAY
+    MP -- "landmark frames only, ~18.6 fps<br/>(no video)" --> RELAY
     ONNX -- "pred: top-3 + verdict" --> RELAY
     RELAY -- "frames, preds" --> SKEL
     RELAY -- "frames, preds" --> UI
@@ -92,7 +104,8 @@ flowchart LR
    landmark frames (hands and upper-body pose points, never the face mesh) to the server. When the TV asks for an attempt, the phone
    counts down, records a window, runs the sign model **on the phone** and sends back the top-3 guesses and a verdict.
 2. **Server (`server/`)**: a small Node.js relay. It pairs the TV and phone with a 4-digit room code, relays
-   messages, and makes the AWS calls:
+   messages, and makes the AWS calls. If the TV's connection falls behind, it drops stale landmark frames rather than
+   buffering them (predictions are never dropped), so the live mirror stays current:
    - **Amazon Polly** (`SynthesizeSpeech`, neural engine, voice Danielle) speaks prompts like "Your turn. Sign milk."
      Every phrase is cached on disk by the SHA-1 of voice and text, so it is synthesized once.
    - **Amazon Bedrock** (Converse API, Amazon Nova Micro, falling back to Nova Lite) writes a coaching tip of two
@@ -101,9 +114,17 @@ flowchart LR
      sent. Tips are cached per (sign, confused-with, attempt bucket).
    - If AWS is unavailable, the TV shows the prompt as text and the server returns a canned tip built from the same
      verified description. The app keeps working.
-3. **TV (`tv/`)**: React Native for TV (`react-native-tvos` 0.81) on Expo SDK 54, structured like Amazon's
-   [react-native-multi-tv-app-sample](https://github.com/AmazonAppDev/react-native-multi-tv-app-sample). It plays the
-   Deaf signer's clip, draws the family's live skeleton as a mirror, and runs the lesson and game flow.
+3. **TV**: two builds of the same app. It plays the Deaf signer's clip, draws the family's live skeleton as a mirror,
+   and runs the lesson and game flow.
+   - **Vega OS** (the demo device): React Native for Vega (RN 0.83, `@amazon-devices/react-native-kepler` 4.0, Vega SDK
+     0.24), a port of `tv/` documented in [`tv/VEGA.md`](tv/VEGA.md). On the 1 GB stick the reference clips play as
+     bundled JPG sprite sheets (a frame flipbook), because w3cmedia video wouldn't play reliably on the device. Only one
+     sheet is mounted at a time, and the sheets were halved in size after an ANR caused by graphics-memory (CMA)
+     exhaustion, diagnosed from the stick's own crash report (`vega device copy-logs`). The live skeleton is drawn at
+     10 fps, always from the newest frame.
+   - **Fire OS** (`tv/`): React Native for TV (`react-native-tvos` 0.81) on Expo SDK 54, structured like Amazon's
+     [react-native-multi-tv-app-sample](https://github.com/AmazonAppDev/react-native-multi-tv-app-sample). Tested on an
+     Android TV emulator and in the browser build.
 4. **Model (`model/`)**: a ~995k-parameter classifier (4.0 MB ONNX) trained on landmarks from Deaf signers in Google's
    GISLR dataset. The exact message formats every component follows are in [`PROTOCOL.md`](PROTOCOL.md).
 
@@ -149,17 +170,19 @@ Full per-sign and per-signer tables, the confusion list and how the 61 signs wer
 
 ### Live, on the phone camera, with hearing learners
 
-> **TODO: being measured.** The numbers above come from GISLR's own recordings of fluent Deaf signers. They are not a
-> measurement of First Signs' live phone camera, at couch distance, in home lighting, with hearing learners, who will
-> sign less cleanly. This section will report that measurement (attempts, signers, signs, accept rate), whatever it shows.
->
-> | Setup | Attempts | Signers | Correct-sign accept rate | Wrong-sign accept rate |
-> |---|---|---|---|---|
-> | TODO | TODO | TODO | TODO | TODO |
+**Not measured yet.** The numbers above come from GISLR's own recordings of fluent Deaf signers. They are not a
+measurement of First Signs' live phone camera, at couch distance, in home lighting, with hearing learners, who will sign
+less cleanly. We don't quote any live accuracy figure. A live study (attempts, signers, signs, accept rates) is the first
+item on the roadmap, and we will publish it whatever it shows.
+
+### Live latency (measured)
+
+The phone sends about 18.6 landmark frames a second, and the cloudflared HTTPS tunnel adds about 40 ms one way.
 
 ## Quick start
 
-You need: Node 20+, a PC and a phone on the same Wi-Fi, and (for the real TV) a Fire TV device with ADB debugging on.
+You need: Node 20+, a PC and a phone on the same Wi-Fi, and (for a real TV) a Vega OS Fire TV stick with Developer Mode
+on, or a Fire OS device with ADB debugging on.
 The phone page loads MediaPipe and onnxruntime-web from jsDelivr, so the phone needs internet access.
 
 ### 1. Server
@@ -177,7 +200,31 @@ AWS is optional. Without it, prompts appear as text and tips come from the built
 Bedrock, give the server's AWS identity the inline policy in [`server/iam-policy.json`](server/iam-policy.json), set
 `AWS_PROFILE` and `AWS_REGION` (default `us-east-1`), and check with `npm run smoke:aws`. Details: [`server/README.md`](server/README.md).
 
-### 2. Fire TV app
+### 2a. Run on a Vega Fire TV stick
+
+The Vega app is built with the Vega SDK 0.24 (Linux only; we used WSL2 on Windows, which Amazon doesn't officially
+support). Full notes and scripts: [`tv/VEGA.md`](tv/VEGA.md).
+
+1. **Developer Mode.** On the stick: Settings > My Fire TV > About, select the device name and press OK **7 times**.
+   Then Developer options > Developer Mode > Continue shows a 6-digit code (valid for 5 minutes). On the PC:
+   ```bash
+   vega devmode login                             # browser OAuth; needs an Amazon Developer account
+   vega devmode enable-device --code <6 digits>   # the stick reboots
+   ```
+   In WSL, `vega devmode` needs an unlocked gnome-keyring: run it inside `dbus-run-session` with the keyring unlocked.
+2. **Network connection.** On the stick: Developer options > Connection Mode > TCP/IP > standard port 5555 (it reboots).
+3. **Build, install, launch** (Fire TV sticks are armv7). Set the server in `src/generated/config.json` first, or later
+   in the app's Settings.
+   ```bash
+   npm run build:app                              # in the Vega project; gives build/armv7-release/firstsigns_armv7.vpkg
+   vega exec vda connect <stick-ip>:5555
+   vega device list                               # note the serial
+   vega device -d <serial> install-app --packagePath build/armv7-release/firstsigns_armv7.vpkg
+   vega device -d <serial> launch-app --appName com.dankam.firstsigns.main
+   ```
+   A sideloaded app may not appear in the launcher; `launch-app` starts it. Crash reports: `vega device copy-logs`.
+
+### 2b. Fire OS app
 
 Sideload the APK (build it with `cd tv && npm install && npm run android:release`; output `tv/dist/first-signs.apk`):
 
@@ -219,9 +266,10 @@ this in one step.
 | [`PROTOCOL.md`](PROTOCOL.md) | The shared contract: WebSocket messages, model bundle, verdict rule, ports |
 | [`server/`](server/README.md) | Node.js relay: pairing, frame relay, Polly and Bedrock, serves the phone page |
 | [`phone/`](phone/README.md) | Phone camera page: MediaPipe, handedness rule, on-phone inference, Sign Together |
-| [`tv/`](tv/README.md) | Fire TV app (React Native for TV, Expo SDK 54), build and sideload scripts, test drivers, screenshots in `tv/docs/` |
+| [`tv/`](tv/README.md) | Fire OS TV app (React Native for TV, Expo SDK 54), build and sideload scripts, test drivers, screenshots in `tv/docs/` |
+| [`tv/VEGA.md`](tv/VEGA.md) | The Vega OS port (React Native for Vega): what changed, build, install on a real stick, friction rows |
 | [`model/`](model/README.md) | Data fetch, preprocessing, training, evaluation and ONNX export. The shipped bundle is `model/export/` |
-| `model/export/videos/` | The 40 Deaf-signer reference clips and their [`CREDITS.md`](model/export/videos/CREDITS.md) |
+| `model/export/videos/` | The 61 Deaf-signer reference clips (one signer) and their [`CREDITS.md`](model/export/videos/CREDITS.md) |
 | `tools/fake_tv.html` | A browser stand-in for the TV, for testing the phone and server |
 | `SUBMIT/` | Hackathon submission text, facts sheet, friction log |
 
@@ -230,8 +278,9 @@ this in one step.
 The code in this repository is released under the [MIT licence](LICENSE). The datasets and sign videos are **not**
 covered by it: they keep their own **CC BY 4.0** licences and attribution requirements, listed below.
 
-**Sign videos: PopSign ASL v1.0.** The 40 reference clips are from PopSign ASL v1.0 by the **Georgia Institute of
-Technology** and the **Deaf Professional Arts Network (DPAN)**, performed by **one Deaf ASL signer** (participant 8037) recruited by DPAN,
+**Sign videos: PopSign ASL v1.0.** All 61 reference clips (the original 40 and the 21 Play and Feelings & needs signs)
+are from PopSign ASL v1.0 by the **Georgia Institute of Technology** and the **Deaf Professional Arts Network (DPAN)**,
+performed by **one Deaf ASL signer** (participant 8037) recruited by DPAN,
 licensed [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Paper: Thad Starner, Sean Forbes, Matthew So, et
 al., "PopSign ASL v1.0: An Isolated American Sign Language Dataset Collected via Smartphones", NeurIPS 2023 Datasets and
 Benchmarks. Dataset: https://signdata.cc.gatech.edu/view/datasets/popsign_v1_0/. We trimmed each clip to the sign,
@@ -246,7 +295,7 @@ Institute of Technology is licensed under CC-BY 4.0"). The held-out test signers
 Sign Recognition Rerun Set". We never use or ship GISLR's face landmarks, and we never use the data to identify anyone.
 
 **Sign descriptions** (used for coaching tips) are written in our own words from Lifeprint/ASL University and HandSpeak,
-with the source URLs listed per sign in `model/export/signs.json`. 38 of 40 are checked; pajamas and toothbrush are
+with the source URLs listed per sign in `model/export/signs.json`. 59 of 61 are checked; pajamas and toothbrush are
 marked unverified and are never sent to Bedrock.
 
 Georgia Tech, DPAN, Google and the signers do not endorse First Signs. Thank you to the Deaf signers whose recordings
@@ -254,6 +303,13 @@ made it possible.
 
 **Code we built on:** the TV app's remote handling and `withKeyEvent` config plugin are adapted from
 [AmazonAppDev/react-native-multi-tv-app-sample](https://github.com/AmazonAppDev/react-native-multi-tv-app-sample) (MIT-0).
+
+## AWS status
+
+Polly and Bedrock are fully integrated in `server/`, but on our shared AWS account the IAM policy has not been attached
+yet: `npm run smoke:aws` returns `AccessDenied` for both (checked 2026-10-23). The app runs on its fallback path:
+on-screen text instead of speech, and built-in tips from the same verified descriptions. Attaching
+[`server/iam-policy.json`](server/iam-policy.json) turns both on with no code change.
 
 ## Privacy
 
@@ -267,18 +323,23 @@ made it possible.
 
 ## Limitations
 
-- **Live accuracy is not yet published.** The measured numbers are on fluent Deaf signers' recordings, not on hearing
-  learners in front of a TV (see the TODO above).
-- **Some reference clips are one-handed.** Every PopSign clip was filmed with the signer holding the phone. Two-handed
-  signs (book, night, morning, clean, wet, finish, bath, sad, brother, wake) appear in their one-handed form in the
-  videos, and don't match the two-handed written descriptions.
+- **Live accuracy is not measured.** The measured numbers are on fluent Deaf signers' recordings, not on hearing
+  learners in front of a TV.
+- **Some reference clips are one-handed.** Every PopSign clip was filmed with the signer holding the phone. 17
+  two-handed signs (book, night, morning, clean, wet, finish, bath, sad, brother, wake, car, jump, balloon, owie, sick,
+  wait, open) appear in their one-handed form in the videos, and each carries a caption note saying so.
 - **Two descriptions are unverified:** pajamas and toothbrush. No reliable written source was found, so they are marked
   in the data and never used for coaching.
 - **Close pairs:** mom/grandma and dad/grandpa are often confused; shower is the weakest sign.
 - **Isolated signs only.** First Signs checks single words, not sentences, facial grammar or fingerspelling.
 - **Not yet reviewed by Deaf ASL teachers.** We have not had Deaf feedback on the app itself yet.
-- **Setup is developer-grade:** a PC runs the server, and the APK is sideloaded with a debug signing key.
-- **Fire OS only for now.** A Vega OS port is planned but not built (see `tv/README.md`).
+- **Setup is developer-grade:** a PC runs the server, and the app is sideloaded (Vega: Developer Mode; Fire OS: a debug
+  signing key).
+- **Fire OS build not tested on a Fire OS device.** It has run on an Android TV emulator and in the browser only. The
+  Vega OS build is the one tested on real hardware.
+- **No voice yet.** Polly and Bedrock are blocked by IAM on our shared account (see [AWS status](#aws-status)), and
+  audio playback on the Vega stick is not yet verified.
+- **No keep-awake on Vega** yet, so the screensaver may start during long sessions.
 
 ## Respect
 
@@ -294,9 +355,10 @@ made it possible.
 ## Roadmap
 
 - **Live accuracy study** with hearing learners on real phone cameras, published whatever it shows.
-- **Deaf review** of the packs, the descriptions and the feedback wording.
+- **Deaf review** of the packs, the descriptions, the Talk with Baby scenes and the feedback wording.
 - **Two-handed reference videos** for the signs that only have one-handed clips today.
 - **More packs:** for baby-sign families (hearing babies) and for general ASL learners.
 - **Auslan**, built with Deaf Australians.
 - **Echo Show** and other devices with a built-in camera, which would remove the phone entirely.
-- **Vega OS** build of the TV app.
+- **Voice on:** attach the IAM policy, then check Polly audio on the Vega stick.
+- **Fire OS hardware test** of the Fire OS build.

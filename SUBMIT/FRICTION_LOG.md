@@ -1,10 +1,13 @@
 # First Signs: friction log
 
-Everything that slowed us down while building First Signs, from zero to a sideloadable Fire OS APK, plus a Vega SDK
-and Vega Virtual Device (VVD) trial. Logged on 2026-10-17 (AEDT) as it happened.
+Everything that slowed us down while building First Signs: a Vega OS port running on a real Fire TV Stick, the same
+port on the Vega Virtual Device (VVD), the Vega SDK install on WSL2, a sideloadable Fire OS APK, AWS, and data tools.
+46 entries. Logged as it happened, 2026-10-17 to 2026-10-23 (AEDT).
 
 **Host:** Windows 11 Home (build 26200), 32 GB RAM, GTX 1660, a nearly full C: drive and a spare D: drive. Vega work ran
-in WSL2 (kernel 6.18.33.2) with WSLg, on Ubuntu 26.04 LTS.
+in WSL2 (kernel 6.18.33.2) with WSLg, on Ubuntu 26.04 LTS, with Vega SDK 0.24.12112 and Vega CLI 1.4.5.
+
+**Device:** Fire TV Stick HD (2nd Gen), software "OS 2.0 (2602000051520)", 1 GB RAM class, on home Wi-Fi.
 
 **Format of each entry:** task, steps, expected, actual, severity, time lost, workaround, suggested fix. "Time lost" is
 what we measured or noted at the time; "not recorded" means we didn't time it, and we have not guessed.
@@ -16,6 +19,24 @@ or needs a non-obvious workaround. **Low** = noise, confusion, or a small detour
 
 | ID | Area | Issue | Severity |
 |---|---|---|---|
+| R1 | Vega real device / buying | Retail Fire TV Stick HD and 4K Select are Vega OS with no ADB; not clear when buying | Medium |
+| R2 | Vega real device / Developer Mode | Developer options shows only a QR code until the device name is pressed 7 times | Medium |
+| R3 | Vega CLI / Developer Mode | `vega devmode login` in WSL needs an unlocked OS keyring | Medium |
+| R4 | Vega real device / connection | Nothing listens on the network until Connection Mode is set to TCP/IP | Low |
+| R5 | Vega real device / OS version | Stick reports OS 2.0; SDK 0.24 docs and templates target OS 1.2 | Low |
+| R6 | Vega w3cmedia | mp4 clips never played on the real stick; no error, and no logs left afterwards | High |
+| R7 | Vega real device / memory | ANR kill from graphics-memory (CMA) exhaustion; no documented texture budget | High |
+| R8 | Vega real device / performance | Live mirror lagged: UI thread couldn't keep up with ~15 SVG redraws a second plus the sprite animation | Medium |
+| R9 | Vega CLI | No screenshot or screen-record command for real devices | Medium |
+| P1 | Vega port / templates | Amazon's sample is RN 0.72 / kepler 2.x; `vega project generate` gives RN 0.83 / kepler 4.x | Low |
+| P2 | Vega port / npm | Confusing dist-tags on `@amazon-devices` packages | Low |
+| P3 | Vega Virtual Device | VVD killed when the launching `wsl.exe` call returns | Low |
+| P4 | Vega Virtual Device | Key injection undocumented; `inputd-cli` needs evdev names | Low |
+| P5 | React Native for Vega | OK button arrives as `enter`, not `select` as in the sample | Low |
+| P6 | Vega logging | Release-build `console.log` never appears in `loggingctl log` | Medium |
+| P7 | Vega Virtual Device | `SpatialNavigationScrollView` froze the whole VVD display | Medium |
+| P8 | Vega Virtual Device | Display freezes survive reinstall and relaunch; only a hard restart recovers | Medium |
+| P9 | Vega w3cmedia (VVD) | Clip drawn about 2x, cropped and frozen in a small view | Medium |
 | F1 | Fire OS / RN multi-TV sample | Native build fails on Windows paths over 260 characters (ninja "still dirty") | High |
 | F2 | Fire OS / RN multi-TV sample | Expo module versions in the sample don't match its Expo SDK | Medium |
 | F3 | Fire OS / RN multi-TV sample | Disk space for the first native build is undocumented | Medium |
@@ -44,6 +65,211 @@ or needs a non-obvious workaround. **Low** = noise, confusion, or a small detour
 | D5 | Data (non-Amazon) | Every PopSign clip filmed hand-held, so two-handed signs appear one-handed | Medium |
 | D6 | Tools (non-Amazon) | MediaPipe handedness docs don't match measured behaviour | Medium |
 | D7 | Tools (non-Amazon) | ffmpeg single-image output fails on full-range input | Low |
+
+**Totals:** 46 entries: 9 on a real Vega stick (R), 9 on the Vega port in the VVD (P), 12 on the Vega SDK install on
+WSL2 (V), 7 Fire OS (F), 2 AWS (A), 7 data and tools (D). High: 6 (R6, R7, F1, A1, V2, V7). Medium: 24. Low: 16.
+
+---
+
+## Vega OS on a real Fire TV Stick
+
+First Signs runs natively on this stick, and our demo video is filmed on it. These entries cover getting from a retail
+stick to the app running well. What worked first time, and is not friction: the CLI Developer Mode flow once the
+keyring was unlocked (no per-device portal registration), `vega exec vda connect` over Wi-Fi, `vega device
+install-app` and `launch-app`, an app with `[os.version] 1.2` running on OS 2.0, and `vega device copy-logs`, which
+gave us the crash report that solved R7.
+
+### R1. Retail Vega sticks have no ADB, and that isn't clear when buying
+- **Task:** buy a Fire TV stick to test our Fire OS (Android) build.
+- **Steps:** bought a Fire TV Stick HD (2nd Gen) at retail.
+- **Expected:** a Fire OS device with ADB debugging in Developer options.
+- **Actual:** the retail Fire TV Stick HD and 4K Select models run Vega OS, which has no ADB and doesn't run APKs. The
+  product listing doesn't make the OS a developer will get obvious.
+- **Severity:** Medium.
+- **Time lost:** not recorded. The bigger cost: our Fire OS build is tested only on an Android TV emulator.
+- **Workaround:** we ported the app to React Native for Vega and made the stick the demo device.
+- **Suggested fix:** a developer page that lists which retail devices run Vega OS vs Fire OS, and whether they have ADB.
+
+### R2. Developer options shows only a QR code
+- **Task:** enable developer features on the retail stick.
+- **Steps:** Settings > My Fire TV > Developer options.
+- **Expected:** toggles for developer features.
+- **Actual:** only a QR code to developer.amazon.com/apps-and-games/vega. A port scan found nothing open except 8009
+  (Cast). The way in, pressing the **device name** in Settings > My Fire TV > About **7 times**, isn't shown on the TV.
+- **Severity:** Medium.
+- **Time lost:** not recorded.
+- **Workaround:** press the device name 7 times ("You are now a developer"), then Developer options > Developer Mode >
+  Continue for a 6-digit code, then `vega devmode login` and `vega devmode enable-device --code <code>` on the PC.
+- **Suggested fix:** say "press the device name in About 7 times" on the QR page itself.
+
+### R3. `vega devmode login` in WSL needs an unlocked OS keyring
+- **Task:** log in for Developer Mode from WSL2.
+- **Steps:** `vega devmode login`.
+- **Expected:** browser OAuth, then a stored token.
+- **Actual:** it fails without an unlocked gnome-keyring, which a WSL shell doesn't have by default.
+- **Severity:** Medium.
+- **Time lost:** not recorded.
+- **Workaround:** a helper script that starts `dbus-run-session`, unlocks gnome-keyring, then runs vega:
+  `wsl dbus-run-session -- bash -l ~/vega_apps/vkr.sh devmode ...`.
+- **Suggested fix:** a file-based token option (or `--no-keyring`) for headless Linux and WSL, or a clear error that
+  names the keyring.
+
+### R4. Nothing listens on the network until Connection Mode is TCP/IP
+- **Task:** connect to the stick over Wi-Fi.
+- **Steps:** `vega exec vda connect <stick-ip>:5555` after enabling Developer Mode.
+- **Expected:** a connection.
+- **Actual:** the stick only accepts connections after Developer options > **Connection Mode** > TCP/IP > standard port
+  5555 > Continue, which reboots it. Before Developer Mode, port 5555 is closed, which looks like a broken device.
+- **Severity:** Low.
+- **Time lost:** not recorded.
+- **Workaround:** set Connection Mode to TCP/IP, wait for the reboot, then `vega exec vda connect` and `vega device list`.
+  USB with `vega exec vda tcpip 5555` is the alternative, but WSL2 can't see USB without usbipd-win.
+- **Suggested fix:** put the Connection Mode step in the Developer Mode page, not only in vda-over-tcpip.
+
+### R5. OS 2.0 on the stick, OS 1.2 in the docs
+- **Task:** check the app would install before trying.
+- **Expected:** docs saying which device OS versions SDK 0.24 apps run on.
+- **Actual:** the stick reports "OS 2.0 (2602000051520)". SDK 0.24's release notes and the generated manifest target
+  OS 1.2 (`[os.version] min/target = 1.2`), and no doc we found mentions OS 2.0. It installed and ran fine.
+- **Severity:** Low.
+- **Time lost:** none, but we planned a fallback to the RN 0.72 template in case it was rejected.
+- **Workaround:** none needed.
+- **Suggested fix:** a compatibility table: SDK version vs device OS versions.
+
+### R6. w3cmedia mp4 never played on the real stick
+- **Task:** play the Deaf signer's reference clip in the lesson's teacher pane.
+- **Steps:** w3cmedia `VideoPlayer` with `KeplerVideoSurfaceView`, streaming the mp4 from our server, ordered like the
+  official sample (initialize, load, `loadedmetadata`, mount the surface, play).
+- **Expected:** the clip plays.
+- **Actual:** stuck, no frames, and no error in JS. On the VVD it was zoomed, cropped and frozen (P9). It couldn't be
+  diagnosed afterwards: `loggingctl log` with no options prints help, and the journal had rotated by then.
+- **Severity:** High (the core teaching video).
+- **Time lost:** not recorded.
+- **Workaround:** bundled JPG sprite sheets (12 fps) animated by one `<Image>` in a clipped View. Same real signer,
+  reliable looping, slow motion still works, and no network or media services needed.
+- **Suggested fix:** a w3cmedia troubleshooting page (MIME type, HTTP Range, the `secureplayback` privilege and media
+  category), and an error event when playback can't start.
+
+### R7. ANR kill from graphics-memory exhaustion
+- **Task:** run lessons on the stick.
+- **Expected:** the app runs.
+- **Actual:** the app was killed with an ANR. The crash report from `vega device copy-logs` showed graphics memory (CMA)
+  exhausted by large decoded textures: our sprite sheets decoded to up to 7.6 MB each.
+- **Severity:** High.
+- **Time lost:** not recorded.
+- **Workaround:** halved the sheets (frames 320 to 240 px tall, sheets capped at 1024 px, so each decodes to about 4 MB
+  or less) and mounted only one sheet at a time.
+- **Suggested fix:** document the texture memory budget per device, and have the VVD optionally emulate it.
+
+### R8. Live mirror lagged on the stick
+- **Task:** draw the family's live skeleton from the phone's landmark frames (the phone sends about 18.6 a second).
+- **Expected:** a smooth, current mirror, as on the VVD and the emulator.
+- **Actual:** the stick's UI thread couldn't keep up with about 15 SVG redraws a second plus the sprite animation, so the
+  mirror fell behind. Frames also piled up in the relay.
+- **Severity:** Medium.
+- **Time lost:** not recorded.
+- **Workaround:** draw at 10 fps on Vega, always the newest frame (no queue); the relay drops landmark frames (never
+  predictions) when the TV's socket falls behind. Measured: the tunnel adds about 40 ms one way.
+- **Suggested fix:** a performance guide for React Native for Vega on 1 GB devices (SVG cost, recommended frame rates).
+
+### R9. No screenshot or screen-record command for real devices
+- **Task:** capture screenshots and the demo video from the stick.
+- **Steps:** `vega device --help` (CLI 1.4.5).
+- **Expected:** `screenshot` and `screen-record` subcommands.
+- **Actual:** none. The `vega device` commands cover logs, files, apps, ports and shell, but not the screen. (VVD
+  screenshots work through the emulator console; see V10.)
+- **Severity:** Medium.
+- **Time lost:** not recorded.
+- **Workaround:** filmed the TV with a camera for the demo video.
+- **Suggested fix:** `vega device screenshot` and `vega device screen-record`.
+
+---
+
+## Vega OS port on the Vega Virtual Device
+
+Porting our Fire OS app to React Native for Vega and testing it in the VVD, before the real stick. Full detail, with
+the remaining risks, is in `tv/VEGA.md`.
+
+### P1. Two different React Native baselines
+- **Task:** pick the RN version for the port.
+- **Expected:** the multi-TV sample's Vega app and the CLI template agree.
+- **Actual:** the sample's Vega workspace is RN 0.72 / react-native-kepler 2.x; `vega project generate --template
+  helloWorld` gives RN 0.83 / kepler 4.x, with a different runtime module and build command (`build-vega` vs
+  `build-kepler`).
+- **Severity:** Low.
+- **Time lost:** not recorded.
+- **Workaround:** used the RN 0.83 template and ported the sample's patterns (TVEventHandler, w3cmedia).
+- **Suggested fix:** a note in the sample saying which baseline new apps should start from.
+
+### P2. Confusing dist-tags on `@amazon-devices` packages
+- **Task:** find the Vega versions of react-native-svg and AsyncStorage.
+- **Actual:** tags like `3.0.9000000001`, `-rn-83` and `rn83-alpha-old`; the packages carry `temporary-alias-for-package`
+  metadata but must be imported by their `@amazon-devices/...` names.
+- **Severity:** Low.
+- **Time lost:** not recorded.
+- **Workaround:** `npm view @amazon-devices/<pkg> dist-tags`, then `latest`.
+- **Suggested fix:** a table of library equivalents and versions per RN baseline.
+
+### P3. VVD killed when the launching `wsl.exe` call returns
+- **Task:** start the VVD from a script run as `wsl -- bash script.sh`.
+- **Actual:** `nohup vega virtual-device start &` (and a nohup'd node stub) were killed when `wsl.exe` returned ("Wait
+  for emulator ... to shutdown gracefully").
+- **Severity:** Low (WSL is unsupported).
+- **Time lost:** not recorded.
+- **Workaround:** `setsid nohup ... < /dev/null & disown`.
+- **Suggested fix:** a `--detach` option on `vega virtual-device start`.
+
+### P4. Key injection undocumented
+- **Task:** drive the remote in the VVD for automated tests.
+- **Actual:** no docs. We found `inputd-cli` on the device; names like `dpad_right` give "invalid button value", but
+  evdev names work (`KEY_RIGHT`, `KEY_ENTER`, `KEY_BACK`).
+- **Severity:** Low.
+- **Time lost:** not recorded.
+- **Workaround:** `vega exec vda shell "inputd-cli button_press KEY_ENTER"`.
+- **Suggested fix:** document `inputd-cli`, or add `vega device press-key`.
+
+### P5. OK arrives as `enter`, not `select`
+- **Task:** handle the OK button with `TVEventHandler`.
+- **Expected:** eventType `select`, as the sample maps it.
+- **Actual:** `KEY_ENTER` arrives as `enter`; `KEY_SELECT` produced no JS event.
+- **Severity:** Low.
+- **Time lost:** not recorded.
+- **Workaround:** map both `select` and `enter`.
+- **Suggested fix:** list the eventType values per input in the TVEventHandler docs.
+
+### P6. Release-build `console.log` never appears
+- **Task:** read JS logs from the app.
+- **Expected:** `loggingctl log` shows them.
+- **Actual:** only native `KeplerScript-Native` telemetry appeared; `loggingctl log -S '-10min'` fails to parse.
+- **Severity:** Medium.
+- **Time lost:** not recorded.
+- **Workaround:** relay debug messages and errors over the app's own WebSocket; an ErrorBoundary shows errors on screen.
+- **Suggested fix:** route release-build JS console output to the system log, or document how to enable it.
+
+### P7. `SpatialNavigationScrollView` froze the VVD display
+- **Task:** open the pack screen (a grid of signs in a scroll view).
+- **Actual:** the screen went blank and the whole VVD display froze, while JS kept running.
+- **Severity:** Medium.
+- **Time lost:** not recorded.
+- **Workaround:** a plain View (each pack fits on one screen).
+- **Suggested fix:** investigate react-tv-space-navigation's scroll view on Vega, or note it as unsupported.
+
+### P8. Display freezes survive reinstall and relaunch
+- **Task:** recover the VVD after a freeze (P7, or after reinstalling an app with a live video surface).
+- **Actual:** the display stayed frozen, or on the plain background colour, after reinstall, relaunch and Home.
+  `vega virtual-device stop` then start, without checking status, sometimes didn't restart at all.
+- **Severity:** Medium.
+- **Time lost:** not recorded.
+- **Workaround:** a restart script that waits for `"running":false`, kills qemu if needed, then boots.
+- **Suggested fix:** a `vega virtual-device restart` that does this.
+
+### P9. w3cmedia clip zoomed, cropped and frozen in the VVD
+- **Task:** play an mp4 in a small view.
+- **Actual:** drawn about 2x, cropped to the top-left, stuck on an early frame; `scalingmode="fit"` changed nothing.
+- **Severity:** Medium.
+- **Time lost:** not recorded.
+- **Workaround:** sprite sheets (see R6).
+- **Suggested fix:** as R6.
 
 ---
 
@@ -125,7 +351,8 @@ or needs a non-obvious workaround. **Low** = noise, confusion, or a small detour
 - **Suggested fix:** if Amazon documents the short-path workaround (F1), show a copy command that excludes by full path.
 
 ### F7. No Fire OS emulator image
-- **Task:** test the Fire OS build before the Fire TV Stick arrived.
+- **Task:** test the Fire OS build. (The stick we bought turned out to run Vega OS, see R1, so this emulator is the
+  only place the Fire OS build has run.)
 - **Steps:** `sdkmanager --list`, looking for a Fire OS or Amazon system image.
 - **Expected:** a Fire OS image, or a documented closest match.
 - **Actual:** only Google's `android-tv` and `google-tv` images are listed.
@@ -134,7 +361,7 @@ or needs a non-obvious workaround. **Low** = noise, confusion, or a small detour
 - **Workaround:** `system-images;android-30;android-tv;x86` (Android 11, the same base as Fire OS 8) with WHPX and the
   AVD on D:. The release APK installs and runs there, and our test script drives it only with
   `adb shell input keyevent` (D-pad 19-23, Back 4). Fire-specific behaviour (the launcher banner in "Your Apps &
-  Channels", the remote's menu keys, performance on a stick) stays unverified until a real device is used.
+  Channels", the remote's menu keys, performance on a stick) is unverified for the Fire OS build.
 - **Suggested fix:** say in the Fire TV docs which Android TV emulator image best matches each Fire OS version.
 
 ---

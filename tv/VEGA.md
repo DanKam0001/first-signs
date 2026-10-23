@@ -22,7 +22,7 @@ paths break the build. The Fire OS app in `tv/` was not modified.
 | Verdict ("Almost! That looked a bit like 'more'") + coach tip | works | `docs/vega-06-verdict.png` |
 | Spoken prompts (`speak` -> audio URL -> w3cmedia `AudioPlayer`) | requests sent and answered; could not hear the VVD audio | n/a |
 | Settings (server URL) + AsyncStorage persistence | code ported (`@amazon-devices/react-native-async-storage__async-storage`); not exercised | n/a |
-| Real Vega stick | **not installed yet**: blocked by a permission check, waiting for the user's go-ahead | n/a |
+| Real Vega stick | **running**: Fire TV Stick HD (2nd Gen, OS 2.0), installed over Wi-Fi with `vega device install-app`; the demo video is filmed on it | 2026-10-23 |
 
 ## What changed from the Fire OS app
 
