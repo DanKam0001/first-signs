@@ -2,8 +2,7 @@
 
 Every field below is ready to paste. All numbers come from `SUBMIT/FACTS.md` and `model/export/metrics.json`.
 
-**Before pasting, fill in the four remaining TODOs:** the YouTube URL, the GitHub repo URL, the Open Source contribution
-(PR) URL and the GitHub username.
+**Before pasting, fill in the remaining TODO:** the YouTube URL.
 
 ---
 
@@ -377,27 +376,24 @@ in the main README.
 
 ## Open Source mini-challenge
 
-- **Contribution URL:** TODO (the PR to AmazonAppDev/react-native-multi-tv-app-sample)
+- **Contribution URL:** https://github.com/DanKam0001/first-signs (a new MIT-licensed open-source project created during the hackathon window)
 - **Project repository URL:** https://github.com/DanKam0001/first-signs
 - **GitHub username:** DanKam0001
 
-**What we did:**
+**What we did:** we built and released First Signs as a new MIT-licensed open-source project during the hackathon
+window. It includes:
 
-1. **First Signs is open source under the MIT licence:** the relay server, the phone camera page, the Fire OS TV app,
-   the Vega OS port notes, and the full training, evaluation and export pipeline for the sign model. The datasets and
-   sign videos keep their own CC BY 4.0 licences and credits.
-2. **A pull request to AmazonAppDev/react-native-multi-tv-app-sample** (drafted in `SUBMIT/OSS_PR.md`) that documents why
-   native Android/Fire OS builds fail on Windows, and how to fix it.
+- **A React Native app for Vega OS** (`vega/`), running on a real Fire TV Stick HD. It shows patterns other Vega developers
+  can reuse: a sprite-sheet player that works around w3cmedia playback on low-end sticks, render throttling that avoids
+  graphics-memory (CMA) ANRs, a D-pad remote layer, and Wi-Fi install scripts that run from WSL2.
+- **The Fire OS / web TV app** (`tv/`), built from Amazon's react-native-multi-tv-app-sample, with the same screens.
+- **A phone camera page and a relay server** (`phone/`, `server/`). Hand tracking runs on the phone, and only landmarks
+  travel, under a documented WebSocket protocol (`PROTOCOL.md`).
+- **The full sign-model pipeline** (`model/`): data fetch, training, held-out-signer evaluation, ONNX export, and
+  Python/JS preprocessing parity tests.
+- **Docs and a 46-entry friction log** covering the Windows path-length build failure, the Vega devmode and keyring setup
+  in WSL, and the real-device crash diagnosis, with workarounds others can copy.
 
-**How the PR works:** on Windows, the sample's native modules (react-native-screens, expo-modules-core,
-react-native-reanimated) fail to build with `ninja: error: manifest 'build.ninja' still dirty after 100 tries` when the
-repo sits under a normal user folder. We traced it to object paths over 260 characters, which the ninja bundled with the
-Android SDK's CMake 3.22.1 can't handle even with `LongPathsEnabled` on. The PR adds a Windows section to the README:
-clone to a short root such as `D:\tv`, clear cached `android/build` and `.cxx` folders, don't move an installed repo
-(Yarn workspace links break), and use `GRADLE_USER_HOME` when the system drive is short of space. It also adds the
-roughly 15 GB disk requirement to the prerequisites. We tested the workaround: the same build completed in about 12
-minutes.
-
-**Why it matters:** this is the first native build most developers run from Amazon's multi-TV sample. On Windows it
-fails after about 13 minutes with an error that never mentions paths. A few README lines save every Windows developer that
-diagnosis.
+**Why it matters:** Vega OS is new, and public example apps are still scarce. A complete, documented app that works on a real stick, together
+with the workarounds we needed to get there, shortens the path for the next developer building for Vega. The datasets
+and sign videos keep their own CC BY 4.0 licences and credits.
