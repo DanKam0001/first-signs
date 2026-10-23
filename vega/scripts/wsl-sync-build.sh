@@ -14,6 +14,6 @@ if [ ! -d node_modules/@amazon-devices/react-native-w3cmedia ] || [ package.json
 fi
 [ -d node_modules/ws ] || npm install --no-save --no-audit --no-fund ws@8
 mkdir -p model-export/videos
-cp -u /mnt/c/Users/Fatal/Desktop/Hackathons/amazon-build-ship-shape/first-signs/model/export/videos/*.mp4 model-export/videos/ 2>/dev/null || true
+cp -u ${FS_MODEL_EXPORT:-$SRC/../model/export}/videos/*.mp4 model-export/videos/ 2>/dev/null || true
 npx react-native build-vega --build-type $TYPE 2>&1 | grep -v "vvman" | tail -25
 ls -la build/*/*.vpkg 2>/dev/null || find build -name "*.vpkg" | head

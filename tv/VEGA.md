@@ -74,7 +74,7 @@ needed.
    now a developer").
 2. Go to Developer options > Developer Mode > Continue. A 6-digit code appears; it is valid for 5 minutes.
 3. On the PC, run `vega devmode login`. A browser opens for OAuth; choose Allow.
-4. On the PC, run `vega devmode enable-device --code <6 digits>`. Pick the vendor (here "DanVentures"). The stick
+4. On the PC, run `vega devmode enable-device --code <6 digits>`. Pick the vendor (your Amazon developer vendor). The stick
    reboots, and Developer Mode then shows Enabled.
    - **In WSL, devmode needs an unlocked gnome-keyring.** Run devmode commands through the helper:
      `wsl dbus-run-session -- bash -l /home/fatal/vega_apps/vkr.sh devmode ...`

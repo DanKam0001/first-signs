@@ -39,7 +39,7 @@ builds a `phoneUrl`, so the order doesn't matter. The quick-tunnel URL changes e
 |---|---|---|
 | `PORT` | `8788` | 8787 is taken by Hackathon HQ |
 | `PUBLIC_URL` | from `server/.public_url` | https base URL the phone uses; falls back to the origin the TV connected through |
-| `AWS_PROFILE` | `opencv-hackathon` | shared key: keep usage tiny |
+| `AWS_PROFILE` | `default` | the AWS CLI profile with Polly + Bedrock access |
 | `AWS_REGION` | `us-east-1` | |
 | `POLLY_VOICE` | `Danielle` | neural en-US; falls back to `Joanna` if the voice is rejected |
 | `BEDROCK_MODEL_ID` | tries `us.amazon.nova-micro-v1:0`, `amazon.nova-micro-v1:0`, `us.amazon.nova-lite-v1:0`, `amazon.nova-lite-v1:0` | the first that works is kept and logged |
@@ -72,11 +72,11 @@ builds a `phoneUrl`, so the order doesn't matter. The quick-tunnel URL changes e
 
 ## AWS permissions
 
-As of 2026-10-17 the `opencv-hackathon-agent` IAM user is **not allowed** to call Polly or Bedrock
+As of 2026-10-17 the your IAM user IAM user is **not allowed** to call Polly or Bedrock
 (`AccessDeniedException: no identity-based policy allows polly:SynthesizeSpeech / bedrock:InvokeModel`). To fix it,
 an account admin (the root user or an IAM admin, not this key) must:
 
-1. Open the IAM console > **Users** > `opencv-hackathon-agent` > **Permissions** tab > **Add permissions** > **Create inline policy**.
+1. Open the IAM console > **Users** > your IAM user > **Permissions** tab > **Add permissions** > **Create inline policy**.
 2. Choose the **JSON** editor, paste the contents of `server/iam-policy.json`, then **Next**.
 3. Name it `FirstSignsPollyBedrock` and select **Create policy**.
 4. Only if Bedrock still says access is denied for the model itself: Bedrock console (us-east-1) > **Model access**,

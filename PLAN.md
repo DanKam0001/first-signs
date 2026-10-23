@@ -47,5 +47,5 @@ Phone (browser, HTTPS)                 server/ (Node, ws)                      t
 - Pitch language: never say "translate" or "interpret". It's "hearing families learning ASL". Credit the Deaf signers. Point
   people to Deaf-led classes. Claim only accuracy we measured. See `../FINGERSPELL_RESEARCH.md`.
 - Public repo: commits as the user (Danish), with no AI co-author trailers.
-- The AWS keys in use belong to the `opencv-hackathon` profile, which is shared. Keep spend small: cache Polly audio, and
+- The AWS keys in use belong to a shared AWS profile. Keep spend small: cache Polly audio, and
   use short Bedrock prompts.

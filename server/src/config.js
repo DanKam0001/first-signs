@@ -8,7 +8,7 @@ export const SERVER_DIR = path.resolve(here, "..");
 export const REPO_DIR = path.resolve(SERVER_DIR, "..");
 
 // The AWS SDK reads AWS_PROFILE from the environment, so set the default before any client is made.
-process.env.AWS_PROFILE ||= "opencv-hackathon";
+process.env.AWS_PROFILE ||= "default";
 
 export function loadConfig(env = process.env) {
   return {

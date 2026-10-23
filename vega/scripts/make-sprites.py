@@ -19,7 +19,7 @@ from pathlib import Path
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parent.parent
-EXPORT = Path(os.environ.get("FS_MODEL_EXPORT", r"C:\Users\Fatal\Desktop\Hackathons\amazon-build-ship-shape\first-signs\model\export"))
+EXPORT = Path(os.environ.get("FS_MODEL_EXPORT", str(ROOT.parent / "model" / "export")))
 VIDEOS = EXPORT / "videos"
 OUT = ROOT / "src" / "generated" / "sprites"
 FFMPEG = os.environ.get("FFMPEG", r"C:\ffmpeg\bin\ffmpeg.exe")

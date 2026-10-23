@@ -17,7 +17,7 @@ The Vega SDK on WSL2 has its own 17-step log in `../vega_test/FRICTION.md`. It n
 ## AWS from the relay server (server/, Node 24, @aws-sdk v3.1152.0, us-east-1), 2026-10-17
 
 - **IAM user cannot call Polly or Bedrock, and cannot discover what it may call (Severity: High).**
-  - **Task:** one Polly neural `SynthesizeSpeech` and one Bedrock `Converse` call from the server with the `opencv-hackathon` profile.
+  - **Task:** one Polly neural `SynthesizeSpeech` and one Bedrock `Converse` call from the server with a shared AWS profile.
   - **Steps:** `aws bedrock list-foundation-models --region us-east-1`; `aws bedrock-runtime converse --model-id amazon.nova-micro-v1:0` (also `us.amazon.nova-micro-v1:0`, `us.amazon.nova-lite-v1:0`); `aws polly synthesize-speech --engine neural --voice-id Joanna`; `aws iam list-attached-user-policies`.
   - **Expected:** a model list, a short reply, an mp3.
   - **Actual:** every call is `AccessDeniedException ... no identity-based policy allows the bedrock:ListFoundationModels / bedrock:InvokeModel / polly:SynthesizeSpeech / polly:DescribeVoices action`, and the IAM calls are denied too, so the user cannot even see which policy is missing. The Bedrock error names the foundation-model ARN, not the model-access page, so it is not obvious whether "model access" or IAM is the blocker (it is IAM).
