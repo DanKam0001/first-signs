@@ -2,7 +2,7 @@
 
 Every field below is ready to paste. All numbers come from `SUBMIT/FACTS.md` and `model/export/metrics.json`.
 
-**Before pasting, fill in the remaining TODO:** the YouTube URL.
+**All fields are filled in.**
 
 ---
 
@@ -19,7 +19,7 @@ Fire TV
 AWS Builder; Open Source
 
 ## Video
-TODO: public YouTube URL (under 3 minutes; filmed on the real Vega OS Fire TV Stick)
+https://youtu.be/bKzDipaWXoY
 
 ## Code repository
 https://github.com/DanKam0001/first-signs
