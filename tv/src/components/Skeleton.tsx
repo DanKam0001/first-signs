@@ -1,7 +1,7 @@
 // Cheap hand + arm skeleton renderer: ONE <Svg> with three <Path>s (arms, hand bones, joints) and a head guide.
 // Fire TV sticks are weak, so updates are capped at ~15 fps and nothing else re-renders per frame.
 import React, { memo, useEffect, useRef, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Platform, StyleSheet, Text, View } from 'react-native';
 import Svg, { Circle, Ellipse, G, Path, Rect } from 'react-native-svg';
 import { CFrame, RefData } from '../data/signs';
 import { conn, Frame } from '../net/connection';
@@ -299,6 +299,43 @@ export function RefSkeleton({
   );
 }
 
+// Live skeleton render rate. The 1 GB Vega stick's UI thread could not keep up with ~15 SVG re-renders a second
+// plus the sprite animation (2026-10-23: ANR kill, live mirror lagging), so Vega gets 10 fps; Fire OS gets 12.
+const LIVE_FPS = Platform.OS === 'web' ? 15 : Platform.OS === 'android' ? 12 : 10;
+const LIVE_PERIOD = Math.round(1000 / LIVE_FPS);
+
+// Lag measurement: frame age (TV clock - phone `t`) on arrival and at render, relayed to the server every 10 s
+// as {type:'debug', what:'tv_stats'}. Ages include any phone/TV clock offset (both use network time).
+const liveStats = { arrived: 0, rendered: 0, ageIn: [] as number[], ageOut: [] as number[], since: Date.now() };
+function pct(a: number[], p: number) {
+  if (!a.length) return null;
+  const b = a.slice().sort((x, y) => x - y);
+  return b[Math.min(b.length - 1, Math.floor(b.length * p))];
+}
+function reportLiveStats(now: number) {
+  const dt = now - liveStats.since;
+  if (dt < 10000) return;
+  if (liveStats.arrived > 0) {
+    try {
+      conn.send({
+        type: 'debug',
+        what: 'tv_stats',
+        platform: Platform.OS,
+        windowMs: dt,
+        arrivedFps: +((liveStats.arrived * 1000) / dt).toFixed(1),
+        renderedFps: +((liveStats.rendered * 1000) / dt).toFixed(1),
+        ageInMs: { p50: pct(liveStats.ageIn, 0.5), p90: pct(liveStats.ageIn, 0.9) },
+        ageAtRenderMs: { p50: pct(liveStats.ageOut, 0.5), p90: pct(liveStats.ageOut, 0.9) },
+      } as any);
+    } catch {}
+  }
+  liveStats.arrived = 0;
+  liveStats.rendered = 0;
+  liveStats.ageIn = [];
+  liveStats.ageOut = [];
+  liveStats.since = now;
+}
+
 /** Draws the family member's live skeleton from incoming `frame` messages, mirrored like a mirror. */
 /**
  * side: duo mode - draw only that person from `frame.people` (L = camera left). Without `people` (a solo
@@ -318,7 +355,7 @@ export function LiveSkeleton({
   waitingText?: string;
 }) {
   const latest = useRef<CFrame | null>(null);
-  const fresh = useRef(false);
+  const fresh = useRef<boolean>(false);
   const lastAt = useRef(0);
   const xf = useRef<Xform>({ cx: 0.5, cy: 0.45, sw: 0.25 });
   const [frame, setFrame] = useState<CFrame | null>(null);
@@ -332,17 +369,34 @@ export function LiveSkeleton({
         if (person) f = { ...f, pose: person.pose, left: person.left, right: person.right };
         else if (f.people || side === 'R') return;
       }
-      latest.current = compactLive(f);
+      // Only the newest frame is kept (no queue). compactLive runs at render time, so a burst of frames that
+      // arrives after a stall costs one JSON.parse each and nothing more.
+      latestRaw = f;
+      const ft = typeof (f as any).t === 'number' ? (f as any).t : 0;
+      latestT = ft;
       if (typeof f.aspect === 'number' && f.aspect > 0) aspect.current = f.aspect;
       fresh.current = true;
       lastAt.current = Date.now();
+      liveStats.arrived++;
+      if (ft) liveStats.ageIn.push(lastAt.current - ft);
     };
+    let latestRaw: Frame | null = null;
+    let latestT = 0;
     conn.events.on('frame', onFrame);
+    let lastTick = Date.now();
     const timer = setInterval(() => {
-      const isStale = Date.now() - lastAt.current > 1200;
+      const now = Date.now();
+      // The JS thread was blocked (this tick fired very late): skip it so renders never stack back to back.
+      const late = now - lastTick > LIVE_PERIOD * 2.5;
+      lastTick = now;
+      const isStale = now - lastAt.current > 1200;
       setStale((prev) => (prev !== isStale ? isStale : prev));
-      if (!fresh.current) return;
+      reportLiveStats(now);
+      if (!fresh.current || late || !latestRaw) return;
       fresh.current = false;
+      latest.current = compactLive(latestRaw);
+      liveStats.rendered++;
+      if (latestT) liveStats.ageOut.push(now - latestT);
       const f = latest.current!;
       const m = measure(f);
       if (m) {
@@ -352,7 +406,7 @@ export function LiveSkeleton({
       }
       inset.current = pickInset(f, aspect.current, inset.current);
       setFrame(f);
-    }, 1000 / 15);
+    }, LIVE_PERIOD);
     return () => {
       conn.events.off('frame', onFrame);
       clearInterval(timer);

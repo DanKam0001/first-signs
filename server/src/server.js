@@ -13,7 +13,9 @@ import { resolveIn, sendFile, sendJson, notFound } from "./static.js";
 const PHONE_TO_TV = new Set(["frame", "pred", "phone_state"]);
 const TV_TO_PHONE = new Set(["attempt", "cancel"]);
 const MAX_MSG_BYTES = 256 * 1024;
-const TV_BUFFER_LIMIT = 512 * 1024; // drop frames (never preds) if the TV link is this far behind
+// Drop frames (never preds) if the TV link is this far behind. Was 512 KB (~150 frames, ~8 s of backlog at 18 fps);
+// 48 KB is ~15 frames, so a stalled TV catches up on fresh frames instead of replaying old ones.
+const TV_BUFFER_LIMIT = 48 * 1024;
 const MODEL_FILES = ["model.onnx", "preprocess.js", "signs.json", "labels.json", "metrics.json"];
 
 function originOf(req) {
@@ -28,6 +30,18 @@ export function createServer(cfg, log = console) {
   const tts = new Tts(cfg, log);
   const coach = new Coach(cfg, signs, log);
   const stats = { started: Date.now(), framesRelayed: 0, framesDropped: 0, messages: 0, connections: 0 };
+  // Every 10 s while frames flow: relay rate, drops, worst TV bufferedAmount, and frame age on arrival here
+  // (server clock - phone `t`; includes the phone/PC clock offset, so compare runs rather than trust one number).
+  const lag = { since: Date.now(), relayed: 0, dropped: 0, buffered: 0, ages: [] };
+  function logLag() {
+    const now = Date.now();
+    const dt = now - lag.since;
+    if (dt < 10000) return;
+    const a = lag.ages.sort((x, y) => x - y);
+    const p = (q) => (a.length ? a[Math.min(a.length - 1, Math.floor(a.length * q))] : "-");
+    log.log(`[relay] ${(lag.relayed * 1000 / dt).toFixed(1)} fps relayed, ${lag.dropped} dropped, max tv buffer ${lag.buffered} B, age at server p50 ${p(0.5)} ms p90 ${p(0.9)} ms`);
+    Object.assign(lag, { since: now, relayed: 0, dropped: 0, buffered: 0, ages: [] });
+  }
   // Requests per rolling hour across all rooms. Cached answers are still counted, which keeps the cap simple and safe.
   const budget = {
     caps: { speak: cfg.maxSpeakPerHour, coach: cfg.maxCoachPerHour },
@@ -142,10 +156,19 @@ export function createServer(cfg, log = console) {
     if (ws.role === "phone" && PHONE_TO_TV.has(msg.type)) {
       if (!room || !room.tv) return;
       if (msg.type === "frame") {
-        if (room.tv.bufferedAmount > TV_BUFFER_LIMIT) { stats.framesDropped++; return; }
+        if (room.tv.bufferedAmount > TV_BUFFER_LIMIT) { stats.framesDropped++; lag.dropped++; return; }
         stats.framesRelayed++;
+        lag.relayed++;
+        if (typeof msg.t === "number") lag.ages.push(Date.now() - msg.t);
+        lag.buffered = Math.max(lag.buffered, room.tv.bufferedAmount);
+        logLag();
       }
       return send(room.tv, raw); // forwarded unchanged
+    }
+    if (msg.type === "debug") {
+      // TV diagnostics (ErrorBoundary render errors, tv_stats lag numbers). Logged, never forwarded.
+      log.log(`[tv-debug] ${raw.slice(0, 2000)}`);
+      return;
     }
     if (ws.role === "tv" && TV_TO_PHONE.has(msg.type)) {
       if (room && room.phone) send(room.phone, raw);

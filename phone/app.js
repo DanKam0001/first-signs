@@ -355,8 +355,9 @@ async function runAttempt(m) {
   const countdownMs = Math.max(0, Number(m.countdownMs) || 3000);
   const windowMs = Math.max(300, Number(m.windowMs) || 2500);
   sendState(true);
+  clearTimeout(verdictTimer);
   cd.hidden = false;
-  cd.classList.remove("rec");
+  cd.classList.remove("rec", "verdictOk", "verdictMiss");
   $("barWrap").hidden = true;
   $("countLabel").textContent = !cameraOn ? "Tap Start camera first"
     : a.mode === "duo" ? `Get ready to sign "${m.target}" together` : `Get ready to sign "${m.target}"`;
@@ -396,7 +397,27 @@ async function runAttempt(m) {
     stats.preds.push({ ...pred, frames: a.frames.length });
     conn && conn.send(pred, { queue: true });
     endAttempt();
+    showVerdict(pred);
     card("Look at the TV", "Your result is on the TV.", "good");
     lastCard = cardKey(); // keep this card until something changes
   }, countdownMs + windowMs));
+}
+
+// brief result flash on the phone too, so a screen recording of the phone tells the whole story
+let verdictTimer = 0;
+function showVerdict(pred) {
+  const people = pred.mode === "duo" ? pred.people : [pred];
+  const ok = people.some((p) => p.ok);
+  const guess = (p) => (p.top && p.top[0] ? p.top[0][0] : "");
+  const g = guess(people[0]);
+  cd.hidden = false;
+  cd.classList.remove("rec");
+  cd.classList.toggle("verdictOk", ok);
+  cd.classList.toggle("verdictMiss", !ok);
+  $("barWrap").hidden = true;
+  $("countNum").textContent = ok ? "✓" : "Almost!";
+  $("countLabel").textContent = ok ? `You signed "${pred.target}"`
+    : g && g !== pred.target ? `That looked a bit like "${g}"` : "Try it again";
+  clearTimeout(verdictTimer);
+  verdictTimer = setTimeout(() => { cd.hidden = true; cd.classList.remove("verdictOk", "verdictMiss"); }, 2500);
 }
